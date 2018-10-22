@@ -1,0 +1,30 @@
+group = '{{groupId}}'
+version = '{{version}}'
+
+
+
+version = '0.0.1' + getVersionQualifier(System.env.BRANCH_NAME ?: 'local')
+
+ext.deVersion = '1.7.6'
+ext.alfrescoVersion = '5.2.4'
+
+static String getVersionQualifier(String branch_name) {
+    switch (branch_name) {
+        case 'release': return ''; break
+        case 'master': return '-SNAPSHOT'; break
+        default: return '-' + branch_name + '-SNAPSHOT'; break
+    }
+}
+
+wrapper {
+    gradleVersion = '4.8.1'
+}
+
+allprojects {
+    task hello {
+        doLast { task ->
+            println "I'm $task.project.group:$task.project.name:$task.project.version"
+        }
+    }
+}
+

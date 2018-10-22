@@ -1,0 +1,22 @@
+plugins {
+    id "eu.xenit.alfresco" version "0.1.3"{{#amp}}
+    id "eu.xenit.amp" version "0.1.3"{{/amp}}
+}
+
+group rootProject.group
+version = rootProject.version
+description = "HelloWorld Webscript, very useful"
+
+repositories {
+    mavenCentral()
+    jcenter()
+
+    // alfrescoPublic()
+    maven {
+        url "https://artifacts.alfresco.com/nexus/content/groups/public/"
+    }
+}
+
+dependencies {
+    alfrescoProvided "org.alfresco:alfresco-repository:${alfrescoVersion}"
+}
