@@ -21,6 +21,10 @@ public class AlfredSdkProjectAssert extends ProjectAssert {
         super(dir);
     }
 
+    public AlfrescoModulePackageAssert ampAssert() {
+        return new AlfrescoModulePackageAssert(this);
+    }
+
     @Override
     public AlfredSdkGradleBuildAssert gradleBuildAssert() {
         try {

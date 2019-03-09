@@ -18,4 +18,9 @@
 *.ipr
 /out/
 
-initializr
+### NetBeans ###
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/

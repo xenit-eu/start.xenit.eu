@@ -1,0 +1,39 @@
+version: '2.2'
+
+services:
+    alfresco:
+        image: ${DOCKER_IMAGE}
+        ports:
+            - ${DOCKER_IP:-127.0.0.1}:8080:8080
+        volumes:
+            - alfresco:/opt/alfresco/alf_data
+        environment:
+            - DB_URL=jdbc:postgresql://database:5432/alfresco
+            - DB_DRIVER=org.postgresql.Driver
+            - SOLR_HOST=solr
+            - GLOBAL_ooo.enabled=false
+            - GLOBAL_jodconverter.enabled=false
+
+
+    solr:
+        image: hub.xenit.eu/alfresco-solr4:5.1.4.1
+        volumes:
+            - solr:/opt/alfresco/alf_data
+        environment:
+            - ALFRESCO_HOST=alfresco
+            - JAVA_XMS=512M
+            - JAVA_XMX=2048M
+
+    database:
+        image: hub.xenit.eu/postgres:10.4
+        volumes:
+            - database:/var/lib/postgresql/data
+        environment:
+            - POSTGRES_USER=alfresco
+            - POSTGRES_PASSWORD=admin
+            - POSTGRES_DB=alfresco
+
+volumes:
+    alfresco:
+    solr:
+    database:

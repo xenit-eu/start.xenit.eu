@@ -1,9 +1,12 @@
 package eu.xenit.alfred.initializr.generator;
 
+import eu.xenit.alfred.initializr.generator.model.Annotations;
+import eu.xenit.alfred.initializr.generator.model.Imports;
 import io.spring.initializr.generator.InvalidProjectRequestException;
 import io.spring.initializr.generator.ProjectGenerator;
 import io.spring.initializr.generator.ProjectRequest;
 import io.spring.initializr.generator.ProjectResourceLocator;
+import io.spring.initializr.metadata.InitializrMetadataProvider;
 import io.spring.initializr.util.TemplateRenderer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,6 +23,12 @@ import java.util.Map;
 public class AlfredSdkProjectGenerator extends ProjectGenerator {
 
     private static final Logger log = LoggerFactory.getLogger(ProjectGenerator.class);
+
+    public AlfredSdkProjectGenerator(InitializrMetadataProvider metadataProvider) {
+        super();
+
+        this.setMetadataProvider(metadataProvider);
+    }
 
     @Autowired
     private TemporaryFileSupport tempFileSupport = new TemporaryFileSupport();
@@ -59,6 +68,10 @@ public class AlfredSdkProjectGenerator extends ProjectGenerator {
         if (!isGradleBuild(request))
             throw new InvalidProjectRequestException("Project type '"+request.getBuild()+"' currently not supported");
 
+
+        log.info("generateProjectStructure -> model:");
+        model.forEach((key, value) -> log.info("-- {} -> {}", key, value));
+
         File rootDir;
         try {
             rootDir = File.createTempFile("tmp", "", this.tempFileSupport.getTemporaryDirectory());
@@ -79,50 +92,130 @@ public class AlfredSdkProjectGenerator extends ProjectGenerator {
         write(new File(dir, "settings.gradle"), "alfred-sdk/settings.gradle.mustache", model);
         writeGradleWrapper(dir);
 
-        generateGitIgnore(dir, request);
+        // Docker Compose file
+        write(new File(dir, "docker-compose.yml"), "alfred-sdk/docker-compose.yml.mustache", model);
 
+        generateGitIgnore(dir, request);
+        generateSubprojectRepo(request, model, dir);
+
+//        generateSubprojectDocker(request, model, dir);
+
+        return rootDir;
+    }
+
+    private void generateSubprojectDocker(ProjectRequest request, Map<String, Object> model, File rootDir) {
+
+        // Create -docker folder structure
+        File dir = new File(rootDir, request.getName() + "-docker");
+        dir.mkdirs();
+
+        write(new File(dir, "build.gradle"), "alfred-sdk/docker/build.gradle.mustache", model);
+
+    }
+
+    private void generateSubprojectRepo(ProjectRequest request, Map<String, Object> model, File dir) {
         // Create -repo folder structure
         File repoDir = new File(dir, request.getName() + "-repo");
         repoDir.mkdirs();
 
         write(new File(repoDir, "build.gradle"), "alfred-sdk/repo-build.gradle.mustache", model);
 
-//        String applicationName = request.getApplicationName();
-        File src = this.getCodeLocation(repoDir, "main", request);
-        src.mkdirs();
-//        String extension = ("kotlin".equals(language) ? "kt" : language);
-//        write(new File(src, applicationName + "." + extension),
-//                "Application." + extension, model);
-//
-//        if ("war".equals(request.getPackaging())) {
-//            String fileName = "ServletInitializer." + extension;
-//            write(new File(src, fileName), fileName, model);
-//        }
-//
-        File test = this.getCodeLocation(repoDir, "test", request);
+        File repoSrc = this.getCodeLocation(repoDir, "main", request.getLanguage(), request.getPackageName());
+        repoSrc.mkdirs();
+
+        if (request.getFacets().contains("webscripts")) {
+            generateRepoWebscript(request, model, repoDir);
+        }
+
+        File ampSrcDir = this.getCodeLocation(repoDir, "main", "amp", "");
+        ampSrcDir.mkdirs();
+
+        write(new File(ampSrcDir, "module.properties"),
+                "alfred-sdk/repo-module.properties.mustache", model);
+
+        File ampModuleDir = this.getCodeLocation(repoDir, "main", "amp", "config.alfresco.module."+request.getName()+"-repo");
+        ampModuleDir.mkdirs();
+        write(new File(ampModuleDir, "module-context.xml"),
+                "alfred-sdk/repo-module-context.xml.mustache", model);
+
+        File test = this.getCodeLocation(repoDir, "test", request.getLanguage(), request.getPackageName());
         test.mkdirs();
-//        setupTestModel(request, model);
-//        write(new File(test, applicationName + "Tests." + extension),
-//                "ApplicationTests." + extension, model);
-//
-//        File resources = new File(dir, "src/main/resources");
-//        resources.mkdirs();
-//        writeText(new File(resources, "application.properties"), "");
-//
-//        if (request.hasWebFacet()) {
-//            new File(dir, "src/main/resources/templates").mkdirs();
-//            new File(dir, "src/main/resources/static").mkdirs();
-//        }
-
-        return rootDir;
     }
 
-    protected File getCodeLocation(File projectDir, String type, ProjectRequest request)
+    private void generateRepoWebscript(ProjectRequest request, Map<String, Object> model, File projectDir) {
+        File srcMainLang = this.getCodeLocation(projectDir, "main", request.getLanguage());
+        String webscriptFilename = request.getApplicationName()+"Webscript."+request.getLanguage();
+        File webscriptDir = new File(srcMainLang, request.getPackageName().replace(".", "/"));
+
+        write(new File(webscriptDir, webscriptFilename),
+                "webscripts/Webscript."+request.getLanguage()+".mustache", model);
+
+
+//        write(new File(repoSrc, request.getApplicationName()+"WebScript."+request.getLanguage()),
+//               "webscripts/Webscript."+request.getLanguage()+".mustache", model);
+        File srcMainResources = this.getCodeLocation(projectDir, "main", "resources");
+        File webscriptDescDir = new File(srcMainResources,
+                "alfresco/extension/templates/webscripts/" + request.getPackageName().replace(".", "/") + "/");
+        webscriptDescDir.mkdirs();
+
+        write(new File(webscriptDescDir, request.getName() + ".get.desc.xml"),
+               "webscripts/webscript.get.desc.xml.mustache", model);
+
+        write(new File(webscriptDescDir, request.getName() + ".get.json.ftl"),
+                "webscripts/webscript.get.json.ftl", model);
+
+
+
+    }
+
+
+    protected File getResourcesLocation(File projectDir, String sourceSet) {
+        return this.getCodeLocation(projectDir, sourceSet, "resources");
+    }
+
+    protected File getCodeLocation(File projectDir, String sourceSet, String language)
     {
-        String language = request.getLanguage();
-        return new File(new File(projectDir, "src/" + type + "/" + language),
-                request.getPackageName().replace(".", "/"));
+        return new File(projectDir, "src/" + sourceSet + "/" + language + "/");
     }
+
+    @Deprecated
+    protected File getCodeLocation(File projectDir, String sourceSet, String language, String packageName)
+    {
+        return new File(
+                this.getCodeLocation(projectDir, sourceSet, language),
+                packageName.replace(".", "/")
+        );
+    }
+
+
+    @Override
+    protected void setupApplicationModel(ProjectRequest request,
+                                         Map<String, Object> model) {
+        Imports imports = new Imports(request.getLanguage());
+        Annotations annotations = new Annotations();
+
+        // TODO check if we use Dynamic Extensions ?
+
+        // AbstractWebScript webscripts:
+//        imports.add("java.io.IOException")
+//                .add("org.springframework.extensions.webscripts.AbstractWebScript")
+//                .add("org.springframework.extensions.webscripts.WebScriptRequest")
+//                .add("org.springframework.extensions.webscripts.WebScriptResponse");
+
+        // DeclarativeWebScript
+        imports.add("org.springframework.extensions.webscripts.Cache")
+                .add("org.springframework.extensions.webscripts.DeclarativeWebScript")
+                .add("org.springframework.extensions.webscripts.Status")
+                .add("org.springframework.extensions.webscripts.WebScriptRequest")
+                .add("java.util.HashMap")
+                .add("java.util.Map");
+
+
+        model.put("applicationImports", imports.toString());
+        model.put("applicationAnnotations", annotations.toString());
+
+    }
+
     private static boolean isGradleBuild(ProjectRequest request) {
         return "gradle".equals(request.getBuild());
     }
@@ -195,5 +288,9 @@ public class AlfredSdkProjectGenerator extends ProjectGenerator {
             throw new IllegalStateException("Cannot write file " + target, ex);
         }
     }
+
+
+
+
 
 }

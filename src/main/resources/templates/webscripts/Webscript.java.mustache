@@ -1,0 +1,16 @@
+package {{packageName}};
+
+{{applicationImports}}
+
+{{applicationAnnotations}}
+public class {{applicationName}}Webscript extends DeclarativeWebScript {
+
+    @Override
+    protected Map<String, Object> executeImpl(WebScriptRequest req, Status status, Cache cache) {
+        Map<String, Object> model = new HashMap<String, Object>();
+        model.put("flower", "roses");
+        model.put("color", "red");
+        return model;
+    }
+
+}
