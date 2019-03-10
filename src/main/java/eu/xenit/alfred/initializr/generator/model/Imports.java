@@ -1,11 +1,14 @@
 package eu.xenit.alfred.initializr.generator.model;
 
+import lombok.Value;
+
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class Imports {
 
-    private final List<String> statements = new ArrayList<>();
+    private final List<Import> statements = new ArrayList<>();
 
     private final String language;
 
@@ -16,7 +19,16 @@ public class Imports {
     }
 
     public Imports add(String type) {
-        this.statements.add(generateImport(type, this.language));
+        return this.add(new Import(type, false));
+    }
+
+    public Imports addStatic(String type) {
+        this.add(new Import(type, true));
+        return this;
+    }
+
+    private Imports add(Import imp) {
+        this.statements.add(imp);
         return this;
     }
 
@@ -25,19 +37,31 @@ public class Imports {
         return this;
     }
 
-    private String generateImport(String type, String language) {
-        String end = (("groovy".equals(language) || "kotlin".equals(language)) ? ""
-                : ";");
-        return "import " + type + end;
-    }
-
     @Override
     public String toString() {
         if (this.statements.isEmpty()) {
             return "";
         }
-        String content = String.join(String.format("%n"), this.statements);
+
+        String content = this.statements.stream()
+                .map(imp -> imp.getStatement(this.language))
+                .collect(Collectors.joining(String.format("%n")));
+
         return (this.finalCarriageReturn ? String.format("%s%n", content) : content);
+    }
+
+    @Value
+    public class Import {
+
+        private final String type;
+        private final boolean isStatic;
+
+        public String getStatement(String language) {
+            String end = (("groovy".equals(language) || "kotlin".equals(language)) ? "" : ";");
+            String staticMod = this.isStatic ? "static " : "";
+            return "import " + staticMod + type + end;
+        }
+
     }
 
 }

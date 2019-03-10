@@ -52,8 +52,8 @@ public class AlfredSdkProjectGeneratorTest extends AbstractProjectGeneratorTest 
                 .isGradleProject(false);
 
         repoProject.gradleBuildAssert()
-                .contains("id \"eu.xenit.alfresco\" version \"0.1.3\"")
-                .contains("id \"eu.xenit.amp\" version \"0.1.3\"")
+                .contains("id \"eu.xenit.alfresco\" version \"0.1.5\"")
+                .contains("id \"eu.xenit.amp\" version \"0.1.5\"")
                 .contains("alfrescoProvided \"org.alfresco:alfresco-repository:${alfrescoVersion}\"");
 
         repoProject.ampAssert()

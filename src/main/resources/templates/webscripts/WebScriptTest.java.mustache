@@ -1,0 +1,18 @@
+package {{packageName}};
+
+{{webscriptsTestImports}}
+
+{{webscriptsTestAnnotations}}
+public class {{applicationName}}WebScriptTest {
+
+    @Test
+    public void testExecuteImpl() {
+        WebScriptRequest request = mock(WebScriptRequest.class);
+
+        {{applicationName}}Webscript webScript = new {{applicationName}}Webscript();
+        Map<String, Object> model = webScript.executeImpl(request, new Status(), new Cache());
+
+        assertThat(model, hasEntry("flower", "roses"));
+        assertThat(model, hasEntry("color", "red"));
+    }
+}

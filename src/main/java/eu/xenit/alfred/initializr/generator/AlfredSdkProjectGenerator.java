@@ -43,6 +43,8 @@ public class AlfredSdkProjectGenerator extends ProjectGenerator {
     protected Map<String, Object> resolveModel(ProjectRequest originalRequest) {
         Map<String, Object> model = super.resolveModel(originalRequest);
 
+
+
         if ("amp".equals(originalRequest.getPackaging())) {
             model.put("amp", true);
         }
@@ -145,9 +147,9 @@ public class AlfredSdkProjectGenerator extends ProjectGenerator {
     private void generateRepoWebscript(ProjectRequest request, Map<String, Object> model, File projectDir) {
         File srcMainLang = this.getCodeLocation(projectDir, "main", request.getLanguage());
         String webscriptFilename = request.getApplicationName()+"Webscript."+request.getLanguage();
-        File webscriptDir = new File(srcMainLang, request.getPackageName().replace(".", "/"));
+        File webscriptSrcDir = new File(srcMainLang, request.getPackageName().replace(".", "/"));
 
-        write(new File(webscriptDir, webscriptFilename),
+        write(new File(webscriptSrcDir, webscriptFilename),
                 "webscripts/Webscript."+request.getLanguage()+".mustache", model);
 
 
@@ -164,6 +166,14 @@ public class AlfredSdkProjectGenerator extends ProjectGenerator {
         write(new File(webscriptDescDir, request.getName() + ".get.json.ftl"),
                 "webscripts/webscript.get.json.ftl", model);
 
+
+        File srcTestLang = this.getCodeLocation(projectDir, "test", request.getLanguage());
+        File webscriptTestDir = new File(srcTestLang, request.getPackageName().replace(".", "/"));
+        webscriptTestDir.mkdirs();
+        String webscriptTestFilename = request.getApplicationName()+"WebScriptTest."+request.getLanguage();
+
+        write(new File(webscriptTestDir, webscriptTestFilename),
+                "webscripts/WebScriptTest."+request.getLanguage()+".mustache", model);
 
 
     }
@@ -214,6 +224,25 @@ public class AlfredSdkProjectGenerator extends ProjectGenerator {
         model.put("applicationImports", imports.toString());
         model.put("applicationAnnotations", annotations.toString());
 
+        this.setupTestModel(request, model);
+    }
+
+    @Override
+    protected void setupTestModel(ProjectRequest request, Map<String, Object> model) {
+        Imports webScriptsTestImports = new Imports(request.getLanguage());
+
+        webScriptsTestImports
+                .add("org.junit.Test")
+                .add("org.springframework.extensions.webscripts.Cache")
+                .add("org.springframework.extensions.webscripts.Status")
+                .add("org.springframework.extensions.webscripts.WebScriptRequest")
+                .add("java.util.Map")
+                .addStatic("org.hamcrest.Matchers.hasEntry")
+                .addStatic("org.junit.Assert.assertThat")
+                .addStatic("org.mockito.Mockito.mock");
+
+        model.put("webscriptsTestImports", webScriptsTestImports);
+        model.put("webscriptsTestAnnotations", new Annotations());
     }
 
     private static boolean isGradleBuild(ProjectRequest request) {
