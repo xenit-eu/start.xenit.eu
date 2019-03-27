@@ -1,0 +1,9 @@
+io.spring.initializr.generator.packaging.PackagingFactory=\
+eu.xenit.alfred.initializr.generator.packaging.amp.AmpPackagingFactory
+
+
+io.spring.initializr.generator.project.ProjectGenerationConfiguration=\
+eu.xenit.alfred.initializr.generator.build.BuildProjectGenerationConfiguration,\
+eu.xenit.alfred.initializr.generator.build.gradle.GradleProjectGenerationConfiguration,\
+eu.xenit.alfred.initializr.generator.build.docker.DockerBuildGenerationConfiguration,\
+eu.xenit.alfred.initializr.generator.build.alfresco.AlfrescoModuleGenerationConfiguration

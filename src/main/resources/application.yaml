@@ -1,44 +1,47 @@
 initializr:
-#  bootVersions:
-#    - name: Enterprise 5.2.4
-#      id: 5.2.4.RELEASE
-#      default: true
-#  javaVersions:
-#    - id: 1.8
-#      default: true
-#    - id: 1.7
-#  languages:
-#    - name: Java
-#      id: java
-#      default: true
-#  packagings:
-#    - name: Amp & Docker
-#      id: amp+docker
-#      default: true
-#    - name: Amp
-#      id: amp
-#    - name: Jar & Docker
-#      id: jar+docker
-#    - name: Jar
-#      id: jar
-#
-#  types:
-#    - name: Alfred Gradle SDK Project
-#      id: gradle-project
-#      description: Generate a Gradle based project archive
-#      tags:
-#        build: gradle
-#        format: project
-#      default: true
-#      action: /starter.zip
-#    - name: Alfresco Maven SDK Project
-#      id: maven-project
-#      description: Generate a Maven based project archive
-#      tags:
-#        build: maven
-#        format: project
-#      default: false
-#      action: /starter.zip
+  types:
+    - name: Alfred Gradle SDK
+      id: gradle-project
+      description: Generate a Gradle based project archive
+      tags:
+        build: gradle
+        format: project
+      default: true
+      action: /starter.zip
+    - name: Gradle Config
+      id: gradle-build
+      description: Generate a Gradle build file
+      tags:
+        build: gradle
+        format: build
+      default: false
+      action: /build.gradle
+    - name: Alfresco Maven SDK
+      id: maven-project
+      description: Generate a Maven based project archive
+      tags:
+        build: maven
+        format: project
+      default: false
+      action: /starter.zip
+  bootVersions:
+    - name: Enterprise 5.2.4
+      id: 5.2.4.RELEASE
+      default: true
+  javaVersions:
+    - id: 1.8
+      default: true
+    - id: 1.7
+  languages:
+    - name: Java
+      id: java
+      default: true
+  packagings:
+    - name: Amp
+      id: amp
+      default: true
+    - name: Jar
+      id: jar
 
 
   dependencies:
@@ -49,4 +52,4 @@ initializr:
         groupId: eu.xenit
         artifactId: alfresco-dynamic-extensions-repo
         version: 1.7.6.RELEASE
-        description: Rapid development of Alfresco repository extensions in Java.
+        description: Rapid development of Alfresco repository extensions.

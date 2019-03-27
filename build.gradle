@@ -20,7 +20,7 @@ version = '0.0.2-SNAPSHOT'
 sourceCompatibility = 1.8
 
 ext {
-    springInitializrVersion = '0.7.0.RELEASE'
+    springInitializrVersion = '0.8.0.BUILD-SNAPSHOT'
 }
 
 repositories {
@@ -34,7 +34,9 @@ repositories {
 
 dependencies {
     implementation('org.springframework.boot:spring-boot-starter-web')
-    implementation("io.spring.initializr:initializr-web:${springInitializrVersion}")
+    implementation("io.spring.initializr:initializr-web:${springInitializrVersion}") {
+        exclude group: "io.spring.initializr", module:"initializr-generator-spring"
+    }
 
     implementation('org.springframework.boot:spring-boot-devtools')
 
