@@ -1,3 +1,4 @@
+# debug: true
 initializr:
   types:
     - name: Alfred Gradle SDK

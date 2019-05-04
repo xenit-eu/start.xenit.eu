@@ -31,9 +31,14 @@ repositories {
     maven { url "https://repo.spring.io/release" }
 }
 
+bootRun {
+    jvmArgs = ["-Dspring.output.ansi.enabled=ALWAYS"]
+}
 
 dependencies {
     implementation('org.springframework.boot:spring-boot-starter-web')
+    implementation('org.springframework.boot:spring-boot-starter-actuator')
+
     implementation("io.spring.initializr:initializr-web:${springInitializrVersion}") {
         exclude group: "io.spring.initializr", module:"initializr-generator-spring"
     }
