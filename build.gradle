@@ -1,18 +1,10 @@
-buildscript {
-    ext {
-        springBootVersion = '2.1.4.RELEASE'
-    }
-    repositories {
-        mavenCentral()
-    }
-    dependencies {
-        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
-    }
+plugins {
+    id 'java'
+    id 'org.springframework.boot' version '2.1.4.RELEASE'
+    id 'eu.xenit.docker' version '4.0.3'
+    id 'idea'
 }
 
-apply plugin: 'java'
-apply plugin: 'idea'
-apply plugin: 'org.springframework.boot'
 apply plugin: 'io.spring.dependency-management'
 
 group = 'eu.xenit.alfred'
@@ -62,4 +54,19 @@ dependencies {
 
 test {
 
+}
+
+dockerFile {
+    dockerFile = file('Dockerfile')
+    dockerBuild {
+        repository = 'hub.xenit.eu/start.xenit.eu'
+        tags = [ project.version ]
+        automaticTags = true
+    }
+}
+
+buildDockerImage {
+    buildArgs = [
+        'JAR_FILE': "build/libs/${tasks.bootJar.getArchiveName()}"
+    ]
 }
