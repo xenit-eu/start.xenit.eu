@@ -7,9 +7,9 @@
 //    public InitializrMetadataTestBuilder addDefaultTypes() {
 //        return this
 //                .addType("maven-build", false, "/pom.xml", "maven", "build")
-//                .addType("maven-project", false, "/starter.zip", "maven", "project")
+//                .addType("maven-module", false, "/starter.zip", "maven", "module")
 //                .addType("gradle-build", false, "/build.gradle", "gradle", "build")
-//                .addType("gradle-project", true, "/starter.zip", "gradle", "project");
+//                .addType("gradle-module", true, "/starter.zip", "gradle", "module");
 //    }
 //
 //    public static InitializrMetadataTestBuilder withDefaults() {

@@ -21,7 +21,7 @@
 //    public void defaultProjectRequest(){
 //        ProjectRequest request = createProjectRequest();
 //
-//        Assertions.assertThat(request.getType()).isEqualToIgnoringCase("gradle-project");
+//        Assertions.assertThat(request.getType()).isEqualToIgnoringCase("gradle-module");
 //        Assertions.assertThat(request.getPackaging()).isEqualToIgnoringCase("amp");
 //    }
 //
@@ -29,14 +29,14 @@
 //    public void defaultProjectWithGradle() {
 //        ProjectRequest request = createProjectRequest();
 //
-//        AlfredSdkProjectAssert project = generateProject(request).isGradleProject();
+//        AlfredSdkProjectAssert module = generateProject(request).isGradleProject();
 //
-//        project.gradleBuildAssert()
+//        module.gradleBuildAssert()
 //                .hasAlfrescoVersion("5.2.4");
 //
-//        project.gradleSettingsAssert()
-//                .hasProjectName(request.getName())
-//                .includesSubProject(String.format("%s-repo", request.getName()));
+//        module.gradleSettingsAssert()
+//                .hasProjectName(request.getId())
+//                .includesSubProject(String.format("%s-repo", request.getId()));
 //
 //        verifyProjectSuccessfulEventFor(request);
 //    }
@@ -48,7 +48,7 @@
 ////        request.setType("gradle-build");
 //
 //        AlfredSdkProjectAssert repoProject = generateProject(request)
-//                .subproject(String.format("%s-repo", request.getName()))
+//                .subproject(String.format("%s-repo", request.getId()))
 //                .isGradleProject(false);
 //
 //        repoProject.gradleBuildAssert()

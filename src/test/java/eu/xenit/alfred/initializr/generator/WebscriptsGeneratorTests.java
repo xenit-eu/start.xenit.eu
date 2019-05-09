@@ -17,7 +17,7 @@
 //        assertThat(request.getStyle(), hasItem("webscripts"));
 //
 //        AlfredSdkProjectAssert repoProject = generateProject(request)
-//                .subproject(String.format("%s-repo", request.getName()))
+//                .subproject(String.format("%s-repo", request.getId()))
 //                .isGradleProject(false);
 //
 //        repoProject.sourceCodeAssert("src/main/resources/alfresco/extension/templates/webscripts/com/example/demo/demo.get.desc.xml")
@@ -63,7 +63,7 @@
 //        assertThat(request.getStyle(), not(hasItem("webscripts")));
 //
 //        AlfredSdkProjectAssert repoProject = generateProject(request)
-//                .subproject(String.format("%s-repo", request.getName()));
+//                .subproject(String.format("%s-repo", request.getId()));
 //
 //        repoProject.hasNoFile("src/main/resources/alfresco/extension/templates/webscripts/com/example/demo/demo.get.desc.xml")
 //                .hasNoFile("src/main/resources/alfresco/extension/templates/webscripts/com/example/demo/demo.get.json.ftl")

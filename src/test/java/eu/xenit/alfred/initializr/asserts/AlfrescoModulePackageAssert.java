@@ -4,8 +4,8 @@
 //
 //public class AlfrescoModulePackageAssert extends AlfrescoModuleAssert {
 //
-//    public AlfrescoModulePackageAssert(AlfredSdkProjectAssert project) {
-//        super(project);
+//    public AlfrescoModulePackageAssert(AlfredSdkProjectAssert module) {
+//        super(module);
 //    }
 //
 //    public AlfrescoModulePackageAssert hasModulePropertiesFile()
@@ -15,7 +15,7 @@
 //
 //    public AlfrescoModulePackageAssert hasModuleContextFile()
 //    {
-//        String projectName = this.project.getDir().getName();
+//        String projectName = this.module.getDir().getId();
 //        return this.hasFile("src/main/amp/config/alfresco/module/"+projectName+"/module-context.xml");
 //    }
 //

@@ -54,8 +54,8 @@ public class AlfredInitializrMetadataBuilder {
 
     private AlfredInitializrMetadataBuilder addDefaultTypes() {
         return this
-                .addType("maven-project", "Alfresco Maven SDK", false, "/starter.zip", "maven", "project")
-                .addType("gradle-project", "Alfred Gradle SDK", true, "/starter.zip", "gradle", "project");
+                .addType("maven-module", "Alfresco Maven SDK", false, "/starter.zip", "maven", "module")
+                .addType("gradle-module", "Alfred Gradle SDK", true, "/starter.zip", "gradle", "module");
     }
 
     private AlfredInitializrMetadataBuilder addDefaultPackagings() {

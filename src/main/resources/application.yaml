@@ -1,12 +1,14 @@
 # debug: true
 initializr:
+  description:
+    value: Demo project using start.xenit.eu
   types:
     - name: Alfred Gradle SDK
-      id: gradle-project
-      description: Generate a Gradle based project archive
+      id: gradle-module
+      description: Generate a Gradle based module archive
       tags:
         build: gradle
-        format: project
+        format: module
       default: true
       action: /starter.zip
     - name: Gradle Config
@@ -18,16 +20,16 @@ initializr:
       default: false
       action: /build.gradle
     - name: Alfresco Maven SDK
-      id: maven-project
-      description: Generate a Maven based project archive
+      id: maven-module
+      description: Generate a Maven based module archive
       tags:
         build: maven
-        format: project
+        format: module
       default: false
       action: /starter.zip
   bootVersions:
-    - name: Enterprise 5.2.4
-      id: 5.2.4.RELEASE
+    - name: Enterprise 5.2.5
+      id: 5.2.5.RELEASE
       default: true
   javaVersions:
     - id: 1.8

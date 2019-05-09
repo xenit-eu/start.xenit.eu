@@ -92,8 +92,8 @@
 //        }
 //    }
 //
-////    public AlfredSdkProjectAssert(ProjectAssert project) {
+////    public AlfredSdkProjectAssert(ProjectAssert module) {
 ////
-////        this.project = project;
+////        this.module = module;
 ////    }
 //}

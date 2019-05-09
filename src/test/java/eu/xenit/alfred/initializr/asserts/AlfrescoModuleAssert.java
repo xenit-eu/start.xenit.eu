@@ -2,15 +2,15 @@
 //
 //public abstract class AlfrescoModuleAssert {
 //
-//    protected AlfredSdkProjectAssert project;
+//    protected AlfredSdkProjectAssert module;
 //
-//    protected AlfrescoModuleAssert(AlfredSdkProjectAssert project)
+//    protected AlfrescoModuleAssert(AlfredSdkProjectAssert module)
 //    {
-//        this.project = project;
+//        this.module = module;
 //    }
 //
 //    public AlfrescoModuleAssert hasFile(String... localPaths) {
-//        this.project.hasFile(localPaths);
+//        this.module.hasFile(localPaths);
 //        return this;
 //    }
 //

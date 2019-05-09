@@ -6,4 +6,5 @@ io.spring.initializr.generator.project.ProjectGenerationConfiguration=\
 eu.xenit.alfred.initializr.generator.build.BuildProjectGenerationConfiguration,\
 eu.xenit.alfred.initializr.generator.build.gradle.GradleProjectGenerationConfiguration,\
 eu.xenit.alfred.initializr.generator.build.docker.DockerBuildGenerationConfiguration,\
-eu.xenit.alfred.initializr.generator.build.alfresco.AlfrescoModuleGenerationConfiguration
+eu.xenit.alfred.initializr.generator.build.sdk.alfred.AlfredSdkProjectGenerationConfiguration,\
+eu.xenit.alfred.initializr.generator.build.alfresco.platform.AlfrescoModuleGenerationConfiguration
