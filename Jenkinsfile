@@ -10,7 +10,7 @@ pipeline {
 
         stage("Build") {
             steps {
-                sh "./gradlew assemble"
+                sh "./gradlew bootJar --info --stacktrace"
             }
         }
 
@@ -21,12 +21,22 @@ pipeline {
         }
 
         stage('Build Docker Image') {
+            when {
+                anyOf {
+                    branch "master*"
+                }
+            }
             steps {
                 sh "./gradlew buildDockerImage"
             }
         }
 
         stage('Publish Docker Image') {
+            when {
+                anyOf {
+                    branch "master*"
+                }
+            }
             steps {
                 sh "./gradlew pushDockerImage"
             }
