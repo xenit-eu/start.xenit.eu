@@ -15,8 +15,8 @@
 //
 //    public AlfrescoModulePackageAssert hasModuleContextFile()
 //    {
-//        String projectName = this.module.getDir().getId();
-//        return this.hasFile("src/main/amp/config/alfresco/module/"+projectName+"/module-context.xml");
+//        String name = this.module.getDir().getId();
+//        return this.hasFile("src/main/amp/config/alfresco/module/"+name+"/module-context.xml");
 //    }
 //
 //    @Override

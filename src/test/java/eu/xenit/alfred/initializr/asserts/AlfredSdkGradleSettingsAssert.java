@@ -15,9 +15,9 @@
 //
 //    }
 //
-//    public AlfredSdkGradleSettingsAssert includesSubProject(String projectName)
+//    public AlfredSdkGradleSettingsAssert includesSubProject(String name)
 //    {
-//        return this.contains(String.format("include '%s'", projectName));
+//        return this.contains(String.format("include '%s'", name));
 //    }
 //
 //    @Override

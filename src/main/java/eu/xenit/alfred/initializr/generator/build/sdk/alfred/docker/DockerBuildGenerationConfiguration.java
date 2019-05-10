@@ -3,33 +3,26 @@ package eu.xenit.alfred.initializr.generator.build.sdk.alfred.docker;
 import static org.springframework.util.StringUtils.quote;
 
 import eu.xenit.alfred.initializr.generator.build.BuildCustomizer;
-import io.spring.initializr.generator.buildsystem.Dependency;
-import io.spring.initializr.generator.buildsystem.DependencyScope;
-import io.spring.initializr.generator.buildsystem.gradle.GradleBuild;
+import eu.xenit.alfred.initializr.generator.build.gradle.root.RootGradleBuild;
+import eu.xenit.alfred.initializr.generator.build.sdk.alfred.AlfredSdk.Dependencies;
 import io.spring.initializr.generator.condition.ConditionalOnBuildSystem;
 import io.spring.initializr.generator.project.ProjectGenerationConfiguration;
 import io.spring.initializr.generator.project.ResolvedProjectDescription;
-import io.spring.initializr.generator.version.VersionReference;
 import org.springframework.context.annotation.Bean;
 
 @ProjectGenerationConfiguration
 @ConditionalOnBuildSystem("gradle")
 public class DockerBuildGenerationConfiguration {
 
-    public final Dependency DEP_ALFRESCO_WAR = new Dependency(
-            "org.alfresco",
-            "alfresco-enterprise",
-            VersionReference.ofProperty("alfresco-version"),
-            DependencyScope.PROVIDED_RUNTIME,
-            "war");
+
 
     @Bean
-    public BuildCustomizer<GradleBuild> addDockerAlfrescoPlugin(ResolvedProjectDescription project) {
+    public BuildCustomizer<RootGradleBuild> addDockerAlfrescoPlugin(ResolvedProjectDescription project) {
         return (build) -> {
             build.addPlugin("eu.xenit.docker-alfresco", "4.0.3");
 
-            build.dependencies()
-                    .add("baseAlfrescoWar", DEP_ALFRESCO_WAR);
+            build.dependencies().add("alfresco-war", Dependencies.ALFRESCO_WAR);
+            //build.dependencies().add("platform", DEP_ALFRESCO_WAR);
 
 //            dependencies {
 //                baseAlfrescoWar "org.alfresco:content-services-community:6.0.7-ga@war"

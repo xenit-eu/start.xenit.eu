@@ -73,9 +73,9 @@
 //        return this;
 //    }
 //
-//    public AlfredSdkProjectAssert subproject(String projectName)
+//    public AlfredSdkProjectAssert subproject(String name)
 //    {
-//        return new AlfredSdkProjectAssert(this.file(projectName));
+//        return new AlfredSdkProjectAssert(this.file(name));
 //    }
 //
 //    private File file(String localPath) {

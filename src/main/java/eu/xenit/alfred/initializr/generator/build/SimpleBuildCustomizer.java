@@ -16,6 +16,7 @@ package eu.xenit.alfred.initializr.generator.build;
  * limitations under the License.
  */
 
+import eu.xenit.alfred.initializr.generator.buildsystem.BuildSystem;
 import io.spring.initializr.generator.buildsystem.Build;
 import io.spring.initializr.generator.project.ResolvedProjectDescription;
 
@@ -28,7 +29,7 @@ import org.springframework.core.Ordered;
  * @author Andy Wilkinson
  * @author Stephane Nicoll
  */
-public class SimpleBuildCustomizer implements BuildCustomizer<Build> {
+public class SimpleBuildCustomizer implements BuildCustomizer<BuildSystem> {
 
     private final ResolvedProjectDescription projectDescription;
 
@@ -37,7 +38,7 @@ public class SimpleBuildCustomizer implements BuildCustomizer<Build> {
     }
 
     @Override
-    public void customize(Build build) {
+    public void customize(BuildSystem build) {
         build.setGroup(this.projectDescription.getGroupId());
         build.setArtifact(this.projectDescription.getArtifactId());
         build.setVersion(this.projectDescription.getVersion());

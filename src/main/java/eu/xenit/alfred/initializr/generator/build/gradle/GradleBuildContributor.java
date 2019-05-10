@@ -17,9 +17,9 @@
 package eu.xenit.alfred.initializr.generator.build.gradle;
 
 
+import eu.xenit.alfred.initializr.generator.buildsystem.BuildAssetWriter;
+import eu.xenit.alfred.initializr.generator.buildsystem.gradle.MultiProjectGradleBuild;
 import io.spring.initializr.generator.buildsystem.BuildWriter;
-import io.spring.initializr.generator.buildsystem.gradle.GradleBuild;
-import io.spring.initializr.generator.buildsystem.gradle.GradleBuildWriter;
 import io.spring.initializr.generator.io.IndentingWriter;
 import io.spring.initializr.generator.io.IndentingWriterFactory;
 import io.spring.initializr.generator.project.contributor.ProjectContributor;
@@ -27,6 +27,7 @@ import java.io.IOException;
 import java.io.Writer;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import org.springframework.util.Assert;
 
 /**
  * {@link ProjectContributor} for the module's {@code build.gradle} file.
@@ -37,15 +38,16 @@ import java.nio.file.Path;
  *
  * @author Andy Wilkinson
  */
-public class GradleBuildContributor implements BuildWriter, ProjectContributor {
+public abstract class GradleBuildContributor implements BuildAssetWriter, ProjectContributor {
+
+    protected final MultiProjectGradleBuild build;
 
     private final CustomGradleBuildWriter buildWriter;
-
-    private final MultiProjectGradleBuild build;
-
     private final IndentingWriterFactory indentingWriterFactory;
 
-    GradleBuildContributor(CustomGradleBuildWriter buildWriter, MultiProjectGradleBuild build,
+    protected GradleBuildContributor(
+            CustomGradleBuildWriter buildWriter,
+            MultiProjectGradleBuild build,
             IndentingWriterFactory indentingWriterFactory) {
         this.buildWriter = buildWriter;
         this.build = build;
@@ -57,7 +59,10 @@ public class GradleBuildContributor implements BuildWriter, ProjectContributor {
         // create module folder if not exists yet
         Files.createDirectories(projectRoot);
 
-        Path buildGradle = Files.createFile(projectRoot.resolve("build.gradle"));
+        Path buildPath = this.relativePath();
+        Assert.isTrue(!buildPath.isAbsolute(), "relativePath() returned an absolute path");
+
+        Path buildGradle = Files.createFile(projectRoot.resolve(buildPath));
         writeBuild(Files.newBufferedWriter(buildGradle));
     }
 

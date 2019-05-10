@@ -50,6 +50,8 @@ dependencies {
 
     testImplementation('org.springframework.boot:spring-boot-starter-test')
     testImplementation("io.spring.initializr:initializr-generator:${springInitializrVersion}:tests")
+
+    testCompileOnly 'org.projectlombok:lombok'
 }
 
 test {

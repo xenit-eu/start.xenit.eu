@@ -3,11 +3,9 @@ package eu.xenit.alfred.initializr.asserts;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
 
-import com.fasterxml.jackson.databind.deser.DataFormatReaders.Match;
-import eu.xenit.alfred.initializr.generator.build.alfresco.AlfrescoModuleProperties;
+import eu.xenit.alfred.initializr.generator.alfresco.AlfrescoModuleProperties;
 import java.io.IOException;
 import java.io.StringReader;
-import java.io.StringWriter;
 import java.util.Properties;
 import org.hamcrest.Matcher;
 

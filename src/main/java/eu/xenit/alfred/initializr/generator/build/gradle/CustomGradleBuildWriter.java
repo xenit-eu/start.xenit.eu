@@ -1,7 +1,10 @@
 package eu.xenit.alfred.initializr.generator.build.gradle;
 
-import eu.xenit.alfred.initializr.generator.build.sdk.alfred.platform.AlfredSdkPlatformModuleGradleCustomizer;
+import eu.xenit.alfred.initializr.generator.alfresco.AlfrescoConstants;
+import eu.xenit.alfred.initializr.generator.buildsystem.CustomScopeDependency;
 import eu.xenit.alfred.initializr.generator.buildsystem.ProjectDependency;
+import eu.xenit.alfred.initializr.generator.buildsystem.gradle.CustomDependencyScope;
+import eu.xenit.alfred.initializr.generator.buildsystem.gradle.MultiProjectGradleBuild;
 import io.spring.initializr.generator.buildsystem.BillOfMaterials;
 import io.spring.initializr.generator.buildsystem.Dependency;
 import io.spring.initializr.generator.buildsystem.DependencyComparator;
@@ -32,8 +35,8 @@ import java.util.stream.Collectors;
 /**
  * Adapted from {@link io.spring.initializr.generator.buildsystem.gradle.GradleBuildWriter}
  *
- * Original class hides utility methods as private, which makes it hard to simply override
- * the {@link #writeTo(IndentingWriter writer, MultiProjectGradleBuild build)} method
+ * Original class hides utility methods as private, which makes it hard to simply override the {@link
+ * #writeTo(IndentingWriter writer, MultiProjectGradleBuild build)} method
  */
 public class CustomGradleBuildWriter {
 
@@ -125,8 +128,7 @@ public class CustomGradleBuildWriter {
             ConfigurationCustomization configurationCustomization) {
         if (configurationCustomization.getExtendsFrom().isEmpty()) {
             writer.println(configurationName);
-        }
-        else {
+        } else {
             writer.println(configurationName + " {");
             writer.indented(() -> writer.println(String.format("extendsFrom %s",
                     String.join(", ", configurationCustomization.getExtendsFrom()))));
@@ -148,7 +150,7 @@ public class CustomGradleBuildWriter {
     private String repositoryAsString(MavenRepository repository) {
         if (MavenRepository.MAVEN_CENTRAL.equals(repository)) {
             return "mavenCentral()";
-        } else if (AlfredSdkPlatformModuleGradleCustomizer.ALFRESCO_PUBLIC_REPO.equals(repository)) {
+        } else if (AlfrescoConstants.MavenRepositories.ALFRESCO_PUBLIC.equals(repository)) {
             return "alfrescoPublic()";
         }
         return "maven { url '" + repository.getUrl() + "' }";
@@ -198,36 +200,39 @@ public class CustomGradleBuildWriter {
 
     private String dependencyAsString(Dependency dependency) {
 
+        String configuration = configurationForDependency(dependency);
         if (dependency instanceof ProjectDependency) {
             ProjectDependency projectDependency = (ProjectDependency) dependency;
 
             // alfrescoAmp project(path: ':{{name}}-repo', configuration: 'amp')
-            return "alfrescoAmp project(path: ':"+projectDependency.getArtifactId()+"'"
-                    + ", configuration: '"+projectDependency.getConfiguration()+"'"
-                    + ")";
+            return String.format("%s project(path: ':%s', configuration: '%s')",
+                    configuration,
+                    projectDependency.getProject().getId(),
+                    projectDependency.getConfiguration());
         }
 
         String quoteStyle = determineQuoteStyle(dependency.getVersion());
         String version = determineVersion(dependency.getVersion());
         String type = dependency.getType();
-        return configurationForDependency(dependency) + " " + quoteStyle
+        return configuration + " " + quoteStyle
                 + dependency.getGroupId() + ":" + dependency.getArtifactId()
                 + ((version != null) ? ":" + version : "")
                 + ((type != null) ? "@" + type : "") + quoteStyle;
     }
 
-    protected String configurationForDependency(Dependency dependency)
-    {
-        // hardcoded hack for the gradle sdk custom configurations
-        if ("org.alfresco".equalsIgnoreCase(dependency.getGroupId()) &&
-            "alfresco-enterprise".equalsIgnoreCase(dependency.getArtifactId())) {
-            return "baseAlfrescoWar";
+    protected String configurationForDependency(Dependency dependency) {
+        // Check if the dependency has custom logic for scope/configuration
+        if (dependency instanceof CustomDependencyScope) {
+            CustomDependencyScope customScopeDependency = (CustomDependencyScope) dependency;
+            if (customScopeDependency.getCustomScope() != null) {
+                return customScopeDependency.getCustomScope();
+            }
         }
 
-        return this.configurationForScope(dependency.getScope());
+        return this.defaultConfigurationForScope(dependency.getScope());
     }
 
-    protected String configurationForScope(DependencyScope type) {
+    protected String defaultConfigurationForScope(DependencyScope type) {
         switch (type) {
             case ANNOTATION_PROCESSOR:
                 return "annotationProcessor";

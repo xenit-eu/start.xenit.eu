@@ -51,7 +51,7 @@ initializr:
     - name: Dynamic Extensions
       content:
       - name: Dynamic Extensions
-        id: alfresco-dynamic-extensions-repo
+        id: dynamic-extensions
         groupId: eu.xenit
         artifactId: alfresco-dynamic-extensions-repo
         version: 1.7.6

@@ -1,0 +1,19 @@
+package eu.xenit.alfred.initializr.generator.alfresco;
+
+import io.spring.initializr.generator.buildsystem.MavenRepository;
+
+public class AlfrescoConstants {
+
+    public static class MavenRepositories {
+        public static final MavenRepository ALFRESCO_PUBLIC = new MavenRepository(
+                "alfresco-public",
+                "Alfresco Public",
+                "https://artifacts.alfresco.com/nexus/content/groups/public/");
+    }
+
+    public static final String GROUP_ID = "org.alfresco";
+
+
+
+
+}

@@ -1,9 +1,8 @@
 package eu.xenit.alfred.initializr.generator.build.sdk.alfred.platform;
 
-import eu.xenit.alfred.initializr.generator.build.alfresco.AlfrescoModuleCustomizer;
-import eu.xenit.alfred.initializr.generator.build.alfresco.AlfrescoModuleProjectLayout;
-import eu.xenit.alfred.initializr.generator.build.alfresco.platform.AlfrescoPlatformModule;
-import java.nio.file.Paths;
+import eu.xenit.alfred.initializr.generator.alfresco.AlfrescoModuleCustomizer;
+import eu.xenit.alfred.initializr.generator.alfresco.AlfrescoModuleProjectLayout;
+import eu.xenit.alfred.initializr.generator.alfresco.platform.AlfrescoPlatformModule;
 import org.springframework.util.Assert;
 
 public class AlfredSdkPlatformProjectLayoutCustomizer implements AlfrescoModuleCustomizer<AlfrescoPlatformModule> {
