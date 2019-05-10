@@ -1,6 +1,7 @@
 package eu.xenit.alfred.initializr.generator.build.gradle;
 
-import eu.xenit.alfred.initializr.generator.build.sdk.alfred.AlfredSdkPlatformModuleBuildCustomizer;
+import eu.xenit.alfred.initializr.generator.build.sdk.alfred.platform.AlfredSdkPlatformModuleGradleCustomizer;
+import eu.xenit.alfred.initializr.generator.buildsystem.ProjectDependency;
 import io.spring.initializr.generator.buildsystem.BillOfMaterials;
 import io.spring.initializr.generator.buildsystem.Dependency;
 import io.spring.initializr.generator.buildsystem.DependencyComparator;
@@ -147,7 +148,7 @@ public class CustomGradleBuildWriter {
     private String repositoryAsString(MavenRepository repository) {
         if (MavenRepository.MAVEN_CENTRAL.equals(repository)) {
             return "mavenCentral()";
-        } else if (AlfredSdkPlatformModuleBuildCustomizer.ALFRESCO_PUBLIC_REPO.equals(repository)) {
+        } else if (AlfredSdkPlatformModuleGradleCustomizer.ALFRESCO_PUBLIC_REPO.equals(repository)) {
             return "alfrescoPublic()";
         }
         return "maven { url '" + repository.getUrl() + "' }";
@@ -176,6 +177,7 @@ public class CustomGradleBuildWriter {
     private void writeDependencies(IndentingWriter writer, GradleBuild build) {
         Set<Dependency> sortedDependencies = new LinkedHashSet<>();
         DependencyContainer dependencies = build.dependencies();
+
         sortedDependencies
                 .addAll(filterDependencies(dependencies, DependencyScope.COMPILE));
         sortedDependencies
@@ -195,13 +197,34 @@ public class CustomGradleBuildWriter {
     }
 
     private String dependencyAsString(Dependency dependency) {
+
+        if (dependency instanceof ProjectDependency) {
+            ProjectDependency projectDependency = (ProjectDependency) dependency;
+
+            // alfrescoAmp project(path: ':{{name}}-repo', configuration: 'amp')
+            return "alfrescoAmp project(path: ':"+projectDependency.getArtifactId()+"'"
+                    + ", configuration: '"+projectDependency.getConfiguration()+"'"
+                    + ")";
+        }
+
         String quoteStyle = determineQuoteStyle(dependency.getVersion());
         String version = determineVersion(dependency.getVersion());
         String type = dependency.getType();
-        return configurationForScope(dependency.getScope()) + " " + quoteStyle
+        return configurationForDependency(dependency) + " " + quoteStyle
                 + dependency.getGroupId() + ":" + dependency.getArtifactId()
                 + ((version != null) ? ":" + version : "")
                 + ((type != null) ? "@" + type : "") + quoteStyle;
+    }
+
+    protected String configurationForDependency(Dependency dependency)
+    {
+        // hardcoded hack for the gradle sdk custom configurations
+        if ("org.alfresco".equalsIgnoreCase(dependency.getGroupId()) &&
+            "alfresco-enterprise".equalsIgnoreCase(dependency.getArtifactId())) {
+            return "baseAlfrescoWar";
+        }
+
+        return this.configurationForScope(dependency.getScope());
     }
 
     protected String configurationForScope(DependencyScope type) {

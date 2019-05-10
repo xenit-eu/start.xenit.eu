@@ -29,7 +29,7 @@ initializr:
       action: /starter.zip
   bootVersions:
     - name: Enterprise 5.2.5
-      id: 5.2.5.RELEASE
+      id: 5.2.5
       default: true
   javaVersions:
     - id: 1.8
@@ -54,5 +54,5 @@ initializr:
         id: alfresco-dynamic-extensions-repo
         groupId: eu.xenit
         artifactId: alfresco-dynamic-extensions-repo
-        version: 1.7.6.RELEASE
+        version: 1.7.6
         description: Rapid development of Alfresco repository extensions.

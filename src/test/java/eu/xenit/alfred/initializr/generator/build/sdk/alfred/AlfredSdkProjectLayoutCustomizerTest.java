@@ -5,14 +5,14 @@ import static org.junit.Assert.*;
 
 import eu.xenit.alfred.initializr.generator.build.alfresco.AlfrescoModuleProjectLayout;
 import eu.xenit.alfred.initializr.generator.build.alfresco.platform.AlfrescoPlatformModule;
-import java.nio.file.Paths;
+import eu.xenit.alfred.initializr.generator.build.sdk.alfred.platform.AlfredSdkPlatformProjectLayoutCustomizer;
 import org.junit.Test;
 
 public class AlfredSdkProjectLayoutCustomizerTest {
 
     @Test
     public void customize() {
-        AlfredSdkProjectLayoutCustomizer customizer = new AlfredSdkProjectLayoutCustomizer();
+        AlfredSdkPlatformProjectLayoutCustomizer customizer = new AlfredSdkPlatformProjectLayoutCustomizer();
 
         AlfrescoPlatformModule module = new AlfrescoPlatformModule("test");
         customizer.customize(module);

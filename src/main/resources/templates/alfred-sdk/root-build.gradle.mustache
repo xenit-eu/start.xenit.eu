@@ -9,7 +9,9 @@ version = '{{version}}'
 // version = '0.0.1' + System.env.BRANCH_NAME?.startsWith("release") ? '' : '-SNAPSHOT'
 
 // ext.deVersion = '1.7.6'
-ext.alfrescoVersion = '5.2.4'
+    ext {
+        alfresco.version = '5.2.4'
+    }
 
 
 dependencies {

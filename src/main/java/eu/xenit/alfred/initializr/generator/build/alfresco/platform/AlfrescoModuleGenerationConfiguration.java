@@ -3,14 +3,12 @@ package eu.xenit.alfred.initializr.generator.build.alfresco.platform;
 import eu.xenit.alfred.initializr.generator.build.alfresco.AlfrescoModuleCustomizer;
 import eu.xenit.alfred.initializr.generator.build.alfresco.AlfrescoModulePropertiesContributor;
 import eu.xenit.alfred.initializr.generator.build.alfresco.AlfrescoModulePropertiesWriter;
-import eu.xenit.alfred.initializr.generator.build.sdk.alfred.AlfredSdkProjectLayoutCustomizer;
 import io.spring.initializr.generator.io.IndentingWriterFactory;
 import io.spring.initializr.generator.project.ProjectGenerationConfiguration;
 import io.spring.initializr.generator.project.ResolvedProjectDescription;
 import java.util.List;
 import java.util.stream.Collectors;
 import org.springframework.beans.factory.ObjectProvider;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.util.LambdaSafe;
 import org.springframework.context.annotation.Bean;
 
