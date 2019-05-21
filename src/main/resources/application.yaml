@@ -1,6 +1,6 @@
-server.port: 8081
-
+# server.port: 8081
 # debug: true
+
 initializr:
   description:
     value: Demo project using start.xenit.eu
