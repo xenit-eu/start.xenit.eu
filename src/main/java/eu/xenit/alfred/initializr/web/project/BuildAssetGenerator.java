@@ -20,19 +20,11 @@ public class BuildAssetGenerator implements ProjectAssetGenerator<Map<Path, Stri
 
     @Override
     public Map<Path, String> generate(ProjectGenerationContext context) throws IOException {
-        ResolvedProjectDescription projectDescription = context.getBean(ResolvedProjectDescription.class);
-
-//        ResolvedProjectDescription projectDescription = context
-//                .getBean(ResolvedProjectDescription.class);
-        //StringWriter out = new StringWriter();
-
         ObjectProvider<BuildAssetWriter> buildAssetWriters = context.getBeanProvider(BuildAssetWriter.class);
 
-        Map<Path, String> result = buildAssetWriters.orderedStream().collect(Collectors.toMap(
+        return buildAssetWriters.stream().collect(Collectors.toMap(
                 BuildAssetWriter::relativePath,
                 this::writeBuildAsset));
-
-        return result;
 
     }
 
@@ -45,46 +37,5 @@ public class BuildAssetGenerator implements ProjectAssetGenerator<Map<Path, Stri
             throw new RuntimeException(e);
         }
     }
-
-//    private Map<String, String> getBuildAssets(List<BuildAssetWriter> buildAssetWriters) {
-//        Map<String, String>
-//        for(BuildAssetWriter buildAssetWriter : buildAssetWriters) {
-//
-//        }
-//    }
-//
-//        for (Iterator<BuildAssetWriter> it = buildAssetWriters.iterator(); it.hasNext(); ) {
-//            BuildAssetWriter buildAssetWriter = it.next();
-//
-//        }
-//            StringWriter out = new StringWriter();
-//            buildAssetWriter.writeBuild(out);
-//            result.putIfAbsent(buildAssetWriter.relativePath(),
-//
-//            buildAssetWriter.
-//        });
-//
-//        if (buildWriter != null) {
-//            buildWriter.writeBuild(out);
-//            return out.toString().getBytes();
-//        } else {
-//            throw new IllegalStateException("No BuildWriter implementation found for "
-//                    + projectDescription.getLanguage());
-//        }
-////        Path projectRoot = context.getBean(ProjectDirectoryFactory.class)
-////                .createProjectDirectory(resolvedProjectDescription);
-////        Path projectDirectory = initializerProjectDirectory(projectRoot,
-////                resolvedProjectDescription);
-//
-//
-////        List<ProjectContributor> contributors = context
-////                .getBeanProvider(ProjectContributor.class).orderedStream()
-////                .collect(Collectors.toList());
-////        for (ProjectContributor contributor : contributors) {
-////            contributor.contribute(projectDirectory);
-////        }
-////        return projectRoot;
-//        return result;
-//    }
 
 }

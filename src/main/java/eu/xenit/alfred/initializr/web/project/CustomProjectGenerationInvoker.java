@@ -15,13 +15,13 @@ import io.spring.initializr.metadata.support.MetadataBuildItemResolver;
 import io.spring.initializr.web.project.ProjectFailedEvent;
 import io.spring.initializr.web.project.ProjectGeneratedEvent;
 import io.spring.initializr.web.project.ProjectGenerationInvoker;
-import io.spring.initializr.web.project.ProjectGenerationResult;
 import io.spring.initializr.web.project.ProjectRequest;
 import io.spring.initializr.web.project.ProjectRequestToDescriptionConverter;
 import io.spring.initializr.web.project.WebProjectRequest;
 import java.io.IOException;
 import java.io.StringWriter;
 import java.nio.file.Path;
+import java.util.List;
 import java.util.Map;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationEventPublisher;
@@ -80,11 +80,36 @@ public class CustomProjectGenerationInvoker extends ProjectGenerationInvoker {
 
     }
 
+
+
+    public DockerComposeGenerationResultSet invokeProjectComposeGeneration(ProjectRequest request) {
+        InitializrMetadata metadata = this.parentApplicationContext.getBean(InitializrMetadataProvider.class).get();
+        try {
+            ProjectDescription projectDescription = this.converter.convert(request, metadata);
+            ProjectGenerator projectGenerator = new ProjectGenerator(
+                    (projectGenerationContext) ->
+                            customizeProjectGenerationContext(projectGenerationContext, metadata));
+
+            return projectGenerator.generate(projectDescription, generateComposeAssets(request));
+        } catch (ProjectGenerationException ex) {
+            publishProjectFailedEvent(request, metadata, ex);
+            throw ex;
+        }
+    }
+
     private ProjectAssetGenerator<BuildGenerationResult> generateBuildAssets(ProjectRequest request) {
         return (context) -> {
             Map<Path, String> result = new BuildAssetGenerator().generate(context);
             publishProjectGeneratedEvent(request, context);
             return new BuildGenerationResult(context.getBean(ResolvedProjectDescription.class), result);
+        };
+    }
+
+    private ProjectAssetGenerator<DockerComposeGenerationResultSet> generateComposeAssets(ProjectRequest request) {
+        return (context) -> {
+            List<DockerComposeYml> result = new DockerComposeAssetGenerator().generate(context);
+            publishProjectGeneratedEvent(request, context);
+            return new DockerComposeGenerationResultSet(context.getBean(ResolvedProjectDescription.class), result);
         };
     }
 

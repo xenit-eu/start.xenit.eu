@@ -20,14 +20,15 @@ package eu.xenit.alfred.initializr.integration;
 //import io.spring.initializr.generator.spring.test.build.PomAssert;
 import eu.xenit.alfred.initializr.app.StartApplication;
 import eu.xenit.alfred.initializr.asserts.build.gradle.GradleMultiProjectAssert;
+import eu.xenit.alfred.initializr.asserts.docker.DockerComposeGenerationAssert;
 import eu.xenit.alfred.initializr.web.project.BuildGenerationResult;
 import eu.xenit.alfred.initializr.web.project.CustomProjectGenerationInvoker;
+import eu.xenit.alfred.initializr.web.project.DockerComposeGenerationResultSet;
 import io.spring.initializr.generator.test.project.ProjectStructure;
 import io.spring.initializr.generator.version.Version;
 import io.spring.initializr.metadata.BillOfMaterials;
 import io.spring.initializr.metadata.Dependency;
 import io.spring.initializr.metadata.InitializrMetadataProvider;
-import io.spring.initializr.web.project.ProjectGenerationInvoker;
 import io.spring.initializr.web.project.ProjectGenerationResult;
 import io.spring.initializr.web.project.ProjectRequest;
 import io.spring.initializr.web.project.WebProjectRequest;
@@ -46,45 +47,51 @@ import org.springframework.test.context.junit4.SpringRunner;
 @RunWith(SpringRunner.class)
 public abstract class BaseGeneratorTests {
 
-	@Autowired
-	private CustomProjectGenerationInvoker invoker;
+    @Autowired
+    private CustomProjectGenerationInvoker invoker;
 
-	@Autowired
-	private InitializrMetadataProvider metadataProvider;
+    @Autowired
+    private InitializrMetadataProvider metadataProvider;
 
-	protected Dependency getDependency(String id) {
-		return this.metadataProvider.get().getDependencies().get(id);
-	}
+    protected Dependency getDependency(String id) {
+        return this.metadataProvider.get().getDependencies().get(id);
+    }
 
-	protected BillOfMaterials getBom(String id, String version) {
-		BillOfMaterials bom = this.metadataProvider.get().getConfiguration().getEnv()
-				.getBoms().get(id);
-		return bom.resolve(Version.parse(version));
-	}
+    protected BillOfMaterials getBom(String id, String version) {
+        BillOfMaterials bom = this.metadataProvider.get().getConfiguration().getEnv()
+                .getBoms().get(id);
+        return bom.resolve(Version.parse(version));
+    }
+
+
+    protected ProjectStructure generateProject(ProjectRequest request) {
+        ProjectGenerationResult result = this.invoker
+                .invokeProjectStructureGeneration(request);
+        return new ProjectStructure(result.getRootDirectory());
+    }
+
+    protected GradleMultiProjectAssert generateGradleBuild(ProjectRequest request) {
+        request.setType("gradle-build");
+        BuildGenerationResult result = this.invoker.invokeProjectBuildGeneration(request);
+        return new GradleMultiProjectAssert(result);
+    }
 
 //	protected PomAssert generateMavenPom(ProjectRequest request) {
 //		request.setType("maven-build");
 //		String content = new String(this.invoker.invokeBuildGeneration(request));
 //		return new PomAssert(content);
-//	}`
+//	}
 
-	protected GradleMultiProjectAssert generateGradleBuild(ProjectRequest request) {
-		request.setType("gradle-build");
-		BuildGenerationResult result = this.invoker.invokeProjectBuildGeneration(request);
-		return new GradleMultiProjectAssert(result);
-	}
+    protected DockerComposeGenerationAssert generateCompose(ProjectRequest request) {
+        DockerComposeGenerationResultSet result = this.invoker.invokeProjectComposeGeneration(request);
+        return new DockerComposeGenerationAssert(result);
+    }
 
-	protected ProjectStructure generateProject(ProjectRequest request) {
-		ProjectGenerationResult result = this.invoker
-				.invokeProjectStructureGeneration(request);
-		return new ProjectStructure(result.getRootDirectory());
-	}
-
-	protected ProjectRequest createProjectRequest(String... styles) {
-		WebProjectRequest request = new WebProjectRequest();
-		request.initialize(this.metadataProvider.get());
-		request.getStyle().addAll(Arrays.asList(styles));
-		return request;
-	}
+    protected ProjectRequest createProjectRequest(String... styles) {
+        WebProjectRequest request = new WebProjectRequest();
+        request.initialize(this.metadataProvider.get());
+        request.getStyle().addAll(Arrays.asList(styles));
+        return request;
+    }
 
 }

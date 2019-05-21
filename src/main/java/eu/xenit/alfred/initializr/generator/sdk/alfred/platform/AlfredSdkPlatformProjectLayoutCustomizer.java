@@ -1,4 +1,4 @@
-package eu.xenit.alfred.initializr.generator.build.sdk.alfred.platform;
+package eu.xenit.alfred.initializr.generator.sdk.alfred.platform;
 
 import eu.xenit.alfred.initializr.generator.alfresco.AlfrescoModuleCustomizer;
 import eu.xenit.alfred.initializr.generator.alfresco.AlfrescoModuleProjectLayout;

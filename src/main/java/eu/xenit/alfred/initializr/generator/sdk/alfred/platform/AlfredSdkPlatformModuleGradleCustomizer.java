@@ -1,11 +1,11 @@
-package eu.xenit.alfred.initializr.generator.build.sdk.alfred.platform;
+package eu.xenit.alfred.initializr.generator.sdk.alfred.platform;
 
 import static org.springframework.util.StringUtils.quote;
 
 import eu.xenit.alfred.initializr.generator.build.BuildCustomizer;
 import eu.xenit.alfred.initializr.generator.alfresco.platform.AlfrescoPlatformModule;
 import eu.xenit.alfred.initializr.generator.build.gradle.platform.PlatformGradleBuild;
-import eu.xenit.alfred.initializr.generator.build.sdk.alfred.AlfredSdk.Dependencies;
+import eu.xenit.alfred.initializr.generator.sdk.alfred.AlfredSdk.Dependencies;
 
 public class AlfredSdkPlatformModuleGradleCustomizer implements BuildCustomizer<PlatformGradleBuild> {
 

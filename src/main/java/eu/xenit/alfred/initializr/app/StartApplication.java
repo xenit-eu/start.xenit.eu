@@ -30,7 +30,7 @@ public class StartApplication {
 
     @Bean
     public IndentingWriterFactory indentingWriterFactory() {
-        return IndentingWriterFactory.create(new SimpleIndentStrategy("    "));
+        return IndentingWriterFactory.withDefaultSettings();
     }
 
     @Bean

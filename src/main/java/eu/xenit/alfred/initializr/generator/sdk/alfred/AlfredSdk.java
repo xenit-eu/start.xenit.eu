@@ -1,4 +1,4 @@
-package eu.xenit.alfred.initializr.generator.build.sdk.alfred;
+package eu.xenit.alfred.initializr.generator.sdk.alfred;
 
 import eu.xenit.alfred.initializr.generator.alfresco.AlfrescoConstants;
 import eu.xenit.alfred.initializr.generator.buildsystem.CustomScopeDependency;
