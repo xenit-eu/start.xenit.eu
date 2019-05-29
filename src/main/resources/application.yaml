@@ -5,68 +5,74 @@ initializr:
   description:
     value: Demo project using start.xenit.eu
   types:
-    - name: Alfred Gradle SDK
-      id: gradle-module
-      description: Generate a Gradle based module archive
-      tags:
-        build: gradle
-        format: module
-      default: true
-      action: /starter.zip
-    - name: Gradle Config
-      id: gradle-build
-      description: Generate a Gradle build file
-      tags:
-        build: gradle
-        format: build
-      default: false
-      action: /build.gradle
-    - name: Alfresco Maven SDK
-      id: maven-module
-      description: Generate a Maven based module archive
-      tags:
-        build: maven
-        format: module
-      default: false
-      action: /starter.zip
+  - name: Alfred Gradle SDK
+    id: gradle-project
+    description: Generate a Gradle based module archive
+    tags:
+      build: gradle
+      format: module
+    default: true
+    action: /starter.zip
+  - name: Gradle Config
+    id: gradle-build
+    description: Generate a Gradle build file
+    tags:
+      build: gradle
+      format: build
+    default: false
+    action: /build.gradle
+  - name: Alfresco Maven SDK
+    id: maven-project
+    description: Generate a Maven based module archive
+    tags:
+      build: maven
+      format: module
+    default: false
+    action: /starter.zip
   bootVersions:
-    - name: Enterprise 5.2.5
-      id: 5.2.5
-      default: true
+  - name: Enterprise 5.2.5
+    id: 5.2.5
+    default: true
   javaVersions:
-    - id: 1.8
-      default: true
-    - id: 1.7
+  - id: 1.8
+    default: true
+  - id: 1.7
   languages:
-    - name: Java
-      id: java
-      default: true
+  - name: Java
+    id: java
+    default: true
   packagings:
-    - name: Amp
-      id: amp
-      default: true
-    - name: Jar
-      id: jar
+  - name: Amp
+    id: amp
+    default: true
+  - name: Jar
+    id: jar
 
 
   dependencies:
+  - name: Dynamic Extensions
+    content:
     - name: Dynamic Extensions
-      content:
-      - name: Dynamic Extensions
-        id: dynamic-extensions
-        groupId: eu.xenit
-        artifactId: alfresco-dynamic-extensions-repo
-        version: 1.7.6
-        description: Rapid development of Alfresco repository extensions.
+      id: dynamic-extensions
+      facets:
+      - platform
+      - alfrescoAmp
+      groupId: eu.xenit
+      artifactId: alfresco-dynamic-extensions-repo
+      version: 2.0.1
+      description: Rapid development of Alfresco repository extensions.
+      mappings:
+      - versionRange: "[5.2.0,5.3.0)"
+        artifactId: alfresco-dynamic-extensions-repo-52
 
+  - name: Alfred API
+    content:
     - name: Alfred API
-      content:
-        - name: Alfred API
-          facets:
-            - dynamic-extensions
-            - platform
-          id: apix
-          groupId: eu.xenit.apix
-          artifactId: alfred-api
-          version: 2.0.1-RC2
-          description: Alfred API allows you to access Alfresco in a standardised way.
+      facets:
+      - dynamic-extensions
+      - platform
+      id: apix
+      groupId: eu.xenit.apix
+      artifactId: alfred-api
+      version: 2.0.1-RC2
+      description: Alfred API allows you to access Alfresco in a standardised way.

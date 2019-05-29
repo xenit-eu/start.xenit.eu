@@ -20,6 +20,8 @@ import eu.xenit.alfred.initializr.generator.buildsystem.BuildSystem;
 import io.spring.initializr.generator.buildsystem.Build;
 import io.spring.initializr.generator.project.ResolvedProjectDescription;
 
+import io.spring.initializr.metadata.Dependency;
+import io.spring.initializr.metadata.InitializrMetadata;
 import org.springframework.core.Ordered;
 
 /**
@@ -32,9 +34,11 @@ import org.springframework.core.Ordered;
 public class SimpleBuildCustomizer implements BuildCustomizer<BuildSystem> {
 
     private final ResolvedProjectDescription projectDescription;
+    private final InitializrMetadata metadata;
 
-    public SimpleBuildCustomizer(ResolvedProjectDescription projectDescription) {
+    public SimpleBuildCustomizer(ResolvedProjectDescription projectDescription, InitializrMetadata metadata) {
         this.projectDescription = projectDescription;
+        this.metadata = metadata;
     }
 
     @Override
@@ -43,8 +47,13 @@ public class SimpleBuildCustomizer implements BuildCustomizer<BuildSystem> {
         build.setArtifact(this.projectDescription.getArtifactId());
         build.setVersion(this.projectDescription.getVersion());
 
-        this.projectDescription.getRequestedDependencies()
-                .forEach((id, dependency) -> build.dependencies().add(id, dependency));
+//        this.projectDescription.getRequestedDependencies()
+//                .entrySet().stream()
+//                .filter(entry -> {
+//                    Dependency dependencyMetadata = this.metadata.getDependencies().get(entry.getKey());
+//                    dependencyMetadata.getFacets().
+//                })
+//                .forEach((id, dependency) -> build.dependencies().add(id, dependency));
     }
 
     @Override

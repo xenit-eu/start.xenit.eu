@@ -1,8 +1,7 @@
 package eu.xenit.alfred.initializr.generator.project;
 
-public interface Project {
+public interface ProjectModule {
 
     String getId();
-    void setId(String name);
 
 }

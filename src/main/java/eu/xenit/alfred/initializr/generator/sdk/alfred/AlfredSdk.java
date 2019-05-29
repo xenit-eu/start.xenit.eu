@@ -1,9 +1,12 @@
 package eu.xenit.alfred.initializr.generator.sdk.alfred;
 
 import eu.xenit.alfred.initializr.generator.alfresco.AlfrescoConstants;
-import eu.xenit.alfred.initializr.generator.buildsystem.CustomScopeDependency;
+import eu.xenit.alfred.initializr.generator.alfresco.AlfrescoConstants.ArtifactId;
+import eu.xenit.alfred.initializr.generator.alfresco.AlfrescoConstants.GroupId;
 import eu.xenit.alfred.initializr.generator.packaging.amp.AmpPackaging;
+import io.spring.initializr.generator.buildsystem.Dependency;
 import io.spring.initializr.generator.buildsystem.DependencyScope;
+import io.spring.initializr.generator.buildsystem.gradle.GradleDependency;
 import io.spring.initializr.generator.packaging.Packaging;
 import io.spring.initializr.generator.packaging.jar.JarPackaging;
 import io.spring.initializr.generator.version.VersionReference;
@@ -32,22 +35,25 @@ public class AlfredSdk {
         }
     }
 
+
     public static class Dependencies {
 
 
-        public static final CustomScopeDependency ALFRESCO_WAR = new CustomScopeDependency(
-                Configurations.BASE_ALFRESCO_WAR,
-                AlfrescoConstants.GROUP_ID,
-                "alfresco-enterprise",
-                VersionReference.ofProperty("alfresco-version"),
-                DependencyScope.PROVIDED_RUNTIME,
-                "war");
+        public static final Dependency ALFRESCO_WAR = GradleDependency.withCoordinates(
+                GroupId.ORG_ALFRESCO,
+                ArtifactId.ALFRESCO_ENTERPRISE)
+                .version(VersionReference.ofProperty("alfresco-version"))
+                .scope(DependencyScope.COMPILE)
+                .configuration("baseAlfrescoWar")
+                .type("war")
+                .build();
 
-        public static final CustomScopeDependency ALFRESCO_REPOSITORY = new CustomScopeDependency(
-                Configurations.ALFRESCO_PROVIDED,
-                AlfrescoConstants.GROUP_ID,
-                "alfresco-repository",
-                VersionReference.ofProperty("alfresco-version"),
-                DependencyScope.PROVIDED_RUNTIME);
+        public static final Dependency ALFRESCO_REPOSITORY = GradleDependency.withCoordinates(
+                GroupId.ORG_ALFRESCO,
+                ArtifactId.ALFRESCO_REPOSITORY)
+                .version(VersionReference.ofProperty("alfresco-version")) // this is not correct ?
+                .scope(DependencyScope.PROVIDED_RUNTIME)
+                .configuration("alfrescoProvided")
+                .build();
     }
 }
