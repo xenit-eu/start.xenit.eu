@@ -1,9 +1,11 @@
 package eu.xenit.alfred.initializr.generator.xml.beans;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
+import java.util.Properties;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -41,6 +43,14 @@ public abstract class Element {
     public static ListElement fromList(Collection<Element> collection)
     {
         return new ListElement(collection);
+    }
+
+    public static ListElement fromList(Element... elements) {
+        return fromList(Arrays.asList(elements));
+    }
+
+    public static Element fromProperty(Properties properties) {
+        return new PropsElement(properties);
     }
 
     @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
@@ -90,6 +100,18 @@ public abstract class Element {
         @Override
         public ElementType getType() {
             return ElementType.LIST;
+        }
+    }
+
+    @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
+    public static class PropsElement extends Element {
+
+        @Getter
+        private final Properties properties;
+
+        @Override
+        public ElementType getType() {
+            return ElementType.PROPS;
         }
     }
 }

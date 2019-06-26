@@ -1,6 +1,7 @@
 package eu.xenit.alfred.initializr.generator.xml.beans;
 
 import eu.xenit.alfred.initializr.generator.xml.beans.Element.ListElement;
+import eu.xenit.alfred.initializr.generator.xml.beans.Element.PropsElement;
 import eu.xenit.alfred.initializr.generator.xml.beans.SpringXmlConfig.ResourceImport;
 import io.spring.initializr.generator.io.IndentingWriter;
 import java.io.IOException;
@@ -62,16 +63,13 @@ public class SpringXmlConfigWriter {
                 writer.println(" />");
                 break;
             case LIST:
-
                 writer.println(">");
-                writer.indented(() -> {
-                    writer.print("<list>");
-                    writer.indented(() -> {
-                        ListElement list = (ListElement) property.getValue();
-                        this.writeCollection(writer, list.getElements(), this::writeSpringElement);
-                    });
-                    writer.println("</list>");
-                });
+                writer.indented(() -> this.writeSpringElement(writer, property.getValue()));
+                writer.println("</property>");
+                break;
+            case PROPS:
+                writer.println(">");
+                writer.indented(() -> this.writeSpringElement(writer, property.getValue()));
                 writer.println("</property>");
                 break;
             default:
@@ -96,6 +94,18 @@ public class SpringXmlConfigWriter {
                     this.writeCollection(writer, list.getElements(), this::writeSpringElement);
                 });
                 writer.println("</list>");
+                break;
+            case PROPS:
+                writer.println("<props>");
+                writer.indented(() -> {
+                    PropsElement props = (PropsElement) element;
+                    props.getProperties().forEach((key, value) -> {
+                        this.writeXmlElement(writer, "prop", () -> {
+                            this.writeAttribute(writer, "key", key.toString());
+                        }, () -> writer.print(value.toString()));
+                    });
+                });
+                writer.println("</props>");
                 break;
             default:
                 throw new UnsupportedOperationException("Element type not supported: "+element.getType());

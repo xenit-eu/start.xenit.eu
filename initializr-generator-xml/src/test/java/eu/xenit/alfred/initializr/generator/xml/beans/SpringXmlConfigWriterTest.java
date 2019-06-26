@@ -10,8 +10,7 @@ import java.io.IOException;
 import java.io.StringWriter;
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.function.Consumer;
-import javax.swing.Spring;
+import java.util.Properties;
 import org.junit.Test;
 import org.springframework.beans.MutablePropertyValues;
 import org.springframework.beans.factory.config.BeanDefinition;
@@ -137,12 +136,12 @@ public class SpringXmlConfigWriterTest {
 
     @Test
     public void testWriteListProperty() throws IOException {
-        Element list = Element.fromList(Arrays.asList(
+        Element list = Element.fromList(
             Element.fromValue("content-model.xml"),
             Element.fromRef("beanRefTest"),
-            Element.fromList(Arrays.asList(Element.fromValue("innerListElement")))
+            Element.fromList(Collections.singletonList(Element.fromValue("innerListElement")))
+        );
 
-        ));
         SpringBeanProperty property = SpringBeanProperty.withElement("name", list);
         String xml = this.writeProperty(property);
 
@@ -158,8 +157,58 @@ public class SpringXmlConfigWriterTest {
                 "</property>",
                 ""
         ));
-
     }
+
+    @Test
+    public void testWritePropsProperty() throws IOException {
+        Properties properties = new Properties() {{
+            put("key", "value");
+        }};
+        Element props = Element.fromProperty(properties);
+
+        SpringBeanProperty property = SpringBeanProperty.withElement("name", props);
+        String xml = this.writeProperty(property);
+
+        assertThat(xml).isEqualTo(String.join(System.lineSeparator(),
+                "<property name=\"name\">",
+                "    <props>",
+                "        <prop key=\"key\">value</prop>",
+                "    </props>",
+                "</property>",
+                ""
+        ));
+    }
+
+//    @Test
+//    public void testWriteListWithEmbeddedProps() throws IOException {
+//        Element list = Element.fromList(
+//
+//        );
+//        SpringBeanProperty property = SpringBeanProperty.withElement("name", list);
+//        String xml = this.writeProperty(property);
+//
+//        assertThat(xml).isEqualTo(String.join(System.lineSeparator(),
+//                "<property name=\"name\">",
+//                "    <list>",
+//                "        <value>content-model.xml</value>",
+//                "        <ref bean=\"beanRefTest\" />",
+//                "        <list>",
+//                "            <value>innerListElement</value>",
+//                "        </list>",
+//                "    </list>",
+//                "</property>",
+//                ""
+//        ));
+////        <property name="workflowDefinitions">
+////            <list>
+////                <props>
+////                    <prop key="engineId">activiti</prop>
+////                    <prop key="location">alfresco/module/test-maven-sdk-platform/workflow/sample-process.bpmn20.xml</prop>
+////                    <prop key="mimetype">text/xml</prop>
+////                </props>
+////            </list>
+////        </property>
+//    }
 
     private String writeSpringBeansXml(SpringXmlConfig model) throws IOException {
         StringWriter out = new StringWriter();
