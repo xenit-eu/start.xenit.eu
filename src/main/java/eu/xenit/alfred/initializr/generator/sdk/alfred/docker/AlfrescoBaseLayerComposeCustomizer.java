@@ -33,7 +33,7 @@ public class AlfrescoBaseLayerComposeCustomizer implements DockerComposeCustomiz
 
         services
             .service("database")
-                .image("hub.xenit.eu/postgres:latest")
+                .image("xeniteu/postgres:latest")
                 .volumes("postgres:/var/lib/postgresql/data")
                 .environment(
                         env("POSTGRES_USER", "alfresco"),
