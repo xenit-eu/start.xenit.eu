@@ -68,6 +68,7 @@ dockerFile {
 }
 
 buildDockerImage {
+    dependsOn(bootJar)
     buildArgs = [
         'JAR_FILE': "build/libs/${tasks.bootJar.getArchiveName()}"
     ]
