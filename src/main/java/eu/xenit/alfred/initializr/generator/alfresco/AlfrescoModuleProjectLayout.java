@@ -20,7 +20,6 @@ public class AlfrescoModuleProjectLayout {
 
         return Paths.get(this.module.getId());
     }
-
     public void setModuleRoot(Path path) {
         this.moduleRoot = path;
     }

@@ -1,3 +1,4 @@
 rootProject.name = 'start.xenit.eu'
-include 'initializr-generator-xml'
+
+include 'initializr-generator-beans-xml-config'
 

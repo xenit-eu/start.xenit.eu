@@ -3,7 +3,6 @@ package eu.xenit.alfred.initializr.generator.alfresco.platform;
 import eu.xenit.alfred.initializr.generator.alfresco.AlfrescoModule;
 import eu.xenit.alfred.initializr.generator.alfresco.AlfrescoModuleProjectLayout;
 import eu.xenit.alfred.initializr.generator.alfresco.AlfrescoModuleProperties;
-import eu.xenit.alfred.initializr.generator.alfresco.SpringXmlConfigModel;
 import io.spring.initializr.generator.version.Version;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -30,7 +29,7 @@ public class AlfrescoPlatformModule implements AlfrescoModule {
     private String description;
 
     private AlfrescoModuleProperties moduleProperties = new AlfrescoModuleProperties();
-    private SpringXmlConfigModel springContext = new SpringXmlConfigModel();
+//    private SpringContextModel springContext = new SpringContextModel();
     private AlfrescoModuleProjectLayout projectLayout = new AlfrescoModuleProjectLayout(this);
 
 

@@ -7,8 +7,11 @@ plugins {
 
 apply plugin: 'io.spring.dependency-management'
 
-group = 'eu.xenit.alfred'
-version = '0.0.2-SNAPSHOT'
+allprojects {
+    group = 'eu.xenit.alfred'
+    version = '0.0.2-SNAPSHOT'
+}
+
 sourceCompatibility = 1.8
 
 ext {
@@ -35,7 +38,6 @@ configurations {
 }
 
 dependencies {
-    implementation project(':initializr-generator-xml')
     implementation('org.springframework.boot:spring-boot-starter-web')
     implementation('org.springframework.boot:spring-boot-starter-actuator')
 
@@ -43,10 +45,13 @@ dependencies {
         exclude group: "io.spring.initializr", module:"initializr-generator-spring"
     }
 
+    implementation project(':initializr-generator-beans-xml-config')
+
     implementation('org.springframework.boot:spring-boot-devtools')
 
     compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'
+
     developmentOnly("org.springframework.boot:spring-boot-devtools")
 
     testImplementation('org.springframework.boot:spring-boot-starter-test')

@@ -2,6 +2,9 @@
 /build/
 !gradle/wrapper/gradle-wrapper.jar
 
+initializr-generator-beans-xml-config/build/
+initializr-generator-beans-xml-config/out/
+
 ### STS ###
 .apt_generated
 .classpath

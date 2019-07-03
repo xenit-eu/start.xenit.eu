@@ -9,5 +9,5 @@ eu.xenit.alfred.initializr.generator.build.gradle.platform.PlatformGradleBuildCo
 eu.xenit.alfred.initializr.generator.sdk.alfred.platform.AlfredSdkPlatformProjectGenerationConfiguration,\
 eu.xenit.alfred.initializr.generator.sdk.alfred.docker.DockerBuildGenerationConfiguration,\
 eu.xenit.alfred.initializr.generator.sdk.alfred.docker.AlfredSdkComposeProjectGenerationConfiguration,\
-eu.xenit.alfred.initializr.generator.alfresco.platform.AlfrescoModuleGenerationConfiguration,\
+eu.xenit.alfred.initializr.generator.alfresco.platform.AlfrescoModuleProjectGenerationConfiguration,\
 eu.xenit.alfred.initializr.generator.docker.compose.DockerComposeProjectGenerationConfiguration
