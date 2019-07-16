@@ -1,6 +1,5 @@
 package eu.xenit.alfred.initializr.generator.condition;
 
-import io.micrometer.core.instrument.util.StringUtils;
 import io.spring.initializr.generator.condition.ProjectGenerationCondition;
 import io.spring.initializr.generator.project.ResolvedProjectDescription;
 import io.spring.initializr.metadata.InitializrMetadata;
@@ -9,6 +8,7 @@ import java.util.Objects;
 import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
 import org.springframework.context.annotation.ConditionContext;
 import org.springframework.core.type.AnnotatedTypeMetadata;
+import org.springframework.util.StringUtils;
 
 /**
  * {@link ProjectGenerationCondition} implementation for {@link ConditionalOnRequestedFacet}.
@@ -25,7 +25,7 @@ class OnRequestedFacetCondition extends ProjectGenerationCondition {
         Objects.requireNonNull(annotationAttributes, "annotation cannot be null");
         String facet = (String) annotationAttributes.get("value");
 
-        if (StringUtils.isBlank(facet)) {
+        if (StringUtils.isEmpty(facet)) {
             return false;
         }
 
