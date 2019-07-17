@@ -7,9 +7,8 @@ import eu.xenit.alfred.initializr.generator.build.BuildCustomizer;
 import eu.xenit.alfred.initializr.generator.build.RootProjectBuild;
 import eu.xenit.alfred.initializr.generator.build.gradle.root.RootGradleBuild;
 import eu.xenit.alfred.initializr.generator.buildsystem.gradle.GradleProjectDependency;
-import eu.xenit.alfred.initializr.generator.docker.compose.DockerComposeLocationStrategy;
+import eu.xenit.alfred.initializr.generator.sdk.alfred.AlfredSdk;
 import eu.xenit.alfred.initializr.generator.sdk.alfred.AlfredSdk.Dependencies;
-import io.spring.initializr.generator.buildsystem.Dependency;
 import io.spring.initializr.generator.buildsystem.DependencyScope;
 import io.spring.initializr.generator.buildsystem.gradle.GradleDependency;
 import io.spring.initializr.generator.condition.ConditionalOnBuildSystem;
@@ -22,6 +21,13 @@ import org.springframework.context.annotation.Bean;
 @ProjectGenerationConfiguration
 @ConditionalOnBuildSystem("gradle")
 public class DockerBuildGenerationConfiguration {
+
+    private final InitializrMetadata metadata;
+
+    public DockerBuildGenerationConfiguration(InitializrMetadata metadata)
+    {
+        this.metadata = metadata;
+    }
 
     @Bean
     public BuildCustomizer<RootGradleBuild> addDockerAlfrescoPlugin(ResolvedProjectDescription project) {
@@ -56,28 +62,39 @@ public class DockerBuildGenerationConfiguration {
     }
 
     @Bean
-    public BuildCustomizer<RootProjectBuild> addDependencies(ResolvedProjectDescription projectDescription,
-            InitializrMetadata metadata) {
+    public BuildCustomizer<RootProjectBuild> addAlfrescoAmpDependencies(ResolvedProjectDescription projectDescription) {
         return (build) -> {
             projectDescription.getRequestedDependencies()
                     .entrySet().stream()
-                    .filter(entry -> this.hasAlfrescoAmpFacet(metadata, entry.getKey()))
+                    .filter(entry -> this.hasFacet("alfrescoAmp", entry.getKey()))
                     .map(entry -> new AbstractMap.SimpleEntry<>(
                             entry.getKey(),
-                            convertDependencyIntoAlfrescoAmp(entry.getValue())))
+                            GradleDependency.from(entry.getValue())
+                                    .configuration(AlfredSdk.Configurations.ALFRESCO_AMP)
+                                    .type("amp")
+                                    .build()))
                     .forEach(entry -> build.dependencies().add(entry.getKey(), entry.getValue()));
 
         };
     }
 
-    private Dependency convertDependencyIntoAlfrescoAmp(Dependency value) {
-        return GradleDependency.from(value)
-                .configuration("alfrescoAmp")
-                .type("amp")
-                .build();
+    @Bean
+    public BuildCustomizer<RootProjectBuild> addAlfrescoSMDependencies(ResolvedProjectDescription projectDescription) {
+        return (build) -> {
+            projectDescription.getRequestedDependencies()
+                    .entrySet().stream()
+                    .filter(entry -> this.hasFacet("alfrescoSM", entry.getKey()))
+                    .map(entry -> new AbstractMap.SimpleEntry<>(
+                            entry.getKey(),
+                            GradleDependency.from(entry.getValue())
+                                    .configuration(AlfredSdk.Configurations.ALFRESCO_SM)
+                                    .build()))
+                    .forEach(entry -> build.dependencies().add(entry.getKey(), entry.getValue()));
+
+        };
     }
 
-    private boolean hasAlfrescoAmpFacet(InitializrMetadata metadata, String id) {
-        return metadata.getDependencies().get(id).getFacets().contains("alfrescoAmp");
+    private boolean hasFacet(String facet, String dependencyId) {
+        return this.metadata.getDependencies().get(dependencyId).getFacets().contains(facet);
     }
 }

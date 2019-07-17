@@ -6,13 +6,19 @@ import eu.xenit.alfred.initializr.generator.alfresco.platform.PlatformBuild;
 import eu.xenit.alfred.initializr.generator.build.BuildCustomizer;
 import eu.xenit.alfred.initializr.generator.build.gradle.root.RootGradleBuild;
 import eu.xenit.alfred.initializr.generator.condition.ConditionalOnRequestedFacet;
+import eu.xenit.alfred.initializr.generator.docker.compose.DockerCompose;
+import eu.xenit.alfred.initializr.generator.docker.compose.DockerComposeLocationStrategy;
+import eu.xenit.alfred.initializr.generator.docker.compose.DockerComposeYmlContributor;
+import eu.xenit.alfred.initializr.generator.docker.compose.DockerComposeYmlWriter;
 import eu.xenit.alfred.initializr.generator.sdk.alfred.AlfredSdk;
 import io.spring.initializr.generator.buildsystem.Dependency;
 import io.spring.initializr.generator.buildsystem.DependencyScope;
 import io.spring.initializr.generator.buildsystem.gradle.GradleBuildSystem;
 import io.spring.initializr.generator.buildsystem.gradle.GradleDependency;
 import io.spring.initializr.generator.condition.ConditionalOnBuildSystem;
+import io.spring.initializr.generator.io.IndentingWriterFactory;
 import io.spring.initializr.generator.project.ProjectGenerationConfiguration;
+import io.spring.initializr.generator.project.ResolvedProjectDescription;
 import io.spring.initializr.generator.version.VersionReference;
 import io.spring.initializr.metadata.InitializrMetadata;
 import io.spring.initializr.metadata.support.MetadataBuildItemMapper;
@@ -75,6 +81,19 @@ public class AlfredTelemetryProjectGenerationConfiguration {
         Assert.notNull(alfredTelemetryDep, "Dependency with id 'alfred-telemetry' not found");
 
         return MetadataBuildItemMapper.toDependency(alfredTelemetryDep);
+    }
+
+    @Bean
+    @ConditionalOnRequestedFacet("grafana")
+    public GrafanaDockerComposeCustomizer grafanaDockerComposeCustomizer() {
+        return new GrafanaDockerComposeCustomizer();
+    }
+
+    @Bean
+    @ConditionalOnRequestedFacet("grafana")
+    public DockerComposeYmlContributor grafanaDockerComposeContributor(DockerCompose compose, DockerComposeYmlWriter writer,
+            IndentingWriterFactory indentingWriterFactory, DockerComposeLocationStrategy locationStrategy) {
+        return new DockerComposeYmlContributor(compose, "grafana", writer, indentingWriterFactory, locationStrategy);
     }
 
 }

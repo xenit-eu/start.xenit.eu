@@ -29,11 +29,9 @@ public class DockerComposeProjectGenerationConfiguration {
 
         return compose;
     }
-
-
-
+    
     @Bean
-    public DockerComposeYmlContributor dockerComposeContributor(DockerCompose compose,
+    public DockerComposeYmlContributor mainDockerComposeContributor(DockerCompose compose,
             DockerComposeYmlWriter writer,
             IndentingWriterFactory indentingWriterFactory,
             DockerComposeLocationStrategy composeLocation) {
@@ -41,7 +39,7 @@ public class DockerComposeProjectGenerationConfiguration {
     }
 
     @Bean
-    public DockerComposeYmlWriter dockerComposeYmlWriter() {
+    public DockerComposeYmlWriter mainDockerComposeYmlWriter() {
         return new DockerComposeYmlWriter();
     }
 }
