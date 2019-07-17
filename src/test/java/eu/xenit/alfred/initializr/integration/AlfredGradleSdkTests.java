@@ -13,12 +13,13 @@ public class AlfredGradleSdkTests extends BaseGeneratorTests {
         GradleMultiProjectAssert result = generateGradleBuild(request);
 
         result.rootGradleBuild()
-                .hasPlugin("eu.xenit.docker-alfresco"); // only when we package as docker ?
+                .hasPlugin("eu.xenit.docker-alfresco") // only when we package as docker ?
+                .contains("alfrescoVersion = '5.2.5'\n");
 
         result.platformGradleBuild()
                 .hasPlugin("eu.xenit.alfresco")
                 .hasPlugin("eu.xenit.amp")
-                .contains("alfrescoVersion = '5.2.5'\n")
+
                 .hasDependency("alfrescoProvided", quote("org.alfresco:alfresco-repository:${alfrescoVersion}"));
 
     }

@@ -1,8 +1,10 @@
 package eu.xenit.alfred.initializr.generator.extensions.alfred.telemetry;
 
+import static org.springframework.util.StringUtils.quote;
+
 import eu.xenit.alfred.initializr.generator.alfresco.platform.PlatformBuild;
 import eu.xenit.alfred.initializr.generator.build.BuildCustomizer;
-import eu.xenit.alfred.initializr.generator.build.RootProjectBuild;
+import eu.xenit.alfred.initializr.generator.build.gradle.root.RootGradleBuild;
 import eu.xenit.alfred.initializr.generator.condition.ConditionalOnRequestedFacet;
 import eu.xenit.alfred.initializr.generator.sdk.alfred.AlfredSdk;
 import io.spring.initializr.generator.buildsystem.Dependency;
@@ -24,11 +26,13 @@ public class AlfredTelemetryProjectGenerationConfiguration {
     private final InitializrMetadata metadata;
 
     private static final String ALFRED_TELEMETRY = "alfred-telemetry";
+    public static final String ALFRED_TELEMETRY_VERSION = "0.1.0";
 
-    private static final Dependency DEP_MICROMETER = Dependency
+    public static final String MICROMETER_VERSION = "1.0.6";
+    private static final Dependency MICROMETER_DEPENDENCY = Dependency
             .withCoordinates("io.micrometer", "micrometer-core")
             .scope(DependencyScope.PROVIDED_RUNTIME)
-            .version(VersionReference.ofValue("1.0.6"))
+            .version(VersionReference.ofProperty("micrometer-version"))
             .build();
 
     public AlfredTelemetryProjectGenerationConfiguration(InitializrMetadata metadata) {
@@ -37,13 +41,17 @@ public class AlfredTelemetryProjectGenerationConfiguration {
 
     @Bean
     @ConditionalOnBuildSystem(GradleBuildSystem.ID)
-    public BuildCustomizer<RootProjectBuild> addRootAlfredTelemetryAmp() {
+    public BuildCustomizer<RootGradleBuild> addRootAlfredTelemetryAmp() {
         return (build) -> {
             io.spring.initializr.generator.buildsystem.Dependency dependency = getDependency(ALFRED_TELEMETRY);
             GradleDependency telemetryAmp = GradleDependency.from(dependency)
                     .type("amp")
+                    .version(VersionReference.ofProperty("alfred-telemetry-version"))
                     .configuration(AlfredSdk.Configurations.ALFRESCO_AMP)
                     .build();
+
+            build.ext("micrometerVersion", quote(MICROMETER_VERSION));
+            build.ext("alfredTelemetryVersion", quote(ALFRED_TELEMETRY_VERSION));
 
             build.dependencies().add(ALFRED_TELEMETRY, telemetryAmp);
         };
@@ -54,7 +62,7 @@ public class AlfredTelemetryProjectGenerationConfiguration {
     public BuildCustomizer<PlatformBuild> addPlatformMicrometerDependency() {
         return (build) -> {
             GradleDependency micrometer = GradleDependency
-                    .from(DEP_MICROMETER)
+                    .from(MICROMETER_DEPENDENCY)
                     .configuration(AlfredSdk.Configurations.ALFRESCO_PROVIDED)
                     .build();
 
