@@ -10,4 +10,5 @@ eu.xenit.alfred.initializr.generator.sdk.alfred.platform.AlfredSdkPlatformProjec
 eu.xenit.alfred.initializr.generator.sdk.alfred.docker.DockerBuildGenerationConfiguration,\
 eu.xenit.alfred.initializr.generator.sdk.alfred.docker.AlfredSdkComposeProjectGenerationConfiguration,\
 eu.xenit.alfred.initializr.generator.alfresco.platform.AlfrescoModuleProjectGenerationConfiguration,\
-eu.xenit.alfred.initializr.generator.docker.compose.DockerComposeProjectGenerationConfiguration
+eu.xenit.alfred.initializr.generator.docker.compose.DockerComposeProjectGenerationConfiguration,\
+eu.xenit.alfred.initializr.generator.extensions.alfred.telemetry.AlfredTelemetryProjectGenerationConfiguration
