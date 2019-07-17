@@ -16,7 +16,7 @@ public class DockerComposeAssetGenerator implements ProjectAssetGenerator<List<D
         ObjectProvider<DockerComposeWriter> composeWriters = context.getBeanProvider(DockerComposeWriter.class);
 
         return composeWriters.orderedStream()
-                .map(writer -> new DockerComposeYml(writer.composeFile(), this.writeDockerComposeContent(writer)))
+                .map(writer -> new DockerComposeYml(writer.composeFilename(), this.writeDockerComposeContent(writer)))
                 .collect(Collectors.toList());
     }
 

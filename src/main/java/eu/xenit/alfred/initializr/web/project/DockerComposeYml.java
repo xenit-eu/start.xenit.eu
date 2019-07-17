@@ -1,6 +1,5 @@
 package eu.xenit.alfred.initializr.web.project;
 
-import java.nio.file.Path;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
@@ -8,7 +7,7 @@ import lombok.RequiredArgsConstructor;
 public class DockerComposeYml {
 
     @Getter
-    private final Path path;
+    private final String filename;
 
     @Getter
     private final String content;

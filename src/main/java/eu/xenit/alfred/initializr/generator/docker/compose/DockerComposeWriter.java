@@ -9,5 +9,6 @@ public interface DockerComposeWriter {
     String getName();
     void writeCompose(Writer out) throws IOException;
     Path composeFile();
+    String composeFilename();
 
 }

@@ -7,6 +7,7 @@ import eu.xenit.alfred.initializr.generator.build.BuildCustomizer;
 import eu.xenit.alfred.initializr.generator.build.RootProjectBuild;
 import eu.xenit.alfred.initializr.generator.build.gradle.root.RootGradleBuild;
 import eu.xenit.alfred.initializr.generator.buildsystem.gradle.GradleProjectDependency;
+import eu.xenit.alfred.initializr.generator.docker.compose.DockerComposeLocationStrategy;
 import eu.xenit.alfred.initializr.generator.sdk.alfred.AlfredSdk.Dependencies;
 import io.spring.initializr.generator.buildsystem.Dependency;
 import io.spring.initializr.generator.buildsystem.DependencyScope;

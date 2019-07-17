@@ -1,5 +1,8 @@
 package eu.xenit.alfred.initializr.generator.docker.compose;
 
+import io.spring.initializr.generator.buildsystem.BuildSystem;
+import io.spring.initializr.generator.buildsystem.gradle.GradleBuildSystem;
+import io.spring.initializr.generator.condition.ConditionalOnBuildSystem;
 import io.spring.initializr.generator.io.IndentingWriterFactory;
 import io.spring.initializr.generator.project.ProjectGenerationConfiguration;
 import java.util.List;
@@ -27,10 +30,14 @@ public class DockerComposeProjectGenerationConfiguration {
         return compose;
     }
 
+
+
     @Bean
-    public DockerComposeYmlContributor dockerComposeContributor(DockerCompose compose, DockerComposeYmlWriter writer,
-            IndentingWriterFactory indentingWriterFactory) {
-        return new DockerComposeYmlContributor(compose, "", writer, indentingWriterFactory);
+    public DockerComposeYmlContributor dockerComposeContributor(DockerCompose compose,
+            DockerComposeYmlWriter writer,
+            IndentingWriterFactory indentingWriterFactory,
+            DockerComposeLocationStrategy composeLocation) {
+        return new DockerComposeYmlContributor(compose, "", writer, indentingWriterFactory, composeLocation);
     }
 
     @Bean

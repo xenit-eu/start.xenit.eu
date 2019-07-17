@@ -20,17 +20,22 @@ public class DockerComposeYmlContributor implements ProjectContributor, DockerCo
 
     private final DockerComposeYmlWriter writer;
     private final IndentingWriterFactory indentingWriterFactory;
+    private final DockerComposeLocationStrategy locationStrategy;
 
     public DockerComposeYmlContributor(DockerCompose compose, String name, DockerComposeYmlWriter writer,
-            IndentingWriterFactory indentingWriterFactory) {
+            IndentingWriterFactory indentingWriterFactory, DockerComposeLocationStrategy locationStrategy) {
         this.compose = compose;
         this.name = name;
         this.writer = writer;
         this.indentingWriterFactory = indentingWriterFactory;
+        this.locationStrategy = locationStrategy;
     }
 
     @Override
     public void contribute(Path projectRoot) throws IOException {
+        // make sure directory exists
+        Files.createDirectories(projectRoot.resolve(this.locationStrategy.getComposePath()));
+
         Path yml = Files.createFile(projectRoot.resolve(composeFile()));
         writeCompose(Files.newBufferedWriter(yml));
     }
@@ -45,10 +50,17 @@ public class DockerComposeYmlContributor implements ProjectContributor, DockerCo
 
     @Override
     public Path composeFile() {
+        Path composePath = this.locationStrategy.getComposePath();
+
+        return composePath.resolve(this.composeFilename());
+    }
+
+    @Override
+    public String composeFilename() {
         if ("".equalsIgnoreCase(this.name)) {
-            return Paths.get("docker-compose.yml");
+            return "docker-compose.yml";
         }
 
-        return Paths.get(String.format("docker-compose-%s.yml", this.name));
+        return String.format("docker-compose-%s.yml", this.name);
     }
 }
