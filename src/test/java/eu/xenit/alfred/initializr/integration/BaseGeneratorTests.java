@@ -20,7 +20,7 @@ package eu.xenit.alfred.initializr.integration;
 //import io.spring.initializr.generator.spring.test.build.PomAssert;
 import eu.xenit.alfred.initializr.app.StartApplication;
 import eu.xenit.alfred.initializr.asserts.build.gradle.GradleMultiProjectAssert;
-import eu.xenit.alfred.initializr.asserts.docker.DockerComposeGenerationAssert;
+import eu.xenit.alfred.initializr.asserts.docker.DockerComposeProjectAssert;
 import eu.xenit.alfred.initializr.web.project.BuildGenerationResult;
 import eu.xenit.alfred.initializr.web.project.CustomProjectGenerationInvoker;
 import eu.xenit.alfred.initializr.web.project.DockerComposeGenerationResultSet;
@@ -82,9 +82,9 @@ public abstract class BaseGeneratorTests {
 //		return new PomAssert(content);
 //	}
 
-    protected DockerComposeGenerationAssert generateCompose(ProjectRequest request) {
+    protected DockerComposeProjectAssert generateCompose(ProjectRequest request) {
         DockerComposeGenerationResultSet result = this.invoker.invokeProjectComposeGeneration(request);
-        return new DockerComposeGenerationAssert(result);
+        return new DockerComposeProjectAssert(result);
     }
 
     protected ProjectRequest createProjectRequest(String... styles) {

@@ -2,11 +2,11 @@ package eu.xenit.alfred.initializr.asserts.docker;
 
 import eu.xenit.alfred.initializr.web.project.DockerComposeGenerationResultSet;
 
-public class DockerComposeGenerationAssert {
+public class DockerComposeProjectAssert {
 
     private final DockerComposeGenerationResultSet result;
 
-    public DockerComposeGenerationAssert(DockerComposeGenerationResultSet result)
+    public DockerComposeProjectAssert(DockerComposeGenerationResultSet result)
     {
         this.result = result;
     }

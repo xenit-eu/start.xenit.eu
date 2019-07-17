@@ -1,6 +1,6 @@
 package eu.xenit.alfred.initializr.integration;
 
-import eu.xenit.alfred.initializr.asserts.docker.DockerComposeGenerationAssert;
+import eu.xenit.alfred.initializr.asserts.docker.DockerComposeProjectAssert;
 import io.spring.initializr.web.project.ProjectRequest;
 import org.junit.Test;
 
@@ -10,7 +10,7 @@ public class DockerComposeTests extends BaseGeneratorTests {
     public void testDefaultBuild() {
         ProjectRequest request = createProjectRequest();
 
-        DockerComposeGenerationAssert result = generateCompose(request);
+        DockerComposeProjectAssert result = generateCompose(request);
 
         result.assertDockerCompose()
                 .isNotBlank()
