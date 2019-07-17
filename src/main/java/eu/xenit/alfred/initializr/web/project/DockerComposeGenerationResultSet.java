@@ -3,6 +3,8 @@ package eu.xenit.alfred.initializr.web.project;
 import io.spring.initializr.generator.project.ResolvedProjectDescription;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Stream;
@@ -49,6 +51,10 @@ public class DockerComposeGenerationResultSet {
 
     public int size() {
         return this.composeFileList.size();
+    }
+
+    public Collection<DockerComposeYml> files() {
+        return Collections.unmodifiableList(this.composeFileList);
     }
 
 
