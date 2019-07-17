@@ -25,7 +25,7 @@ public class AlfrescoBaseLayerComposeCustomizer implements DockerComposeCustomiz
             .service("alfresco")
                 .image(String.format("${DOCKER_IMAGE:-hub.xenit.eu/%s:latest}", projectDescription.getName()))
                 .volumes("alfresco:/opt/alfresco/alf_data")
-                .ports("${SERVICE_ALFRESCO_TCP_8080:-8080:8080}")
+                .ports("8080")
                 .environment(
                         env("DB_URL", "jdbc:postgresql://database:5432/alfresco"),
                         env("INDEX", "noindex")
