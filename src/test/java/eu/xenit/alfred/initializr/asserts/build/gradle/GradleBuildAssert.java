@@ -30,13 +30,6 @@ public class GradleBuildAssert extends AbstractStringAssert<GradleBuildAssert> {
     public GradleBuildAssert hasVersion(String version) {
         return this.contains("version = '" + version + "'");
     }
-//    public GradleBuildAssert hasSpringBootBuildScriptPlugin(String springBootVersion) {
-//        return ((GradleBuildAssert)this.contains(new CharSequence[]{"ext {"})).contains(new CharSequence[]{"org.springframework.boot:spring-boot-gradle-plugin:" + springBootVersion});
-//    }
-//
-//    public GradleBuildAssert hasSpringBootPlugin(String springBootVersion) {
-//        return this.contains(new CharSequence[]{"id 'org.springframework.boot' version '" + springBootVersion + "'"});
-//    }
 
     public GradleBuildAssert hasJavaVersion(String javaVersion) {
         return this.contains("sourceCompatibility = '" + javaVersion + "'");

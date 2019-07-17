@@ -35,7 +35,11 @@ public class DockerComposeGenerationResultSet {
     }
 
     public String getDockerComposeLayer(String layer) {
-        return this.getComposeContent(Paths.get(String.format("docker-compose-%s.yml", layer)));
+        return this.getComposeContent(this.getComposePath(layer));
+    }
+
+    public Path getComposePath(String layer) {
+        return Paths.get(String.format("docker-compose-%s.yml", layer));
     }
 
     public int size() {

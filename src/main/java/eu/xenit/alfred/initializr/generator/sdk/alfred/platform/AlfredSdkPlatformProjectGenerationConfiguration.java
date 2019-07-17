@@ -25,11 +25,6 @@ public class AlfredSdkPlatformProjectGenerationConfiguration {
             AlfrescoPlatformModule platform
     ) {
         return (build) -> {
-//            build.dependencies().add("", new ProjectDependency(
-//                    platform,
-//                    projectDescription.getGroupId(),
-//                    AlfredSdk.Configurations.configurationForPackaging(projectDescription.getPackaging()),
-//                    projectDescription.getPackaging().id()));
             build.dependencies().add("platform",
                     Dependency.withCoordinates(projectDescription.getGroupId(), platform.getId())
                             .type(projectDescription.getPackaging().id()).build()

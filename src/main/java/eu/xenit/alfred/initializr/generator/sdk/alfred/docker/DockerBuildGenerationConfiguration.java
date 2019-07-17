@@ -5,7 +5,6 @@ import static org.springframework.util.StringUtils.quote;
 import eu.xenit.alfred.initializr.generator.alfresco.platform.AlfrescoPlatformModule;
 import eu.xenit.alfred.initializr.generator.build.BuildCustomizer;
 import eu.xenit.alfred.initializr.generator.build.RootProjectBuild;
-import eu.xenit.alfred.initializr.generator.build.gradle.platform.PlatformGradleBuild;
 import eu.xenit.alfred.initializr.generator.build.gradle.root.RootGradleBuild;
 import eu.xenit.alfred.initializr.generator.buildsystem.gradle.GradleProjectDependency;
 import eu.xenit.alfred.initializr.generator.sdk.alfred.AlfredSdk.Dependencies;
@@ -17,7 +16,6 @@ import io.spring.initializr.generator.project.ProjectGenerationConfiguration;
 import io.spring.initializr.generator.project.ResolvedProjectDescription;
 import io.spring.initializr.metadata.InitializrMetadata;
 import java.util.AbstractMap;
-import java.util.Map;
 import org.springframework.context.annotation.Bean;
 
 @ProjectGenerationConfiguration
@@ -43,11 +41,9 @@ public class DockerBuildGenerationConfiguration {
     }
 
     @Bean
-    public BuildCustomizer<RootProjectBuild> addPlatformAmp(
+    public BuildCustomizer<RootProjectBuild> addAlfrescoPlatformModuleDependency(
             ResolvedProjectDescription projectDescription,
-            //PlatformGradleBuild platformGradleBuild
-            AlfrescoPlatformModule platformModule
-    ) {
+            AlfrescoPlatformModule platformModule) {
         return (build) -> {
             build.dependencies().add("platform",
                     GradleProjectDependency.from(platformModule)
@@ -56,7 +52,6 @@ public class DockerBuildGenerationConfiguration {
                             .scope(DependencyScope.COMPILE)
                             .build());
         };
-
     }
 
     @Bean
@@ -84,6 +79,4 @@ public class DockerBuildGenerationConfiguration {
     private boolean hasAlfrescoAmpFacet(InitializrMetadata metadata, String id) {
         return metadata.getDependencies().get(id).getFacets().contains("alfrescoAmp");
     }
-
-
 }

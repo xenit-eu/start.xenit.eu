@@ -15,7 +15,7 @@ public class DockerComposeProjectAssert {
         return new DockerComposeAssert(this.result.getDockerCompose());
     }
 
-    public DockerComposeAssert assertDockerComposeLayer(String layer) {
+    public DockerComposeAssert assertDockerCompose(String layer) {
         return new DockerComposeAssert(this.result.getDockerComposeLayer(layer));
     }
 
