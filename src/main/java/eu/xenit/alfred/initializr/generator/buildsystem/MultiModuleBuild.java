@@ -2,7 +2,7 @@ package eu.xenit.alfred.initializr.generator.buildsystem;
 
 import java.util.Map;
 
-public interface MultiModuleBuild<TBuild extends BuildSystem> extends BuildSystem {
+public interface MultiModuleBuild<TBuild extends Build> extends Build {
 
     String getName();
 

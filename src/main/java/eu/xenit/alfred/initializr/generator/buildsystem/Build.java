@@ -9,7 +9,7 @@ import lombok.Getter;
 import lombok.NonNull;
 import lombok.Setter;
 
-public interface BuildSystem {
+public interface Build {
 
     String getGroup();
 

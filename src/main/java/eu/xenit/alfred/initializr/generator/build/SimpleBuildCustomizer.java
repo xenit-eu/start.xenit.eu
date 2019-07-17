@@ -16,11 +16,8 @@ package eu.xenit.alfred.initializr.generator.build;
  * limitations under the License.
  */
 
-import eu.xenit.alfred.initializr.generator.buildsystem.BuildSystem;
-import io.spring.initializr.generator.buildsystem.Build;
+import eu.xenit.alfred.initializr.generator.buildsystem.Build;
 import io.spring.initializr.generator.project.ResolvedProjectDescription;
-
-import io.spring.initializr.metadata.Dependency;
 import io.spring.initializr.metadata.InitializrMetadata;
 import org.springframework.core.Ordered;
 
@@ -28,10 +25,8 @@ import org.springframework.core.Ordered;
  * Customize the {@link Build} as early as possible based on the information held in the
  * {@link ResolvedProjectDescription}.
  *
- * @author Andy Wilkinson
- * @author Stephane Nicoll
  */
-public class SimpleBuildCustomizer implements BuildCustomizer<BuildSystem> {
+public class SimpleBuildCustomizer implements BuildCustomizer<Build> {
 
     private final ResolvedProjectDescription projectDescription;
     private final InitializrMetadata metadata;
@@ -42,18 +37,10 @@ public class SimpleBuildCustomizer implements BuildCustomizer<BuildSystem> {
     }
 
     @Override
-    public void customize(BuildSystem build) {
+    public void customize(Build build) {
         build.setGroup(this.projectDescription.getGroupId());
         build.setArtifact(this.projectDescription.getArtifactId());
         build.setVersion(this.projectDescription.getVersion());
-
-//        this.projectDescription.getRequestedDependencies()
-//                .entrySet().stream()
-//                .filter(entry -> {
-//                    Dependency dependencyMetadata = this.metadata.getDependencies().get(entry.getKey());
-//                    dependencyMetadata.getFacets().
-//                })
-//                .forEach((id, dependency) -> build.dependencies().add(id, dependency));
     }
 
     @Override
