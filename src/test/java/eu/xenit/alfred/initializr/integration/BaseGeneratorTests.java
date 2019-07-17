@@ -18,6 +18,7 @@ package eu.xenit.alfred.initializr.integration;
 
 //import io.spring.initializr.generator.spring.test.build.GradleBuildAssert;
 //import io.spring.initializr.generator.spring.test.build.PomAssert;
+
 import eu.xenit.alfred.initializr.app.StartApplication;
 import eu.xenit.alfred.initializr.asserts.build.gradle.GradleMultiProjectAssert;
 import eu.xenit.alfred.initializr.asserts.docker.DockerComposeProjectAssert;
@@ -94,4 +95,17 @@ public abstract class BaseGeneratorTests {
         return request;
     }
 
+    public static String quote(String string) {
+        // if string uses variables, use double quotes (")
+        if (string.contains("$")) {
+            return quote(string, "\"");
+        }
+
+        // but prefer single quote (')
+        return quote(string, "'");
+    }
+
+    static String quote(String string, String quote) {
+        return quote + string + quote;
+    }
 }

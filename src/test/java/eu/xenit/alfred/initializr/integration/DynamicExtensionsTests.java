@@ -21,12 +21,4 @@ public class DynamicExtensionsTests extends BaseGeneratorTests {
                 .hasDependency("implementation", quote("eu.xenit:alfresco-dynamic-extensions-repo-52:"+DE_RELEASE));
 
     }
-
-    private static String quote(String string) {
-        return quote(string, "'");
-    }
-
-    private static String quote(String string, String quote) {
-        return quote + string + quote;
-    }
 }

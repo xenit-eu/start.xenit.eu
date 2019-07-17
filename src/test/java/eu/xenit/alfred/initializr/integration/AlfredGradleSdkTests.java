@@ -22,8 +22,4 @@ public class AlfredGradleSdkTests extends BaseGeneratorTests {
                 .hasDependency("alfrescoProvided", quote("org.alfresco:alfresco-repository:${alfrescoVersion}"));
 
     }
-
-    private static String quote(String string) {
-        return "\"" + string + "\"";
-    }
 }
