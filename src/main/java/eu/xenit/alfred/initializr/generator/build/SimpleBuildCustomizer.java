@@ -18,7 +18,6 @@ package eu.xenit.alfred.initializr.generator.build;
 
 import eu.xenit.alfred.initializr.generator.buildsystem.Build;
 import io.spring.initializr.generator.project.ResolvedProjectDescription;
-import io.spring.initializr.metadata.InitializrMetadata;
 import org.springframework.core.Ordered;
 
 /**
@@ -29,11 +28,9 @@ import org.springframework.core.Ordered;
 public class SimpleBuildCustomizer implements BuildCustomizer<Build> {
 
     private final ResolvedProjectDescription projectDescription;
-    private final InitializrMetadata metadata;
 
-    public SimpleBuildCustomizer(ResolvedProjectDescription projectDescription, InitializrMetadata metadata) {
+    public SimpleBuildCustomizer(ResolvedProjectDescription projectDescription) {
         this.projectDescription = projectDescription;
-        this.metadata = metadata;
     }
 
     @Override
