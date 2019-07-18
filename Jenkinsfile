@@ -67,7 +67,7 @@ applications_to_install:
         - auto-proxy-consul.conf.ctmpl
     - app: start
       name: initializr
-      image: start.xenit.eu:awx
+      image: start.xenit.eu:latest
       service_name: initializr
       service_tags: proxy-http,sbx'''
 		)
