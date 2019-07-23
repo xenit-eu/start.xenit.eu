@@ -66,10 +66,10 @@ applications_to_install:
       ctpl_templates:
         - auto-proxy-consul.conf.ctmpl
     - app: start
-      name: initializr
+      name: start
       image: start.xenit.eu:latest
-      service_name: initializr
-      service_tags: proxy-http,sbx'''
+      service_name: start
+      service_tags: proxy-http,production'''
 		)
 	    }
 	}
