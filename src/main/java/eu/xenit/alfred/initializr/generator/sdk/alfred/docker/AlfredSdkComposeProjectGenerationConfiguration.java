@@ -32,7 +32,7 @@ public class AlfredSdkComposeProjectGenerationConfiguration {
 
             build.customizeTask("dockerCompose", (dockerCompose) -> {
                 dockerCompose.set("dockerComposeWorkingDirectory",
-                        "'" + locationStrategy.getComposePath().toString() + "/'");
+                        "'" + locationStrategy.getLocation().toString() + "/'");
             });
         };
     }

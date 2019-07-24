@@ -11,9 +11,9 @@ import java.io.IOException;
 import java.io.StringWriter;
 import org.junit.Test;
 
-public class DockerComposeYmlWriterTest {
+public class DockerComposeYmlWriterDelegateTest {
 
-    private DockerComposeYmlWriter composeWriter = new DockerComposeYmlWriter();
+    private DockerComposeYmlWriterDelegate composeWriter = new DockerComposeYmlWriterDelegate();
     private IndentingWriterFactory indentingWriterFactory = IndentingWriterFactory.withDefaultSettings();
 
     @Test
@@ -95,7 +95,7 @@ public class DockerComposeYmlWriterTest {
     }
 
     private IndentingWriter createWriter(StringWriter out) {
-        return this.indentingWriterFactory.createIndentingWriter("compose", out);
+        return this.indentingWriterFactory.createIndentingWriter("yml", out);
     }
 
 }

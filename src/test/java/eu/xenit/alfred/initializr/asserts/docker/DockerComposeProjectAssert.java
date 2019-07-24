@@ -1,7 +1,5 @@
 package eu.xenit.alfred.initializr.asserts.docker;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
 import eu.xenit.alfred.initializr.web.project.DockerComposeGenerationResultSet;
 import eu.xenit.alfred.initializr.web.project.DockerComposeYml;
 import java.util.stream.Collectors;

@@ -1,13 +1,10 @@
 package eu.xenit.alfred.initializr.web.project;
 
 import io.spring.initializr.generator.project.ResolvedProjectDescription;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Stream;
 import lombok.Getter;
 import org.springframework.util.StringUtils;
 
@@ -18,7 +15,7 @@ public class DockerComposeGenerationResultSet {
 
     private final List<DockerComposeYml> composeFileList;
 
-    DockerComposeGenerationResultSet(ResolvedProjectDescription projectDescription, List<DockerComposeYml> files) {
+    public DockerComposeGenerationResultSet(ResolvedProjectDescription projectDescription, List<DockerComposeYml> files) {
         this.projectDescription = projectDescription;
         this.composeFileList = files;
     }

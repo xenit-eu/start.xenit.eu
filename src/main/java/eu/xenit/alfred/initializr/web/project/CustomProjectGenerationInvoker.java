@@ -77,10 +77,15 @@ public class CustomProjectGenerationInvoker extends ProjectGenerationInvoker {
             publishProjectFailedEvent(request, metadata, ex);
             throw ex;
         }
-
     }
 
-
+    private ProjectAssetGenerator<BuildGenerationResult> generateBuildAssets(ProjectRequest request) {
+        return (context) -> {
+            Map<Path, String> result = new BuildAssetGenerator().generate(context);
+            publishProjectGeneratedEvent(request, context);
+            return new BuildGenerationResult(context.getBean(ResolvedProjectDescription.class), result);
+        };
+    }
 
     public DockerComposeGenerationResultSet invokeProjectComposeGeneration(ProjectRequest request) {
         InitializrMetadata metadata = this.parentApplicationContext.getBean(InitializrMetadataProvider.class).get();
@@ -97,19 +102,34 @@ public class CustomProjectGenerationInvoker extends ProjectGenerationInvoker {
         }
     }
 
-    private ProjectAssetGenerator<BuildGenerationResult> generateBuildAssets(ProjectRequest request) {
-        return (context) -> {
-            Map<Path, String> result = new BuildAssetGenerator().generate(context);
-            publishProjectGeneratedEvent(request, context);
-            return new BuildGenerationResult(context.getBean(ResolvedProjectDescription.class), result);
-        };
-    }
-
     private ProjectAssetGenerator<DockerComposeGenerationResultSet> generateComposeAssets(ProjectRequest request) {
         return (context) -> {
             List<DockerComposeYml> result = new DockerComposeAssetGenerator().generate(context);
             publishProjectGeneratedEvent(request, context);
             return new DockerComposeGenerationResultSet(context.getBean(ResolvedProjectDescription.class), result);
+        };
+    }
+
+    public GrafanaProvisioningResult invokeGrafanaProvisioningGeneration(ProjectRequest request) {
+        InitializrMetadata metadata = this.parentApplicationContext.getBean(InitializrMetadataProvider.class).get();
+        try {
+            ProjectDescription projectDescription = this.converter.convert(request, metadata);
+            ProjectGenerator projectGenerator = new ProjectGenerator(
+                    (projectGenerationContext) ->
+                            customizeProjectGenerationContext(projectGenerationContext, metadata));
+
+            return projectGenerator.generate(projectDescription, generateGrafanaProvisioningAssets(request));
+        } catch (ProjectGenerationException ex) {
+            publishProjectFailedEvent(request, metadata, ex);
+            throw ex;
+        }
+    }
+
+    private ProjectAssetGenerator<GrafanaProvisioningResult> generateGrafanaProvisioningAssets(ProjectRequest request) {
+        return (context) -> {
+            GrafanaProvisioningResult result = new GrafanaProvisioningAssetGenerator().generate(context);
+            publishProjectGeneratedEvent(request, context);
+            return result;
         };
     }
 

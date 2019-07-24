@@ -33,15 +33,15 @@ public class DockerComposeProjectGenerationConfiguration {
 
     @Bean
     DockerComposeYmlContributor mainDockerComposeContributor(DockerCompose compose,
-            DockerComposeYmlWriter writer,
+            DockerComposeYmlWriterDelegate writer,
             IndentingWriterFactory indentingWriterFactory,
             DockerComposeLocationStrategy composeLocation) {
         return new DockerComposeYmlContributor(compose, "", writer, indentingWriterFactory, composeLocation);
     }
 
     @Bean
-    DockerComposeYmlWriter mainDockerComposeYmlWriter() {
-        return new DockerComposeYmlWriter();
+    DockerComposeYmlWriterDelegate mainDockerComposeYmlWriter() {
+        return new DockerComposeYmlWriterDelegate();
     }
 
     @Bean

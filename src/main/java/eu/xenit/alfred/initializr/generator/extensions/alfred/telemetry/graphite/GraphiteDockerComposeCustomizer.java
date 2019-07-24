@@ -18,14 +18,18 @@ public class GraphiteDockerComposeCustomizer implements DockerComposeCustomizer 
 
         services.service("alfresco")
                 .environment(
-                        env("GLOBAL_alfred.telemetry.export.graphite.host", "carbon")
+                        env("GLOBAL_alfred.telemetry.export.graphite.host", "carbon"),
+
+                        // disabling caches-binder because it outputs too many metrics
+                        // for carbon to swallow at this point
+                        env("GLOBAL_alfred.telemetry.binder.cache.enabled", "false")
                 );
 
         services.service("carbon")
                 .image("hub.xenit.eu/carbon:0.0.1-4")
                 .volumes("whisperdb:/opt/graphite/storage/whisper");
 
-        services.service("monitor-graphite-api")
+        services.service("graphite-api")
                 .image("hub.xenit.eu/graphite-api:0.0.1-10")
                 .volumes("whisperdb:/srv/graphite/whisper");
 
