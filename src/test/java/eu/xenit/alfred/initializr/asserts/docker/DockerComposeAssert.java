@@ -7,4 +7,12 @@ public class DockerComposeAssert extends AbstractStringAssert<DockerComposeAsser
     public DockerComposeAssert(String actual) {
         super(actual, DockerComposeAssert.class);
     }
+
+
+    public DockerComposeAssert hasService(String name)
+    {
+        this.contains("    " + name + ":");
+        return this;
+    }
+
 }

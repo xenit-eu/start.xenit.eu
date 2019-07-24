@@ -22,9 +22,12 @@ package eu.xenit.alfred.initializr.integration;
 import eu.xenit.alfred.initializr.app.StartApplication;
 import eu.xenit.alfred.initializr.asserts.build.gradle.GradleMultiProjectAssert;
 import eu.xenit.alfred.initializr.asserts.docker.DockerComposeProjectAssert;
+import eu.xenit.alfred.initializr.asserts.grafana.GrafanaProvisioningAssert;
+import eu.xenit.alfred.initializr.generator.extensions.alfred.telemetry.grafana.provisioning.GrafanaProvisioning;
 import eu.xenit.alfred.initializr.web.project.BuildGenerationResult;
 import eu.xenit.alfred.initializr.web.project.CustomProjectGenerationInvoker;
 import eu.xenit.alfred.initializr.web.project.DockerComposeGenerationResultSet;
+import eu.xenit.alfred.initializr.web.project.GrafanaProvisioningResult;
 import io.spring.initializr.generator.test.project.ProjectStructure;
 import io.spring.initializr.generator.version.Version;
 import io.spring.initializr.metadata.BillOfMaterials;
@@ -88,12 +91,19 @@ public abstract class BaseGeneratorTests {
         return new DockerComposeProjectAssert(result);
     }
 
+    protected GrafanaProvisioningAssert generateGrafanaProvisioning(ProjectRequest request) {
+        GrafanaProvisioningResult result = this.invoker.invokeGrafanaProvisioningGeneration(request);
+        return new GrafanaProvisioningAssert(result);
+    }
+
     protected ProjectRequest createProjectRequest(String... styles) {
         WebProjectRequest request = new WebProjectRequest();
         request.initialize(this.metadataProvider.get());
         request.getStyle().addAll(Arrays.asList(styles));
         return request;
     }
+
+
 
     public static String quote(String string) {
         // if string uses variables, use double quotes (")

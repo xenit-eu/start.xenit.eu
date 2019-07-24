@@ -1,8 +1,6 @@
 package eu.xenit.alfred.initializr.integration.extensions;
 
 import eu.xenit.alfred.initializr.asserts.build.gradle.GradleMultiProjectAssert;
-import eu.xenit.alfred.initializr.asserts.docker.DockerComposeAssert;
-import eu.xenit.alfred.initializr.asserts.docker.DockerComposeProjectAssert;
 import eu.xenit.alfred.initializr.generator.extensions.alfred.telemetry.AlfredTelemetryProjectGenerationConfiguration;
 import eu.xenit.alfred.initializr.integration.BaseGeneratorTests;
 import io.spring.initializr.web.project.ProjectRequest;

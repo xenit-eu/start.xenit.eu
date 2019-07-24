@@ -89,3 +89,13 @@ initializr:
       weight: 10
       facets:
       - telemetry
+    - id: micrometer-graphite
+      name: Micrometer Graphite Registry
+      description: Export Micrometer metrics to Graphite registry
+      groupId: io.micrometer
+      artifactId: micrometer-registry-graphite
+      version: 1.0.6
+      facets:
+      - telemetry
+      - alfrescoSM
+      - grafana

@@ -1,7 +1,5 @@
 package eu.xenit.alfred.initializr.model.docker;
 
-import java.util.Collection;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.function.Function;

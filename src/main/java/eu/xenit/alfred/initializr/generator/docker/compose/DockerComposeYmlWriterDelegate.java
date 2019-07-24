@@ -10,16 +10,13 @@ import java.util.Collection;
 import java.util.Map;
 import java.util.function.Function;
 
-public class DockerComposeYmlWriter {
+public class DockerComposeYmlWriterDelegate {
 
     public void writeTo(IndentingWriter writer, DockerComposeModel file) {
         writeVersion(writer, file);
         writeServices(writer, file.getServices());
         writeVolumes(writer, file.getVolumes());
     }
-
-
-
 
     private void writeVersion(IndentingWriter writer, DockerComposeModel file) {
         writer.println("version: '" + file.getVersion() + "'");

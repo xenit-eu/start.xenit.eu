@@ -1,5 +1,6 @@
 package eu.xenit.alfred.initializr.generator.docker.compose;
 
+import eu.xenit.alfred.initializr.generator.project.LocationStrategy;
 import eu.xenit.alfred.initializr.model.docker.DockerComposeModel;
 import io.spring.initializr.generator.io.IndentingWriter;
 import io.spring.initializr.generator.io.IndentingWriterFactory;
@@ -8,7 +9,6 @@ import java.io.IOException;
 import java.io.Writer;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import lombok.Getter;
 
 public class DockerComposeYmlContributor implements ProjectContributor, DockerComposeWriter {
@@ -18,12 +18,12 @@ public class DockerComposeYmlContributor implements ProjectContributor, DockerCo
     @Getter
     private final String name;
 
-    private final DockerComposeYmlWriter writer;
+    private final DockerComposeYmlWriterDelegate writer;
     private final IndentingWriterFactory indentingWriterFactory;
-    private final DockerComposeLocationStrategy locationStrategy;
+    private final LocationStrategy locationStrategy;
 
-    public DockerComposeYmlContributor(DockerCompose compose, String name, DockerComposeYmlWriter writer,
-            IndentingWriterFactory indentingWriterFactory, DockerComposeLocationStrategy locationStrategy) {
+    public DockerComposeYmlContributor(DockerCompose compose, String name, DockerComposeYmlWriterDelegate writer,
+            IndentingWriterFactory indentingWriterFactory, LocationStrategy locationStrategy) {
         this.compose = compose;
         this.name = name;
         this.writer = writer;
@@ -34,7 +34,7 @@ public class DockerComposeYmlContributor implements ProjectContributor, DockerCo
     @Override
     public void contribute(Path projectRoot) throws IOException {
         // make sure directory exists
-        Files.createDirectories(projectRoot.resolve(this.locationStrategy.getComposePath()));
+        Files.createDirectories(projectRoot.resolve(this.locationStrategy.getLocation()));
 
         Path yml = Files.createFile(projectRoot.resolve(composeFile()));
         writeCompose(Files.newBufferedWriter(yml));
@@ -43,14 +43,14 @@ public class DockerComposeYmlContributor implements ProjectContributor, DockerCo
     @Override
     public void writeCompose(Writer out) throws IOException {
         DockerComposeModel model = this.compose.file(this.name);
-        try (IndentingWriter writer = this.indentingWriterFactory.createIndentingWriter("compose", out)) {
+        try (IndentingWriter writer = this.indentingWriterFactory.createIndentingWriter("yml", out)) {
             this.writer.writeTo(writer, model);
         }
     }
 
     @Override
     public Path composeFile() {
-        Path composePath = this.locationStrategy.getComposePath();
+        Path composePath = this.locationStrategy.getLocation();
 
         return composePath.resolve(this.composeFilename());
     }
