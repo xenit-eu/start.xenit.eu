@@ -1,10 +1,8 @@
 package eu.xenit.alfred.initializr.generator.io;
 
 import io.spring.initializr.generator.io.IndentingWriter;
-import java.io.IOException;
-import java.io.Writer;
 
-public class YmlWriter extends Writer {
+public class YmlWriter {
 
     private final IndentingWriter writer;
 
@@ -47,7 +45,6 @@ public class YmlWriter extends Writer {
         this.prependIndent = false;
     }
 
-    @Override
     public void write(char[] chars, int offset, int length) {
         if (this.prependIndent) {
             if (this.printSequenceIndicator) {
@@ -60,15 +57,5 @@ public class YmlWriter extends Writer {
         }
 
         this.writer.write(chars, offset, length);
-    }
-
-    @Override
-    public void flush() throws IOException {
-        this.writer.flush();
-    }
-
-    @Override
-    public void close() throws IOException {
-        this.writer.close();
     }
 }
