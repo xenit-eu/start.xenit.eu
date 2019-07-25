@@ -58,18 +58,8 @@ pipeline {
 		    verbose: true,
 		    extraVars: '''---
 applications_to_install:
-    - name: nginx_sbx
-      app: nginx
-      proxy_tag: sbx
-      proxy_domain: sbx.xenit.eu
-      certbot_staging: False
-      ctpl_templates:
-        - auto-proxy-consul.conf.ctmpl
     - app: start
-      name: start
-      image: start.xenit.eu:latest
-      service_name: start
-      service_tags: proxy-http,production'''
+      name: start'''
 		)
 	    }
 	}
