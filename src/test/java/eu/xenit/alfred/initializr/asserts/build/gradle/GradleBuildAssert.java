@@ -1,9 +1,13 @@
 package eu.xenit.alfred.initializr.asserts.build.gradle;
 
+import io.spring.initializr.generator.buildsystem.gradle.GradleBuildSystem;
+import java.util.function.Consumer;
 import lombok.Getter;
 import org.assertj.core.api.AbstractStringAssert;
 
 public class GradleBuildAssert extends AbstractStringAssert<GradleBuildAssert> {
+
+
 
     public GradleBuildAssert(String content) {
         super(content, GradleBuildAssert.class);
@@ -61,4 +65,10 @@ public class GradleBuildAssert extends AbstractStringAssert<GradleBuildAssert> {
     @Getter(lazy=true)
     private final DependenciesAssert dependencies = new DependenciesAssert(this.actual);
 
+    public GradleBuildAssert assertTask(String task, Consumer<GradleTaskAssertion> callback)
+    {
+        String section = GradleBuildParser.extractSection(task, this.actual);
+        callback.accept(new GradleTaskAssertion(section));
+        return this;
+    }
 }
