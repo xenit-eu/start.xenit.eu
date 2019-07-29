@@ -50,6 +50,17 @@ initializr:
 
 
   dependencies:
+  - name: Alfresco Zipkin Repo
+    content:
+    - name: Alfresco Zipkin Repo
+      id: alfresco-zipkin-repo
+      facets:
+      - alfresco-zipkin-repo
+      groupId: eu.xenit.alfred.edge
+      artifactId: alfresco-zipkin-repo
+      version: 1.1.1-SNAPSHOT
+      description: Zipkin instrumentation for Alfresco repository
+
   - name: Dynamic Extensions
     content:
     - name: Dynamic Extensions
