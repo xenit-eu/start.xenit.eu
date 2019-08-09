@@ -18,9 +18,16 @@ public class AlfredSdk {
         public static final String ALFRESCO_PROVIDED = "alfrescoProvided";
         public static final String BASE_ALFRESCO_WAR = "baseAlfrescoWar";
 
+        public static final String SHARE_PROVIDED = "shareProvided";
+        public static final String BASE_SHARE_WAR = "baseShareWar";
+
         public static final String ALFRESCO_AMP = "alfrescoAmp";
         public static final String ALFRESCO_SM = "alfrescoSM";
         public static final String ALFRESCO_DE = "alfrescoDE";
+
+        public static final String SHARE_AMP = "shareAmp";
+        public static final String SHARE_SM = "shareSM";
+        public static final String SHARE_DE = "shareDE";
 
         public static String configurationForPackaging(Packaging packaging) {
             switch (packaging.id()) {
