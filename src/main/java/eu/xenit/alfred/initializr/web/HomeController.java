@@ -165,8 +165,8 @@ public class HomeController {
         if (dependency.getDescription() != null) {
             node.put("description", dependency.getDescription());
         }
-        if (dependency.getVersionRange() != null) {
-            node.put("versionRange", dependency.getVersionRange());
+        if (dependency.getCompatibilityRange() != null) {
+            node.put("compatibilityRange", dependency.getCompatibilityRange());
             node.put("versionRequirement", dependency.getVersionRequirement());
         }
         if (!CollectionUtils.isEmpty(dependency.getKeywords())
