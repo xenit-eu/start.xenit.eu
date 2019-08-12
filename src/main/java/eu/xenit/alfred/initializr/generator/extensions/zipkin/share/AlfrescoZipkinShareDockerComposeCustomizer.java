@@ -16,7 +16,7 @@ public class AlfrescoZipkinShareDockerComposeCustomizer implements DockerCompose
 //        ComposeServices services = zipkinModel.getServices();
 //        services.service("share")
 //                .environment(
-//                        env("GLOBAL_zipkin.collector","http://zipkin:9411/api/v2/spans")
+//                        env("JAVA_OPTS=-Dzipkin.collector=http://zipkin:9411/api/v2/spans")
 //                );
     }
 
