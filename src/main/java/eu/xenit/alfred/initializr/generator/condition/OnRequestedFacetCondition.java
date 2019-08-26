@@ -1,7 +1,7 @@
 package eu.xenit.alfred.initializr.generator.condition;
 
 import io.spring.initializr.generator.condition.ProjectGenerationCondition;
-import io.spring.initializr.generator.project.ResolvedProjectDescription;
+import io.spring.initializr.generator.project.ProjectDescription;
 import io.spring.initializr.metadata.InitializrMetadata;
 import java.util.Map;
 import java.util.Objects;
@@ -18,7 +18,7 @@ class OnRequestedFacetCondition extends ProjectGenerationCondition {
     private static String conditionalClassName = ConditionalOnRequestedFacet.class.getName();
 
     @Override
-    protected boolean matches(ResolvedProjectDescription projectDescription, ConditionContext context,
+    protected boolean matches(ProjectDescription projectDescription, ConditionContext context,
             AnnotatedTypeMetadata metadata) {
 
         Map<String, Object> annotationAttributes = metadata.getAnnotationAttributes(conditionalClassName);

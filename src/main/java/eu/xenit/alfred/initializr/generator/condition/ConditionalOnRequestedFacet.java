@@ -1,6 +1,6 @@
 package eu.xenit.alfred.initializr.generator.condition;
 
-import io.spring.initializr.generator.project.ResolvedProjectDescription;
+import io.spring.initializr.generator.project.ProjectDescription;
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -9,7 +9,7 @@ import java.lang.annotation.Target;
 import org.springframework.context.annotation.Conditional;
 
 /**
- * Condition that matches when a {@link ResolvedProjectDescription} has a requested
+ * Condition that matches when a {@link ProjectDescription} has a requested
  * dependency with a specific facet.
  *
  * A generated project may ultimately reference a different set of dependencies, but

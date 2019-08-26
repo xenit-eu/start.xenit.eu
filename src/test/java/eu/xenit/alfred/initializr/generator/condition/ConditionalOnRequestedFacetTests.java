@@ -3,7 +3,7 @@ package eu.xenit.alfred.initializr.generator.condition;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.mock;
 
-import io.spring.initializr.generator.project.ProjectDescription;
+import io.spring.initializr.generator.project.MutableProjectDescription;
 import io.spring.initializr.generator.test.project.ProjectAssetTester;
 import io.spring.initializr.metadata.Dependency;
 import io.spring.initializr.metadata.DependencyGroup;
@@ -50,7 +50,7 @@ public class ConditionalOnRequestedFacetTests {
 
     @Test
     public void outcomeWithMatchingFacet() {
-        ProjectDescription projectDescription = new ProjectDescription();
+        MutableProjectDescription projectDescription = new MutableProjectDescription();
         projectDescription.addDependency("foo", mock(io.spring.initializr.generator.buildsystem.Dependency.class));
 
         String bean = this.projectTester.generate(projectDescription, (projectGenerationContext) -> {
@@ -63,7 +63,7 @@ public class ConditionalOnRequestedFacetTests {
 
     @Test
     public void outcomeWithNoMatch() {
-        ProjectDescription projectDescription = new ProjectDescription();
+        MutableProjectDescription projectDescription = new MutableProjectDescription();
         projectDescription.addDependency("another", mock(io.spring.initializr.generator.buildsystem.Dependency.class));
 
         this.projectTester.generate(projectDescription, (projectGenerationContext) -> {

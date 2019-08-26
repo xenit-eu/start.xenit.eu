@@ -2,14 +2,14 @@ package eu.xenit.alfred.initializr.generator.alfresco.platform;
 
 import eu.xenit.alfred.initializr.generator.alfresco.AlfrescoModuleCustomizer;
 import eu.xenit.alfred.initializr.generator.alfresco.AlfrescoModuleProperties;
-import io.spring.initializr.generator.project.ResolvedProjectDescription;
+import io.spring.initializr.generator.project.ProjectDescription;
 import org.springframework.core.Ordered;
 
 public class SimpleAlfrescoModuleCustomizer implements AlfrescoModuleCustomizer<AlfrescoPlatformModule> {
 
-    private final ResolvedProjectDescription projectDescription;
+    private final ProjectDescription projectDescription;
 
-    public SimpleAlfrescoModuleCustomizer(ResolvedProjectDescription description) {
+    public SimpleAlfrescoModuleCustomizer(ProjectDescription description) {
         this.projectDescription = description;
     }
 

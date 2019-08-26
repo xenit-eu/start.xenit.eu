@@ -13,7 +13,7 @@ import io.spring.initializr.generator.buildsystem.BuildItemResolver;
 import io.spring.initializr.generator.buildsystem.MavenRepository;
 import io.spring.initializr.generator.io.IndentingWriterFactory;
 import io.spring.initializr.generator.project.ProjectGenerationConfiguration;
-import io.spring.initializr.generator.project.ResolvedProjectDescription;
+import io.spring.initializr.generator.project.ProjectDescription;
 import io.spring.initializr.metadata.InitializrMetadata;
 import java.util.stream.Collectors;
 import org.springframework.beans.factory.ObjectProvider;
@@ -48,7 +48,7 @@ public class AlfrescoModuleProjectGenerationConfiguration {
 
 
     @Bean
-    public SimpleAlfrescoModuleCustomizer platformModuleCustomizer(ResolvedProjectDescription description) {
+    public SimpleAlfrescoModuleCustomizer platformModuleCustomizer(ProjectDescription description) {
         return new SimpleAlfrescoModuleCustomizer(description);
     }
 
@@ -72,7 +72,7 @@ public class AlfrescoModuleProjectGenerationConfiguration {
     @Bean
     public BuildCustomizer<PlatformBuild> simplePlatformCustomizer(
             AlfrescoPlatformModule module,
-            ResolvedProjectDescription projectDescription) {
+            ProjectDescription projectDescription) {
         return (build) -> {
             build.setArtifact(module.getId());
             build.setGroup(projectDescription.getGroupId());
@@ -89,7 +89,7 @@ public class AlfrescoModuleProjectGenerationConfiguration {
     @Bean
     public BuildCustomizer<PlatformBuild> platformDependenciesCustomizer(
             AlfrescoPlatformModule module,
-            ResolvedProjectDescription projectDescription,
+            ProjectDescription projectDescription,
             InitializrMetadata metadata,
             BuildItemResolver depResolver) {
         return new PlatformDependenciesBuildCustomizer(module, metadata, projectDescription, depResolver);

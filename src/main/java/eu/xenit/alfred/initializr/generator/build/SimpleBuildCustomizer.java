@@ -17,19 +17,19 @@ package eu.xenit.alfred.initializr.generator.build;
  */
 
 import eu.xenit.alfred.initializr.generator.buildsystem.Build;
-import io.spring.initializr.generator.project.ResolvedProjectDescription;
+import io.spring.initializr.generator.project.ProjectDescription;
 import org.springframework.core.Ordered;
 
 /**
  * Customize the {@link Build} as early as possible based on the information held in the
- * {@link ResolvedProjectDescription}.
+ * {@link ProjectDescription}.
  *
  */
 public class SimpleBuildCustomizer implements BuildCustomizer<Build> {
 
-    private final ResolvedProjectDescription projectDescription;
+    private final ProjectDescription projectDescription;
 
-    public SimpleBuildCustomizer(ResolvedProjectDescription projectDescription) {
+    public SimpleBuildCustomizer(ProjectDescription projectDescription) {
         this.projectDescription = projectDescription;
     }
 

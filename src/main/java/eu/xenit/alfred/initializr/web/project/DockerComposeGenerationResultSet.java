@@ -1,6 +1,6 @@
 package eu.xenit.alfred.initializr.web.project;
 
-import io.spring.initializr.generator.project.ResolvedProjectDescription;
+import io.spring.initializr.generator.project.ProjectDescription;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
@@ -11,11 +11,11 @@ import org.springframework.util.StringUtils;
 public class DockerComposeGenerationResultSet {
 
     @Getter
-    private final ResolvedProjectDescription projectDescription;
+    private final ProjectDescription projectDescription;
 
     private final List<DockerComposeYml> composeFileList;
 
-    public DockerComposeGenerationResultSet(ResolvedProjectDescription projectDescription, List<DockerComposeYml> files) {
+    public DockerComposeGenerationResultSet(ProjectDescription projectDescription, List<DockerComposeYml> files) {
         this.projectDescription = projectDescription;
         this.composeFileList = files;
     }

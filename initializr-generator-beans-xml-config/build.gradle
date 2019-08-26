@@ -21,9 +21,9 @@ dependencies {
     compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'
 
-    testCompile 'io.spring.initializr:initializr-generator::tests'
-    testCompile group: 'org.assertj', name: 'assertj-core'
-    testCompile group: 'junit', name: 'junit'
+    testImplementation "io.spring.initializr:initializr-generator-test:${springInitializrVersion}"
+    testImplementation 'org.assertj:assertj-core'
+    testImplementation 'junit:junit'
 }
 
 dependencyManagement {
