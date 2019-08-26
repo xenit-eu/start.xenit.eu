@@ -85,7 +85,7 @@ initializr:
       groupId: eu.xenit.alfred.telemetry
       artifactId: alfred-telemetry-platform
       type: amp
-      version: 0.1.0
+      version: 0.1.1
       weight: 10
       facets:
       - telemetry
