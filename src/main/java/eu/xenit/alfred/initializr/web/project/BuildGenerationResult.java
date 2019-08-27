@@ -1,6 +1,6 @@
 package eu.xenit.alfred.initializr.web.project;
 
-import io.spring.initializr.generator.project.ResolvedProjectDescription;
+import io.spring.initializr.generator.project.ProjectDescription;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Map;
@@ -9,11 +9,11 @@ import lombok.Getter;
 public class BuildGenerationResult {
 
     @Getter
-    private final ResolvedProjectDescription projectDescription;
+    private final ProjectDescription projectDescription;
 
     private final Map<Path, String> build;
 
-    BuildGenerationResult(ResolvedProjectDescription projectDescription, Map<Path, String> build) {
+    BuildGenerationResult(ProjectDescription projectDescription, Map<Path, String> build) {
         this.projectDescription = projectDescription;
         this.build = build;
     }

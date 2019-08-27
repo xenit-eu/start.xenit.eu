@@ -4,13 +4,11 @@ import static org.springframework.util.StringUtils.quote;
 
 import eu.xenit.alfred.initializr.generator.build.BuildCustomizer;
 import eu.xenit.alfred.initializr.generator.build.gradle.CustomGradleBuildWriter;
-import eu.xenit.alfred.initializr.generator.build.gradle.GradleBuildContributor;
-import eu.xenit.alfred.initializr.generator.buildsystem.gradle.MultiProjectGradleBuild;
 import io.spring.initializr.generator.buildsystem.BuildItemResolver;
 import io.spring.initializr.generator.condition.ConditionalOnBuildSystem;
 import io.spring.initializr.generator.io.IndentingWriterFactory;
+import io.spring.initializr.generator.project.ProjectDescription;
 import io.spring.initializr.generator.project.ProjectGenerationConfiguration;
-import io.spring.initializr.generator.project.ResolvedProjectDescription;
 import java.util.List;
 import java.util.stream.Collectors;
 import org.springframework.beans.factory.ObjectProvider;
@@ -23,7 +21,7 @@ public class GradleProjectGenerationConfiguration {
 
     @Bean
     public RootGradleBuild gradleBuild(
-            ResolvedProjectDescription projectDescription,
+            ProjectDescription projectDescription,
             ObjectProvider<BuildItemResolver> buildItemResolver,
             ObjectProvider<BuildCustomizer<?>> buildCustomizers) {
         return this.createGradleBuild(
@@ -43,7 +41,7 @@ public class GradleProjectGenerationConfiguration {
     }
 
     @Bean
-    public BuildCustomizer<RootGradleBuild> addDockerVersion(ResolvedProjectDescription projectDescription) {
+    public BuildCustomizer<RootGradleBuild> addDockerVersion(ProjectDescription projectDescription) {
         return (build) -> build.ext("alfrescoVersion", quote(projectDescription.getPlatformVersion().toString()));
 
     }

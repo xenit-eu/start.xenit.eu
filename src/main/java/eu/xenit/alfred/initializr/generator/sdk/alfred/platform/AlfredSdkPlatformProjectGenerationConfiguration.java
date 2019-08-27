@@ -6,7 +6,7 @@ import eu.xenit.alfred.initializr.generator.build.RootProjectBuild;
 import io.spring.initializr.generator.buildsystem.Dependency;
 import io.spring.initializr.generator.condition.ConditionalOnBuildSystem;
 import io.spring.initializr.generator.project.ProjectGenerationConfiguration;
-import io.spring.initializr.generator.project.ResolvedProjectDescription;
+import io.spring.initializr.generator.project.ProjectDescription;
 import org.springframework.context.annotation.Bean;
 
 @ProjectGenerationConfiguration
@@ -15,13 +15,13 @@ public class AlfredSdkPlatformProjectGenerationConfiguration {
 
     @Bean
     public AlfredSdkPlatformModuleGradleCustomizer alfredSdkPlatformBuildCustomizer(AlfrescoPlatformModule module,
-            ResolvedProjectDescription projectDescription) {
+            ProjectDescription projectDescription) {
         return new AlfredSdkPlatformModuleGradleCustomizer(module);
     }
 
     @Bean
     public BuildCustomizer<RootProjectBuild> addPlatformAmp(
-            ResolvedProjectDescription projectDescription,
+            ProjectDescription projectDescription,
             AlfrescoPlatformModule platform
     ) {
         return (build) -> {

@@ -6,14 +6,13 @@ import static eu.xenit.alfred.initializr.model.docker.ComposeVolumes.volume;
 import eu.xenit.alfred.initializr.generator.docker.compose.DockerCompose;
 import eu.xenit.alfred.initializr.generator.docker.compose.DockerComposeCustomizer;
 import eu.xenit.alfred.initializr.model.docker.ComposeServices;
-import eu.xenit.alfred.initializr.model.docker.ComposeVolumeInfo;
-import io.spring.initializr.generator.project.ResolvedProjectDescription;
+import io.spring.initializr.generator.project.ProjectDescription;
 
 public class AlfrescoBaseLayerComposeCustomizer implements DockerComposeCustomizer {
 
-    private final ResolvedProjectDescription projectDescription;
+    private final ProjectDescription projectDescription;
 
-    public AlfrescoBaseLayerComposeCustomizer(ResolvedProjectDescription projectDescription) {
+    public AlfrescoBaseLayerComposeCustomizer(ProjectDescription projectDescription) {
         this.projectDescription = projectDescription;
     }
 

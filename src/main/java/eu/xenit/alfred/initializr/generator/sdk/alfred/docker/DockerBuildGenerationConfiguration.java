@@ -13,7 +13,7 @@ import io.spring.initializr.generator.buildsystem.DependencyScope;
 import io.spring.initializr.generator.buildsystem.gradle.GradleDependency;
 import io.spring.initializr.generator.condition.ConditionalOnBuildSystem;
 import io.spring.initializr.generator.project.ProjectGenerationConfiguration;
-import io.spring.initializr.generator.project.ResolvedProjectDescription;
+import io.spring.initializr.generator.project.ProjectDescription;
 import io.spring.initializr.metadata.InitializrMetadata;
 import java.util.AbstractMap;
 import org.springframework.context.annotation.Bean;
@@ -30,9 +30,10 @@ public class DockerBuildGenerationConfiguration {
     }
 
     @Bean
-    public BuildCustomizer<RootGradleBuild> addDockerAlfrescoPlugin(ResolvedProjectDescription project) {
+    public BuildCustomizer<RootGradleBuild> addDockerAlfrescoPlugin(ProjectDescription project) {
         return (build) -> {
-            build.addPlugin("eu.xenit.docker-alfresco", "4.0.3");
+            build.plugins().add("eu.xenit.docker-alfresco", plugin -> plugin.setVersion("4.0.3"));
+
 
             build.dependencies().add("alfresco-war", Dependencies.ALFRESCO_WAR);
 
@@ -49,7 +50,7 @@ public class DockerBuildGenerationConfiguration {
 
     @Bean
     public BuildCustomizer<RootProjectBuild> addAlfrescoPlatformModuleDependency(
-            ResolvedProjectDescription projectDescription,
+            ProjectDescription projectDescription,
             AlfrescoPlatformModule platformModule) {
         return (build) -> {
             build.dependencies().add("platform",
@@ -62,7 +63,7 @@ public class DockerBuildGenerationConfiguration {
     }
 
     @Bean
-    public BuildCustomizer<RootProjectBuild> addAlfrescoAmpDependencies(ResolvedProjectDescription projectDescription) {
+    public BuildCustomizer<RootProjectBuild> addAlfrescoAmpDependencies(ProjectDescription projectDescription) {
         return (build) -> {
             projectDescription.getRequestedDependencies()
                     .entrySet().stream()
@@ -79,7 +80,7 @@ public class DockerBuildGenerationConfiguration {
     }
 
     @Bean
-    public BuildCustomizer<RootProjectBuild> addAlfrescoSMDependencies(ResolvedProjectDescription projectDescription) {
+    public BuildCustomizer<RootProjectBuild> addAlfrescoSMDependencies(ProjectDescription projectDescription) {
         return (build) -> {
             projectDescription.getRequestedDependencies()
                     .entrySet().stream()

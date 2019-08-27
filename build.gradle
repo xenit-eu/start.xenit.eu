@@ -46,7 +46,6 @@ dependencies {
     }
 
     implementation project(':initializr-generator-beans-xml-config')
-
     implementation('org.springframework.boot:spring-boot-devtools')
 
     compileOnly 'org.projectlombok:lombok'
@@ -55,7 +54,7 @@ dependencies {
     developmentOnly("org.springframework.boot:spring-boot-devtools")
 
     testImplementation('org.springframework.boot:spring-boot-starter-test')
-    testImplementation("io.spring.initializr:initializr-generator:${springInitializrVersion}:tests")
+    testImplementation("io.spring.initializr:initializr-generator-test:${springInitializrVersion}")
 
     testCompileOnly 'org.projectlombok:lombok'
 }

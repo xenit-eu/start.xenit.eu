@@ -7,7 +7,7 @@ import io.spring.initializr.generator.project.ProjectDescription;
 import io.spring.initializr.generator.project.ProjectGenerationContext;
 import io.spring.initializr.generator.project.ProjectGenerationException;
 import io.spring.initializr.generator.project.ProjectGenerator;
-import io.spring.initializr.generator.project.ResolvedProjectDescription;
+import io.spring.initializr.generator.project.ProjectDescription;
 import io.spring.initializr.generator.project.contributor.ProjectContributor;
 import io.spring.initializr.metadata.InitializrMetadata;
 import io.spring.initializr.metadata.InitializrMetadataProvider;
@@ -83,7 +83,7 @@ public class CustomProjectGenerationInvoker extends ProjectGenerationInvoker {
         return (context) -> {
             Map<Path, String> result = new BuildAssetGenerator().generate(context);
             publishProjectGeneratedEvent(request, context);
-            return new BuildGenerationResult(context.getBean(ResolvedProjectDescription.class), result);
+            return new BuildGenerationResult(context.getBean(ProjectDescription.class), result);
         };
     }
 
@@ -106,7 +106,7 @@ public class CustomProjectGenerationInvoker extends ProjectGenerationInvoker {
         return (context) -> {
             List<DockerComposeYml> result = new DockerComposeAssetGenerator().generate(context);
             publishProjectGeneratedEvent(request, context);
-            return new DockerComposeGenerationResultSet(context.getBean(ResolvedProjectDescription.class), result);
+            return new DockerComposeGenerationResultSet(context.getBean(ProjectDescription.class), result);
         };
     }
 
@@ -167,8 +167,7 @@ public class CustomProjectGenerationInvoker extends ProjectGenerationInvoker {
 
     private byte[] generateBuild(ProjectGenerationContext context, Class<? extends BuildWriter> buildWriterClass)
             throws IOException {
-        ResolvedProjectDescription projectDescription = context
-                .getBean(ResolvedProjectDescription.class);
+        ProjectDescription projectDescription = context.getBean(ProjectDescription.class);
         StringWriter out = new StringWriter();
         BuildWriter buildWriter = context.getBeanProvider(buildWriterClass)
                 .getIfAvailable();
@@ -187,7 +186,7 @@ public class CustomProjectGenerationInvoker extends ProjectGenerationInvoker {
         context.registerBean(InitializrMetadata.class, () -> metadata);
         context.registerBean(BuildItemResolver.class, () -> new MetadataBuildItemResolver(
                 metadata,
-                context.getBean(ResolvedProjectDescription.class).getPlatformVersion()));
+                context.getBean(ProjectDescription.class).getPlatformVersion()));
     }
 
     private void publishProjectGeneratedEvent(ProjectRequest request,

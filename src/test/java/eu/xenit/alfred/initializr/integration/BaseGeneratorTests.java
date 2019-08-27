@@ -23,7 +23,6 @@ import eu.xenit.alfred.initializr.app.StartApplication;
 import eu.xenit.alfred.initializr.asserts.build.gradle.GradleMultiProjectAssert;
 import eu.xenit.alfred.initializr.asserts.docker.DockerComposeProjectAssert;
 import eu.xenit.alfred.initializr.asserts.grafana.GrafanaProvisioningAssert;
-import eu.xenit.alfred.initializr.generator.extensions.alfred.telemetry.grafana.provisioning.GrafanaProvisioning;
 import eu.xenit.alfred.initializr.web.project.BuildGenerationResult;
 import eu.xenit.alfred.initializr.web.project.CustomProjectGenerationInvoker;
 import eu.xenit.alfred.initializr.web.project.DockerComposeGenerationResultSet;

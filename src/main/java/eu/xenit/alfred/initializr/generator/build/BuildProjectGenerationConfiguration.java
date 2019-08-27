@@ -1,7 +1,7 @@
 package eu.xenit.alfred.initializr.generator.build;
 
+import io.spring.initializr.generator.project.ProjectDescription;
 import io.spring.initializr.generator.project.ProjectGenerationConfiguration;
-import io.spring.initializr.generator.project.ResolvedProjectDescription;
 import org.springframework.context.annotation.Bean;
 
 @ProjectGenerationConfiguration
@@ -9,7 +9,7 @@ public class BuildProjectGenerationConfiguration {
 
     @Bean
     public SimpleBuildCustomizer projectDescriptionBuildCustomizer(
-            ResolvedProjectDescription projectDescription) {
+            ProjectDescription projectDescription) {
         return new SimpleBuildCustomizer(projectDescription);
     }
 

@@ -2,7 +2,7 @@ package eu.xenit.alfred.initializr.generator.beans.config;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import io.spring.initializr.generator.test.assertj.NodeAssert;
+import io.spring.initializr.generator.test.io.NodeAssert;
 
 public class SpringXmlConfigAssert {
 

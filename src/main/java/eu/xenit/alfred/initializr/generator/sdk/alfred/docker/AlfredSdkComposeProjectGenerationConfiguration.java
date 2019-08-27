@@ -7,7 +7,7 @@ import eu.xenit.alfred.initializr.generator.docker.compose.DockerComposeLocation
 import io.spring.initializr.generator.buildsystem.gradle.GradleBuildSystem;
 import io.spring.initializr.generator.condition.ConditionalOnBuildSystem;
 import io.spring.initializr.generator.project.ProjectGenerationConfiguration;
-import io.spring.initializr.generator.project.ResolvedProjectDescription;
+import io.spring.initializr.generator.project.ProjectDescription;
 import java.nio.file.Paths;
 import org.springframework.context.annotation.Bean;
 
@@ -16,7 +16,7 @@ import org.springframework.context.annotation.Bean;
 public class AlfredSdkComposeProjectGenerationConfiguration {
 
     @Bean
-    public DockerComposeCustomizer basicAlfrescoComposeCustomizer(ResolvedProjectDescription projectDescription) {
+    public DockerComposeCustomizer basicAlfrescoComposeCustomizer(ProjectDescription projectDescription) {
         return new AlfrescoBaseLayerComposeCustomizer(projectDescription);
     }
 
