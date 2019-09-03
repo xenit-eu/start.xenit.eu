@@ -2,6 +2,7 @@ package eu.xenit.alfred.initializr.web.project;
 
 import eu.xenit.alfred.initializr.generator.buildsystem.BuildAssetWriter;
 import io.spring.initializr.generator.project.ProjectAssetGenerator;
+import io.spring.initializr.generator.project.ProjectDescription;
 import io.spring.initializr.generator.project.ProjectGenerationContext;
 import java.io.IOException;
 import java.io.StringWriter;
@@ -10,15 +11,17 @@ import java.util.Map;
 import java.util.stream.Collectors;
 import org.springframework.beans.factory.ObjectProvider;
 
-public class BuildAssetGenerator implements ProjectAssetGenerator<Map<Path, String>> {
+public class BuildAssetGenerator implements ProjectAssetGenerator<BuildGenerationResult> {
 
     @Override
-    public Map<Path, String> generate(ProjectGenerationContext context) throws IOException {
+    public BuildGenerationResult generate(ProjectGenerationContext context) {
         ObjectProvider<BuildAssetWriter> buildAssetWriters = context.getBeanProvider(BuildAssetWriter.class);
 
-        return buildAssetWriters.stream().collect(Collectors.toMap(
+        Map<Path, String> buildFiles = buildAssetWriters.stream().collect(Collectors.toMap(
                 BuildAssetWriter::relativePath,
                 this::writeBuildAsset));
+
+        return new BuildGenerationResult(context.getBean(ProjectDescription.class), buildFiles);
 
     }
 

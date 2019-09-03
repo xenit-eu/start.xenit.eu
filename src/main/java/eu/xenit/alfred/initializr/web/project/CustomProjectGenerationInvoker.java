@@ -1,14 +1,11 @@
 package eu.xenit.alfred.initializr.web.project;
 
 import io.spring.initializr.generator.buildsystem.BuildItemResolver;
-import io.spring.initializr.generator.buildsystem.BuildWriter;
 import io.spring.initializr.generator.project.ProjectAssetGenerator;
 import io.spring.initializr.generator.project.ProjectDescription;
 import io.spring.initializr.generator.project.ProjectGenerationContext;
 import io.spring.initializr.generator.project.ProjectGenerationException;
 import io.spring.initializr.generator.project.ProjectGenerator;
-import io.spring.initializr.generator.project.ProjectDescription;
-import io.spring.initializr.generator.project.contributor.ProjectContributor;
 import io.spring.initializr.metadata.InitializrMetadata;
 import io.spring.initializr.metadata.InitializrMetadataProvider;
 import io.spring.initializr.metadata.support.MetadataBuildItemResolver;
@@ -18,43 +15,66 @@ import io.spring.initializr.web.project.ProjectGenerationInvoker;
 import io.spring.initializr.web.project.ProjectRequest;
 import io.spring.initializr.web.project.ProjectRequestToDescriptionConverter;
 import io.spring.initializr.web.project.WebProjectRequest;
-import java.io.IOException;
-import java.io.StringWriter;
-import java.nio.file.Path;
-import java.util.List;
-import java.util.Map;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 /**
- * A {@link ProjectGenerationInvoker} consumes a {@link ProjectRequest} and invokes the project generation API. This
- * intermediate layer is used by both the web-frontend and the integration tests
+ * Invokes the project generation API. This is an intermediate layer that can consume a {@link ProjectRequest} and
+ * trigger project generation based on the request.
  *
- * The base class has support for generating both a full project or the build-system: build.gradle for Gradle or pom.xml
- * for Maven.
+ * This customized invoker attempts to enhance the super class implementation on a few fronts:
+ * <ul>
+ *   <li>Generalize the project-generation invocation by making the {@link ProjectAssetGenerator<>} a parameter @{@link
+ * #invokeGeneration}.</li>
+ *   <li>Move the responsibility to publish a success|failed-event away from  of the {@link
+ * ProjectAssetGenerator<>} and into the generalized @{@link #invokeGeneration}.</li>
+ * </ul>
  *
- * Full project generation happens by requesting all the {@link ProjectContributor}s to contribute their part. The scope
- * of the genration can be limited, by not going over {@link ProjectContributor}, but simply select a single (or
- * subset?), using a marker interface like {@link BuildWriter}.
- *
- * This {@link CustomProjectGenerationInvoker} attempts to generalize that concept.
+ * @param <R> the concrete {@link ProjectRequest} type
+ * @author Toon Geens
  */
-public class CustomProjectGenerationInvoker extends ProjectGenerationInvoker {
+public class CustomProjectGenerationInvoker<R extends ProjectRequest> extends ProjectGenerationInvoker<R> {
 
     private final ApplicationContext parentApplicationContext;
     private final ApplicationEventPublisher eventPublisher;
-    private final ProjectRequestToDescriptionConverter converter;
+    private final ProjectRequestToDescriptionConverter<R> requestConverter;
 
     public CustomProjectGenerationInvoker(ApplicationContext parentApplicationContext,
-            ApplicationEventPublisher eventPublisher,
-            ProjectRequestToDescriptionConverter converter) {
-        super(parentApplicationContext, eventPublisher, converter);
+            ProjectRequestToDescriptionConverter<R> requestConverter) {
+        super(parentApplicationContext, requestConverter);
         this.parentApplicationContext = parentApplicationContext;
-        this.eventPublisher = eventPublisher;
-        this.converter = converter;
+        this.eventPublisher = parentApplicationContext;
+        this.requestConverter = requestConverter;
     }
 
+    protected <G> G invokeGeneration(R request, ProjectAssetGenerator<G> assetGenerator) {
+        InitializrMetadata metadata = this.parentApplicationContext.getBean(InitializrMetadataProvider.class).get();
+        try {
+            ProjectDescription description = this.requestConverter.convert(request, metadata);
+            ProjectGenerator projectGenerator = new ProjectGenerator((projectGenerationContext) -> {
+                customizeProjectGenerationContext(projectGenerationContext, metadata);
+            });
+
+            // decorate asset-generation with project-generation-success event-publisher
+            assetGenerator = decorateWithProjectGenerationEventPublication(request, assetGenerator);
+            G generated = projectGenerator.generate(description, assetGenerator);
+
+            return generated;
+        } catch (ProjectGenerationException ex) {
+            publishProjectFailedEvent(request, metadata, ex);
+            throw ex;
+        }
+    }
+
+    private <A> ProjectAssetGenerator<A> decorateWithProjectGenerationEventPublication(R request,
+            ProjectAssetGenerator<A> assetGenerator) {
+        return context -> {
+            A result = assetGenerator.generate(context);
+            publishProjectGeneratedEvent(request, context);
+            return result;
+        };
+    }
 
     /**
      * Invokes the project generation API that knows how to just write *all* build-related files.
@@ -64,122 +84,31 @@ public class CustomProjectGenerationInvoker extends ProjectGenerationInvoker {
      * @param request the project request
      * @return the {@link BuildGenerationResult}
      */
-    public BuildGenerationResult invokeProjectBuildGeneration(ProjectRequest request) {
-        InitializrMetadata metadata = this.parentApplicationContext.getBean(InitializrMetadataProvider.class).get();
-        try {
-            ProjectDescription projectDescription = this.converter.convert(request, metadata);
-            ProjectGenerator projectGenerator = new ProjectGenerator(
-                    (projectGenerationContext) ->
-                            customizeProjectGenerationContext(projectGenerationContext, metadata));
-
-            return projectGenerator.generate(projectDescription, generateBuildAssets(request));
-        } catch (ProjectGenerationException ex) {
-            publishProjectFailedEvent(request, metadata, ex);
-            throw ex;
-        }
-    }
-
-    private ProjectAssetGenerator<BuildGenerationResult> generateBuildAssets(ProjectRequest request) {
-        return (context) -> {
-            Map<Path, String> result = new BuildAssetGenerator().generate(context);
-            publishProjectGeneratedEvent(request, context);
-            return new BuildGenerationResult(context.getBean(ProjectDescription.class), result);
-        };
-    }
-
-    public DockerComposeGenerationResultSet invokeProjectComposeGeneration(ProjectRequest request) {
-        InitializrMetadata metadata = this.parentApplicationContext.getBean(InitializrMetadataProvider.class).get();
-        try {
-            ProjectDescription projectDescription = this.converter.convert(request, metadata);
-            ProjectGenerator projectGenerator = new ProjectGenerator(
-                    (projectGenerationContext) ->
-                            customizeProjectGenerationContext(projectGenerationContext, metadata));
-
-            return projectGenerator.generate(projectDescription, generateComposeAssets(request));
-        } catch (ProjectGenerationException ex) {
-            publishProjectFailedEvent(request, metadata, ex);
-            throw ex;
-        }
-    }
-
-    private ProjectAssetGenerator<DockerComposeGenerationResultSet> generateComposeAssets(ProjectRequest request) {
-        return (context) -> {
-            List<DockerComposeYml> result = new DockerComposeAssetGenerator().generate(context);
-            publishProjectGeneratedEvent(request, context);
-            return new DockerComposeGenerationResultSet(context.getBean(ProjectDescription.class), result);
-        };
-    }
-
-    public GrafanaProvisioningResult invokeGrafanaProvisioningGeneration(ProjectRequest request) {
-        InitializrMetadata metadata = this.parentApplicationContext.getBean(InitializrMetadataProvider.class).get();
-        try {
-            ProjectDescription projectDescription = this.converter.convert(request, metadata);
-            ProjectGenerator projectGenerator = new ProjectGenerator(
-                    (projectGenerationContext) ->
-                            customizeProjectGenerationContext(projectGenerationContext, metadata));
-
-            return projectGenerator.generate(projectDescription, generateGrafanaProvisioningAssets(request));
-        } catch (ProjectGenerationException ex) {
-            publishProjectFailedEvent(request, metadata, ex);
-            throw ex;
-        }
-    }
-
-    private ProjectAssetGenerator<GrafanaProvisioningResult> generateGrafanaProvisioningAssets(ProjectRequest request) {
-        return (context) -> {
-            GrafanaProvisioningResult result = new GrafanaProvisioningAssetGenerator().generate(context);
-            publishProjectGeneratedEvent(request, context);
-            return result;
-        };
+    public BuildGenerationResult invokeProjectBuildGeneration(R request) {
+        return this.invokeGeneration(request, new BuildAssetGenerator());
     }
 
     /**
-     * Invokes the project generation API that knows how to just write the build file. Returns a directory containing
-     * the project for the specified {@link WebProjectRequest}.
+     * Invokes the project generation API that generates all docker-compose yml files.
      *
      * @param request the project request
-     * @return the generated build content
+     * @return the {@link DockerComposeGenerationResultSet}
      */
-    public byte[] invokeBuildGeneration(ProjectRequest request) {
-
-        InitializrMetadata metadata = this.parentApplicationContext.getBean(InitializrMetadataProvider.class).get();
-        try {
-            ProjectDescription projectDescription = this.converter.convert(request,
-                    metadata);
-            ProjectGenerator projectGenerator = new ProjectGenerator(
-                    (projectGenerationContext) -> customizeProjectGenerationContext(
-                            projectGenerationContext, metadata));
-            return projectGenerator.generate(projectDescription, generateBuild(request, BuildWriter.class));
-        } catch (ProjectGenerationException ex) {
-            publishProjectFailedEvent(request, metadata, ex);
-            throw ex;
-        }
+    public DockerComposeGenerationResultSet invokeProjectComposeGeneration(R request) {
+        return this.invokeGeneration(request, new DockerComposeAssetGenerator());
     }
 
-    private ProjectAssetGenerator<byte[]> generateBuild(ProjectRequest request,
-            Class<? extends BuildWriter> buildWriterClass) {
-        return (context) -> {
-            byte[] content = generateBuild(context, buildWriterClass);
-            publishProjectGeneratedEvent(request, context);
-            return content;
-        };
+    /**
+     * Invokes the project generation API that generates Grafana provisioning configuration
+     *
+     * @param request the project request
+     * @return the {@link GrafanaProvisioningResult}
+     */
+    public GrafanaProvisioningResult invokeGrafanaProvisioningGeneration(R request) {
+        return this.invokeGeneration(request, new GrafanaProvisioningAssetGenerator());
     }
 
-    private byte[] generateBuild(ProjectGenerationContext context, Class<? extends BuildWriter> buildWriterClass)
-            throws IOException {
-        ProjectDescription projectDescription = context.getBean(ProjectDescription.class);
-        StringWriter out = new StringWriter();
-        BuildWriter buildWriter = context.getBeanProvider(buildWriterClass)
-                .getIfAvailable();
-        if (buildWriter != null) {
-            buildWriter.writeBuild(out);
-            return out.toString().getBytes();
-        } else {
-            throw new IllegalStateException("No BuildWriter implementation found for "
-                    + projectDescription.getLanguage());
-        }
-    }
-
+    // Duplicating super class implementation because it's private
     private void customizeProjectGenerationContext(
             AnnotationConfigApplicationContext context, InitializrMetadata metadata) {
         context.setParent(this.parentApplicationContext);
@@ -189,6 +118,7 @@ public class CustomProjectGenerationInvoker extends ProjectGenerationInvoker {
                 context.getBean(ProjectDescription.class).getPlatformVersion()));
     }
 
+    // Duplicating super class implementation because it's private
     private void publishProjectGeneratedEvent(ProjectRequest request,
             ProjectGenerationContext context) {
         InitializrMetadata metadata = context.getBean(InitializrMetadata.class);
@@ -196,6 +126,7 @@ public class CustomProjectGenerationInvoker extends ProjectGenerationInvoker {
         this.eventPublisher.publishEvent(event);
     }
 
+    // Duplicating super class implementation because it's private
     private void publishProjectFailedEvent(ProjectRequest request,
             InitializrMetadata metadata, Exception cause) {
         ProjectFailedEvent event = new ProjectFailedEvent(request, metadata, cause);
