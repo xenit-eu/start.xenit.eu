@@ -12,9 +12,7 @@ import io.spring.initializr.web.project.ProjectRequest;
 import io.spring.initializr.web.support.InitializrMetadataUpdateStrategy;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.ApplicationContext;
-import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.context.annotation.Bean;
 import org.springframework.web.servlet.resource.ResourceUrlProvider;
 
@@ -48,10 +46,7 @@ public class StartApplication {
     }
 
     @Bean
-    @ConditionalOnMissingBean
     ProjectGenerationController projectGenerationController(InitializrMetadataProvider metadataProvider,
-            ApplicationEventPublisher eventPublisher,
-            ApplicationContext applicationContext,
             ProjectGenerationInvoker<ProjectRequest> projectGenerationInvoker) {
         return new DefaultProjectGenerationController(metadataProvider, projectGenerationInvoker);
     }
