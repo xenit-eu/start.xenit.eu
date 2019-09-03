@@ -2,9 +2,9 @@ package eu.xenit.alfred.initializr.generator.build.sdk.alfred;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import eu.xenit.alfred.initializr.generator.alfresco.AlfrescoModuleProjectLayout;
-import eu.xenit.alfred.initializr.generator.alfresco.platform.AlfrescoPlatformModule;
-import eu.xenit.alfred.initializr.generator.sdk.alfred.platform.AlfredSdkPlatformProjectLayoutCustomizer;
+import eu.xenit.alfred.initializr.start.alfresco.AlfrescoModuleProjectLayout;
+import eu.xenit.alfred.initializr.start.alfresco.platform.AlfrescoPlatformModule;
+import eu.xenit.alfred.initializr.start.sdk.alfred.platform.AlfredSdkPlatformProjectLayoutCustomizer;
 import org.junit.Test;
 
 public class AlfredSdkProjectLayoutCustomizerTest {

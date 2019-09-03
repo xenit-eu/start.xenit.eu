@@ -3,7 +3,6 @@ package eu.xenit.alfred.initializr.asserts;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
 
-import eu.xenit.alfred.initializr.generator.alfresco.AlfrescoModuleProperties;
 import java.io.IOException;
 import java.io.StringReader;
 import java.util.Properties;

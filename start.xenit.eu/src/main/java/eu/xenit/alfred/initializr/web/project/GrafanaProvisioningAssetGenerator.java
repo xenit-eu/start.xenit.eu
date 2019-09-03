@@ -1,6 +1,6 @@
 package eu.xenit.alfred.initializr.web.project;
 
-import eu.xenit.alfred.initializr.generator.extensions.alfred.telemetry.grafana.provisioning.GrafanaProvisioningWriter;
+import eu.xenit.alfred.initializr.start.extensions.alfred.telemetry.grafana.provisioning.GrafanaProvisioningWriter;
 import io.spring.initializr.generator.project.ProjectAssetGenerator;
 import io.spring.initializr.generator.project.ProjectGenerationContext;
 import java.io.IOException;

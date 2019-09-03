@@ -3,6 +3,10 @@ package eu.xenit.alfred.initializr.generator.alfresco;
 import static org.mockito.Mockito.mock;
 
 import eu.xenit.alfred.initializr.asserts.AlfrescoModulePropertiesAssert;
+import eu.xenit.alfred.initializr.start.alfresco.AlfrescoModuleProjectLayout;
+import eu.xenit.alfred.initializr.start.alfresco.AlfrescoModuleProperties;
+import eu.xenit.alfred.initializr.start.alfresco.AlfrescoModulePropertiesContributor;
+import eu.xenit.alfred.initializr.start.alfresco.AlfrescoModulePropertiesWriter;
 import io.spring.initializr.generator.io.IndentingWriterFactory;
 import java.io.IOException;
 import java.io.StringWriter;
