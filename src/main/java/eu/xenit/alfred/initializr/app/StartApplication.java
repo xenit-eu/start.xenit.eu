@@ -3,10 +3,12 @@ package eu.xenit.alfred.initializr.app;
 import eu.xenit.alfred.initializr.web.HomeController;
 import eu.xenit.alfred.initializr.web.project.CustomProjectGenerationInvoker;
 import io.spring.initializr.generator.io.IndentingWriterFactory;
-import io.spring.initializr.generator.io.SimpleIndentStrategy;
 import io.spring.initializr.metadata.InitializrMetadataProvider;
+import io.spring.initializr.web.controller.DefaultProjectGenerationController;
+import io.spring.initializr.web.controller.ProjectGenerationController;
+import io.spring.initializr.web.project.DefaultProjectRequestToDescriptionConverter;
 import io.spring.initializr.web.project.ProjectGenerationInvoker;
-import io.spring.initializr.web.project.ProjectRequestToDescriptionConverter;
+import io.spring.initializr.web.project.ProjectRequest;
 import io.spring.initializr.web.support.InitializrMetadataUpdateStrategy;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -40,12 +42,17 @@ public class StartApplication {
     }
 
     @Bean
-    public CustomProjectGenerationInvoker projectGenerationInvoker(
-            ApplicationContext applicationContext,
-            ApplicationEventPublisher eventPublisher,
-            ProjectRequestToDescriptionConverter projectRequestToDescriptionConverter) {
-        return new CustomProjectGenerationInvoker(applicationContext, eventPublisher,
-                projectRequestToDescriptionConverter);
+    public CustomProjectGenerationInvoker projectGenerationInvoker(ApplicationContext applicationContext) {
+        return new CustomProjectGenerationInvoker(applicationContext,
+                new DefaultProjectRequestToDescriptionConverter());
     }
 
+    @Bean
+    @ConditionalOnMissingBean
+    ProjectGenerationController projectGenerationController(InitializrMetadataProvider metadataProvider,
+            ApplicationEventPublisher eventPublisher,
+            ApplicationContext applicationContext,
+            ProjectGenerationInvoker<ProjectRequest> projectGenerationInvoker) {
+        return new DefaultProjectGenerationController(metadataProvider, projectGenerationInvoker);
+    }
 }
