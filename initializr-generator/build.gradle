@@ -1,0 +1,41 @@
+plugins {
+    id 'idea'
+    id 'java'
+    id 'io.spring.dependency-management'
+}
+
+sourceCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+
+    maven { url "https://repo.spring.io/snapshot" }
+    maven { url "https://repo.spring.io/milestone" }
+    maven { url "https://repo.spring.io/release" }
+}
+
+dependencies {
+    implementation("io.spring.initializr:initializr-web:${springInitializrVersion}") {
+        exclude group: "io.spring.initializr", module:"initializr-generator-spring"
+    }
+
+    implementation project(':initializr-generator-beans-xml-config')
+
+    compileOnly 'org.projectlombok:lombok'
+    annotationProcessor 'org.projectlombok:lombok'
+    testCompileOnly 'org.projectlombok:lombok'
+    testAnnotationProcessor 'org.projectlombok:lombok'
+
+    testImplementation('org.springframework.boot:spring-boot-starter-test')
+    testImplementation("io.spring.initializr:initializr-generator-test:${springInitializrVersion}")
+}
+
+test {
+
+}
+
+dependencyManagement {
+    imports {
+        mavenBom org.springframework.boot.gradle.plugin.SpringBootPlugin.BOM_COORDINATES
+    }
+}
