@@ -50,6 +50,42 @@ initializr:
 
 
   dependencies:
+  - name: Alfresco Zipkin Repo
+    content:
+    - name: Alfresco Zipkin Repo
+      id: alfresco-zipkin-repo
+      facets:
+      - zipkin
+      - alfresco-zipkin-repo
+      groupId: eu.xenit.alfred.edge
+      artifactId: alfresco-zipkin-repo
+      version: 1.1.1-SNAPSHOT
+      description: Zipkin instrumentation for Alfresco Repository
+
+  - name: Alfresco Zipkin Share
+    content:
+    - name: Alfresco Zipkin Share
+      id: alfresco-zipkin-share
+      facets:
+      - share-war
+      - zipkin
+      - alfresco-zipkin-share
+      groupId: eu.xenit.alfred.edge
+      artifactId: alfresco-zipkin-share
+      version: 1.1.1-SNAPSHOT
+      description: Zipkin instrumentation for Alfresco Share
+
+  - name: Share War
+    content:
+    - name: Share War
+      id: share-war
+      facets:
+      - share-war
+      groupId: org.alfresco
+      artifactId: share
+      version: 5.2.5
+      description: Alfresco share war
+
   - name: Dynamic Extensions
     content:
     - name: Dynamic Extensions
