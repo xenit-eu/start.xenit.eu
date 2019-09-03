@@ -1,15 +1,18 @@
-package eu.xenit.alfred.initializr.start.sdk.alfred.docker;
+package eu.xenit.alfred.initializr.start.sdk.alfred.platformdocker;
 
 import static org.springframework.util.StringUtils.quote;
 
 import eu.xenit.alfred.initializr.start.alfresco.platform.AlfrescoPlatformModule;
 import eu.xenit.alfred.initializr.start.build.BuildCustomizer;
-import eu.xenit.alfred.initializr.start.build.RootProjectBuild;
-import eu.xenit.alfred.initializr.start.build.gradle.root.RootGradleBuild;
+import eu.xenit.alfred.initializr.start.build.platform.gradle.PlatformGradleBuild;
+import eu.xenit.alfred.initializr.start.build.platformdocker.gradle.PlatformDockerGradleBuild;
 import eu.xenit.alfred.initializr.generator.buildsystem.gradle.GradleProjectDependency;
 import eu.xenit.alfred.initializr.start.sdk.alfred.AlfredSdk;
 import eu.xenit.alfred.initializr.start.sdk.alfred.AlfredSdk.Dependencies;
+import eu.xenit.alfred.initializr.start.sdk.alfred.compose.config.ComposeUpGradleTaskConfiguration;
+import eu.xenit.alfred.initializr.start.sdk.alfred.compose.config.ComposeUpGradleTaskConfigurationCustomizer;
 import io.spring.initializr.generator.buildsystem.DependencyScope;
+import io.spring.initializr.generator.buildsystem.gradle.GradleBuildSystem;
 import io.spring.initializr.generator.buildsystem.gradle.GradleDependency;
 import io.spring.initializr.generator.condition.ConditionalOnBuildSystem;
 import io.spring.initializr.generator.project.ProjectGenerationConfiguration;
@@ -19,21 +22,19 @@ import java.util.AbstractMap;
 import org.springframework.context.annotation.Bean;
 
 @ProjectGenerationConfiguration
-@ConditionalOnBuildSystem("gradle")
-public class DockerBuildGenerationConfiguration {
+@ConditionalOnBuildSystem(GradleBuildSystem.ID)
+public class PlatformDockerBuildGenerationConfiguration {
 
     private final InitializrMetadata metadata;
 
-    public DockerBuildGenerationConfiguration(InitializrMetadata metadata)
-    {
+    public PlatformDockerBuildGenerationConfiguration(InitializrMetadata metadata) {
         this.metadata = metadata;
     }
 
     @Bean
-    public BuildCustomizer<RootGradleBuild> addDockerAlfrescoPlugin(ProjectDescription project) {
+    public BuildCustomizer<PlatformDockerGradleBuild> addDockerAlfrescoPlugin(ProjectDescription project) {
         return (build) -> {
             build.plugins().add("eu.xenit.docker-alfresco", plugin -> plugin.setVersion("4.0.3"));
-
 
             build.dependencies().add("alfresco-war", Dependencies.ALFRESCO_WAR);
 
@@ -49,7 +50,7 @@ public class DockerBuildGenerationConfiguration {
     }
 
     @Bean
-    public BuildCustomizer<RootProjectBuild> addAlfrescoPlatformModuleDependency(
+    public BuildCustomizer<PlatformDockerGradleBuild> addAlfrescoPlatformModuleDependency(
             ProjectDescription projectDescription,
             AlfrescoPlatformModule platformModule) {
         return (build) -> {
@@ -63,7 +64,8 @@ public class DockerBuildGenerationConfiguration {
     }
 
     @Bean
-    public BuildCustomizer<RootProjectBuild> addAlfrescoAmpDependencies(ProjectDescription projectDescription) {
+    public BuildCustomizer<PlatformDockerGradleBuild> addAlfrescoAmpDependencies(
+            ProjectDescription projectDescription) {
         return (build) -> {
             projectDescription.getRequestedDependencies()
                     .entrySet().stream()
@@ -80,7 +82,7 @@ public class DockerBuildGenerationConfiguration {
     }
 
     @Bean
-    public BuildCustomizer<RootProjectBuild> addAlfrescoSMDependencies(ProjectDescription projectDescription) {
+    public BuildCustomizer<PlatformDockerGradleBuild> addAlfrescoSMDependencies(ProjectDescription projectDescription) {
         return (build) -> {
             projectDescription.getRequestedDependencies()
                     .entrySet().stream()
@@ -95,7 +97,31 @@ public class DockerBuildGenerationConfiguration {
         };
     }
 
+    @Bean
+    public BuildCustomizer<PlatformDockerGradleBuild> disableComposeTasksInPlatformDockerCustomizer() {
+        return gradleBuild -> {
+            gradleBuild.tasks().customize("composeUp", composeUp -> composeUp.attribute("enabled", "false"));
+            gradleBuild.tasks().customize("composeDown", composeUp -> composeUp.attribute("enabled", "false"));
+            gradleBuild.tasks().customize("composeDownForced", composeUp -> composeUp.attribute("enabled", "false"));
+        };
+    }
+
     private boolean hasFacet(String facet, String dependencyId) {
         return this.metadata.getDependencies().get(dependencyId).getFacets().contains(facet);
     }
+
+
+    @Bean
+    ComposeUpGradleTaskConfigurationCustomizer platformComposeUpCustomizer(
+            PlatformDockerGradleBuild dockerGradleBuild) {
+        return composeUp -> composeUp.usesDockerImageFrom().add(dockerGradleBuild);
+    }
+
+
+//    @Bean
+//    void configureRootComposeUpWithPlatformImage(ComposeUpGradleTaskConfiguration composeUp,
+//            PlatformDockerGradleBuild dockerGradleBuild) {
+//        composeUp.usesDockerImageFrom().add(dockerGradleBuild);
+//        //return composeUp -> composeUp.usesDockerImageFrom().add(dockerGradleBuild);
+//    }
 }

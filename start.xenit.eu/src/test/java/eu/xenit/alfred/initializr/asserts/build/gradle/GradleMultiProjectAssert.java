@@ -28,8 +28,17 @@ public class GradleMultiProjectAssert {
         return new GradleBuildAssert(gradleBuild);
     }
 
-    public GradleBuildAssert platformGradleBuild() {
-        return this.projectGradleBuild(this.buildGenerationResult.getProjectDescription().getName() + "-platform");
+    public GradleBuildAssert platformBuildGradle() {
+        return this.projectGradleBuild(getBaseName() + "-platform");
     }
+
+    public GradleBuildAssert platformDockerBuildGradle() {
+        return this.projectGradleBuild(getBaseName() + "-platform-docker");
+    }
+
+    private String getBaseName() {
+        return this.buildGenerationResult.getProjectDescription().getName();
+    }
+
 
 }

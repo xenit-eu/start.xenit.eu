@@ -12,7 +12,7 @@ public class GradleGeneratorTests extends BaseGeneratorTests {
 
         GradleMultiProjectAssert result = generateGradleBuild(request);
         result.rootGradleBuild().isNotBlank();
-        result.platformGradleBuild()
+        result.platformBuildGradle()
                 .isNotBlank();
     }
 

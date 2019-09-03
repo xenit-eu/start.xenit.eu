@@ -7,18 +7,23 @@ import org.junit.Test;
 public class DynamicExtensionsTests extends BaseGeneratorTests {
 
     private static final String DE_RELEASE = "2.0.1";
+
     @Test
     public void testDefaultBuild() {
         ProjectRequest request = createProjectRequest("dynamic-extensions");
 
         GradleMultiProjectAssert result = generateGradleBuild(request);
 
-        result.rootGradleBuild()
+        // result.rootGradleBuild()
+        // Should the DE-version number be in the root project ext ?
+
+        result.platformBuildGradle()
+                .hasDependency("implementation", quote("eu.xenit:alfresco-dynamic-extensions-repo-52:"+DE_RELEASE));
+
+        // when creating platform docker image:
+        result.platformDockerBuildGradle()
                 .hasDependency("alfrescoAmp", quote("eu.xenit:alfresco-dynamic-extensions-repo-52:"+DE_RELEASE+"@amp"));
 
-
-        result.platformGradleBuild()
-                .hasDependency("implementation", quote("eu.xenit:alfresco-dynamic-extensions-repo-52:"+DE_RELEASE));
 
     }
 }

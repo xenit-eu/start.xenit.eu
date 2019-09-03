@@ -1,4 +1,4 @@
-package eu.xenit.alfred.initializr.start.sdk.alfred.docker;
+package eu.xenit.alfred.initializr.start.sdk.alfred.compose;
 
 import static eu.xenit.alfred.initializr.generator.docker.compose.model.ComposeEnvironment.env;
 import static eu.xenit.alfred.initializr.generator.docker.compose.model.ComposeVolumes.volume;

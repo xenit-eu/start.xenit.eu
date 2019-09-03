@@ -1,4 +1,4 @@
-package eu.xenit.alfred.initializr.start.build.gradle;
+package eu.xenit.alfred.initializr.generator.buildsystem.gradle;
 
 import eu.xenit.alfred.initializr.generator.buildsystem.gradle.GradleProjectDependency;
 import io.spring.initializr.generator.buildsystem.Dependency;

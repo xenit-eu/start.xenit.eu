@@ -1,9 +1,10 @@
 package eu.xenit.alfred.initializr.start.sdk.alfred.docker;
 
 import eu.xenit.alfred.initializr.start.build.BuildCustomizer;
-import eu.xenit.alfred.initializr.start.build.gradle.root.RootGradleBuild;
+import eu.xenit.alfred.initializr.start.build.root.gradle.RootGradleBuild;
 import eu.xenit.alfred.initializr.generator.docker.compose.DockerComposeCustomizer;
 import eu.xenit.alfred.initializr.generator.docker.compose.DockerComposeLocationStrategy;
+import eu.xenit.alfred.initializr.start.sdk.alfred.compose.AlfrescoBaseLayerComposeCustomizer;
 import io.spring.initializr.generator.buildsystem.gradle.GradleBuildSystem;
 import io.spring.initializr.generator.condition.ConditionalOnBuildSystem;
 import io.spring.initializr.generator.project.ProjectGenerationConfiguration;
@@ -36,5 +37,4 @@ public class AlfredSdkComposeProjectGenerationConfiguration {
             });
         };
     }
-
 }

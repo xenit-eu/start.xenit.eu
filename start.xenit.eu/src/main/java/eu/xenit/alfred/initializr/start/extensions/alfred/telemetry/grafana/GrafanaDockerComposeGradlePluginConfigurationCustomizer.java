@@ -1,7 +1,7 @@
 package eu.xenit.alfred.initializr.start.extensions.alfred.telemetry.grafana;
 
-import eu.xenit.alfred.initializr.start.docker.compose.DockerComposeGradlePluginConfiguration;
-import eu.xenit.alfred.initializr.start.docker.compose.DockerComposeGradlePluginConfigurationCustomizer;
+import eu.xenit.alfred.initializr.start.sdk.alfred.compose.config.DockerComposeGradlePluginConfiguration;
+import eu.xenit.alfred.initializr.start.sdk.alfred.compose.config.DockerComposeGradlePluginConfigurationCustomizer;
 
 class GrafanaDockerComposeGradlePluginConfigurationCustomizer implements
         DockerComposeGradlePluginConfigurationCustomizer {

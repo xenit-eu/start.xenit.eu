@@ -1,10 +1,11 @@
-package eu.xenit.alfred.initializr.start.build.gradle.platform;
+package eu.xenit.alfred.initializr.start.build.platform.gradle;
 
 import eu.xenit.alfred.initializr.start.build.BuildCustomizer;
 import eu.xenit.alfred.initializr.start.alfresco.platform.AlfrescoPlatformModule;
-import eu.xenit.alfred.initializr.start.build.gradle.CustomGradleBuildWriter;
-import eu.xenit.alfred.initializr.start.build.gradle.root.RootGradleBuild;
+import eu.xenit.alfred.initializr.generator.buildsystem.gradle.CustomGradleBuildWriter;
+import eu.xenit.alfred.initializr.start.build.root.gradle.RootGradleBuild;
 import io.spring.initializr.generator.buildsystem.BuildItemResolver;
+import io.spring.initializr.generator.buildsystem.gradle.GradleBuildSystem;
 import io.spring.initializr.generator.condition.ConditionalOnBuildSystem;
 import io.spring.initializr.generator.io.IndentingWriterFactory;
 import io.spring.initializr.generator.project.ProjectGenerationConfiguration;
@@ -15,7 +16,7 @@ import org.springframework.boot.util.LambdaSafe;
 import org.springframework.context.annotation.Bean;
 
 @ProjectGenerationConfiguration
-@ConditionalOnBuildSystem("gradle")
+@ConditionalOnBuildSystem(GradleBuildSystem.ID)
 public class PlatformGradleBuildConfiguration {
 
     @Bean

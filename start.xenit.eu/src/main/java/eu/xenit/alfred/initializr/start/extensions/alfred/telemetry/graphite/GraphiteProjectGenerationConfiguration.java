@@ -3,7 +3,7 @@ package eu.xenit.alfred.initializr.start.extensions.alfred.telemetry.graphite;
 import eu.xenit.alfred.initializr.generator.condition.ConditionalOnRequestedFacet;
 import eu.xenit.alfred.initializr.generator.docker.compose.DockerComposeFiles;
 import eu.xenit.alfred.initializr.generator.docker.compose.DockerComposeCustomizer;
-import eu.xenit.alfred.initializr.start.docker.compose.DockerComposeGradlePluginConfigurationCustomizer;
+import eu.xenit.alfred.initializr.start.sdk.alfred.compose.config.DockerComposeGradlePluginConfigurationCustomizer;
 import eu.xenit.alfred.initializr.generator.docker.compose.DockerComposeLocationStrategy;
 import eu.xenit.alfred.initializr.generator.docker.compose.DockerComposeYmlWriterDelegate;
 import eu.xenit.alfred.initializr.start.extensions.alfred.telemetry.grafana.provisioning.GrafanaDashboardProvider;

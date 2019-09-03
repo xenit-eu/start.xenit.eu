@@ -1,7 +1,7 @@
-package eu.xenit.alfred.initializr.start.build.gradle.root;
+package eu.xenit.alfred.initializr.start.build.root.gradle;
 
-import eu.xenit.alfred.initializr.start.build.gradle.CustomGradleBuildWriter;
-import eu.xenit.alfred.initializr.start.build.gradle.GradleBuildContributor;
+import eu.xenit.alfred.initializr.generator.buildsystem.gradle.CustomGradleBuildWriter;
+import eu.xenit.alfred.initializr.generator.buildsystem.gradle.GradleBuildContributor;
 import eu.xenit.alfred.initializr.generator.buildsystem.BuildAssetWriter;
 import io.spring.initializr.generator.io.IndentingWriterFactory;
 import java.nio.file.Path;
@@ -17,7 +17,7 @@ public class RootGradleBuildContributor extends GradleBuildContributor implement
     }
 
     @Override
-    public Path relativePath() {
+    public Path getRelativePath() {
         return Paths.get("build.gradle");
     }
 }

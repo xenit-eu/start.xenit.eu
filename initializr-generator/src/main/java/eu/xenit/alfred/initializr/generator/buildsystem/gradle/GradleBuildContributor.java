@@ -14,11 +14,10 @@
  * limitations under the License.
  */
 
-package eu.xenit.alfred.initializr.start.build.gradle;
+package eu.xenit.alfred.initializr.generator.buildsystem.gradle;
 
 
 import eu.xenit.alfred.initializr.generator.buildsystem.BuildAssetWriter;
-import eu.xenit.alfred.initializr.generator.buildsystem.gradle.MultiProjectGradleBuild;
 import io.spring.initializr.generator.io.IndentingWriter;
 import io.spring.initializr.generator.io.IndentingWriterFactory;
 import io.spring.initializr.generator.project.contributor.ProjectContributor;
@@ -26,6 +25,7 @@ import java.io.IOException;
 import java.io.Writer;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import org.springframework.util.Assert;
 
 /**
@@ -37,7 +37,7 @@ import org.springframework.util.Assert;
  *
  * @author Andy Wilkinson
  */
-public abstract class GradleBuildContributor implements BuildAssetWriter, ProjectContributor {
+public class GradleBuildContributor implements BuildAssetWriter, ProjectContributor {
 
     protected final MultiProjectGradleBuild build;
 
@@ -55,14 +55,21 @@ public abstract class GradleBuildContributor implements BuildAssetWriter, Projec
 
     @Override
     public void contribute(Path projectRoot) throws IOException {
-        // create module folder if not exists yet
-        Files.createDirectories(projectRoot);
+        // Get path for the build.gradle relative to the project root
+        Path buildGradlePath = this.getRelativePath();
+        Assert.isTrue(!buildGradlePath.isAbsolute(), "getRelativePath() returned an absolute path");
 
-        Path buildPath = this.relativePath();
-        Assert.isTrue(!buildPath.isAbsolute(), "relativePath() returned an absolute path");
+        // Resolve relative to the project root folder
+        buildGradlePath = projectRoot.resolve(buildGradlePath);
 
-        Path buildGradle = Files.createFile(projectRoot.resolve(buildPath));
-        writeBuild(Files.newBufferedWriter(buildGradle));
+        // Make sure directory structure exists
+        Files.createDirectories(buildGradlePath.getParent());
+
+        // Make sure we can create a file (and barf if it already exists)
+        Files.createFile(buildGradlePath);
+
+        // Write the contents to build.gradle
+        writeBuild(Files.newBufferedWriter(buildGradlePath));
     }
 
     @Override
@@ -71,6 +78,10 @@ public abstract class GradleBuildContributor implements BuildAssetWriter, Projec
                 .createIndentingWriter("gradle", out)) {
             this.buildWriter.writeTo(writer, this.build);
         }
+    }
+
+    public Path getRelativePath() {
+        return Paths.get(build.getName(), "build.gradle");
     }
 
 }

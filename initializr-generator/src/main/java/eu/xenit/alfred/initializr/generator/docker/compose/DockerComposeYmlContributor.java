@@ -1,4 +1,4 @@
-package eu.xenit.alfred.initializr.start.docker.compose;
+package eu.xenit.alfred.initializr.generator.docker.compose;
 
 import eu.xenit.alfred.initializr.generator.docker.compose.DockerComposeFiles;
 import eu.xenit.alfred.initializr.generator.docker.compose.DockerComposeWriter;

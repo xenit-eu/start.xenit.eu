@@ -23,7 +23,7 @@ public class AlfredTelemetryTests extends BaseGeneratorTests {
                 .contains("alfredTelemetryVersion = \"" + telemetryVersion + "\"")
                 .contains("micrometerVersion = \"" + micrometerVersion + "\"");
 
-        result.platformGradleBuild()
+        result.platformBuildGradle()
                 .hasDependency("alfrescoProvided", quote("io.micrometer:micrometer-core:${micrometerVersion}"));
     }
 }
