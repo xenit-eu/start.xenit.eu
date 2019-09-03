@@ -21,14 +21,41 @@ public class GradleBuildParser {
 
         content = content.substring(openPluginsIndex + name.length() + " {".length()).trim();
 
+        // FIXME here we should start tracking the level ? we could open a few more 'sections'
+
         // now 'content' contains the start of the section
-        // the assumption here is that the closing brace is on a separate line
+        // we start tracking the 'depth', to support nested sections
+        //
+        // ASSUMPTION: the matching closing brace is:
+        // 1. at the end of a line (after trimming)
+        // 2. alone on a new line (is that the same as case (1) ?
+        // This is to avoid running into variables in strings like "${foo}"
+
         List<String> section = new ArrayList<>();
-        for(String line : content.split(System.lineSeparator())) {
-            if ("}".equalsIgnoreCase(line.trim()))
-            {
-                // found end of section on a new line
-                return String.join(System.lineSeparator(), section);
+        int depth = 1;
+        for (String line : content.split(System.lineSeparator())) {
+
+            if (line.trim().matches("^\\w+\\s\\{.*$")) {
+                depth++;
+            }
+//            else if (line.trim().startsWith("}")) {
+//                depth--;
+//            }
+
+            if (line.trim().endsWith("}")) {
+                depth--;
+
+                if (depth == 0) {
+
+                    if (!line.trim().equalsIgnoreCase("}"))
+                    {
+                        // there is useful content before the closing '}'
+                        // Example: maven { url 'https://artifacts.alfresco.com/nexus/content/groups/public/' }
+
+                        section.add(line.substring(0, line.indexOf("}")).trim());
+                    }
+                    return String.join(System.lineSeparator(), section);
+                }
             }
 
             section.add(line);
@@ -36,7 +63,7 @@ public class GradleBuildParser {
 
         // if we end up here, something went wrong
         // the matching closing brace was not found ?!
-        throw new IllegalStateException("matching closing brace not found for section "+name);
+        throw new IllegalStateException("matching closing brace not found for section " + name);
 
     }
 
@@ -94,6 +121,40 @@ public class GradleBuildParser {
 
             String result = extractSection("plugins", missingClosingBrace);
 
+        }
+
+        @Test
+        public void testNested() {
+            String gradle = String.join("\n",
+                    "sourceSets {",
+                    "   main {",
+                    "       amp {",
+                    "           dynamicExtension()",
+                    "       }",
+                    "   }",
+                    "}");
+
+            String sourceSets = extractSection("sourceSets", gradle);
+            String main = extractSection("main", sourceSets);
+            String amp = extractSection("amp", main);
+
+            assertThat(amp).isEqualTo("dynamicExtension()");
+        }
+
+        @Test
+        public void testOnSingleLine() {
+            String gradle = String.join("\n",
+                    "repositories {",
+                    "    mavenCentral()",
+                    "    maven { url 'https://artifacts.alfresco.com/nexus/content/groups/public/' }",
+                    "}",
+                    ""
+            );
+
+            String repositories = extractSection("repositories", gradle);
+            String maven = extractSection("maven", repositories);
+
+            assertThat(maven).isEqualTo("url 'https://artifacts.alfresco.com/nexus/content/groups/public/'");
         }
     }
 }
