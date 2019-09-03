@@ -1,4 +1,4 @@
-package eu.xenit.alfred.initializr.start.build.gradle.root;
+package eu.xenit.alfred.initializr.start.build.root.gradle;
 
 import eu.xenit.alfred.initializr.generator.buildsystem.gradle.MultiProjectGradleBuild;
 import io.spring.initializr.generator.buildsystem.gradle.GroovyDslGradleSettingsWriter;

@@ -4,8 +4,8 @@ import static org.springframework.util.StringUtils.quote;
 
 import eu.xenit.alfred.initializr.start.alfresco.platform.AlfrescoPlatformModule;
 import eu.xenit.alfred.initializr.start.build.BuildCustomizer;
-import eu.xenit.alfred.initializr.start.build.RootProjectBuild;
-import eu.xenit.alfred.initializr.start.build.gradle.root.RootGradleBuild;
+import eu.xenit.alfred.initializr.start.build.root.RootProjectBuild;
+import eu.xenit.alfred.initializr.start.build.root.gradle.RootGradleBuild;
 import eu.xenit.alfred.initializr.generator.buildsystem.gradle.GradleProjectDependency;
 import eu.xenit.alfred.initializr.start.sdk.alfred.AlfredSdk;
 import eu.xenit.alfred.initializr.start.sdk.alfred.AlfredSdk.Dependencies;

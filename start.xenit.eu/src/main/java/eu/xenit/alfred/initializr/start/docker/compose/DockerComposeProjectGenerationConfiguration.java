@@ -1,7 +1,7 @@
 package eu.xenit.alfred.initializr.start.docker.compose;
 
 import eu.xenit.alfred.initializr.start.build.BuildCustomizer;
-import eu.xenit.alfred.initializr.start.build.gradle.root.RootGradleBuild;
+import eu.xenit.alfred.initializr.start.build.root.gradle.RootGradleBuild;
 import eu.xenit.alfred.initializr.generator.docker.compose.DockerComposeCustomizer;
 import eu.xenit.alfred.initializr.generator.docker.compose.DockerComposeFiles;
 import eu.xenit.alfred.initializr.generator.docker.compose.DockerComposeLocationStrategy;

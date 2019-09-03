@@ -1,7 +1,7 @@
 package eu.xenit.alfred.initializr.start.alfresco.platform;
 
 import eu.xenit.alfred.initializr.start.build.BuildCustomizer;
-import eu.xenit.alfred.initializr.start.build.PlatformBuild;
+import eu.xenit.alfred.initializr.start.build.platform.PlatformBuild;
 import io.spring.initializr.generator.buildsystem.BuildItemResolver;
 import io.spring.initializr.generator.project.ProjectDescription;
 import io.spring.initializr.metadata.Dependency;

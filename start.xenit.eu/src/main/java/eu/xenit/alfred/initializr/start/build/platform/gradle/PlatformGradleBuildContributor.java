@@ -1,7 +1,7 @@
-package eu.xenit.alfred.initializr.start.build.gradle.platform;
+package eu.xenit.alfred.initializr.start.build.platform.gradle;
 
-import eu.xenit.alfred.initializr.start.build.gradle.CustomGradleBuildWriter;
-import eu.xenit.alfred.initializr.start.build.gradle.GradleBuildContributor;
+import eu.xenit.alfred.initializr.generator.buildsystem.gradle.CustomGradleBuildWriter;
+import eu.xenit.alfred.initializr.generator.buildsystem.gradle.GradleBuildContributor;
 import eu.xenit.alfred.initializr.generator.buildsystem.BuildAssetWriter;
 import io.spring.initializr.generator.io.IndentingWriterFactory;
 import java.nio.file.Path;

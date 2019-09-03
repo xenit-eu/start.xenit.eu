@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package eu.xenit.alfred.initializr.start.build.gradle.root;
+package eu.xenit.alfred.initializr.start.build.root.gradle;
 
 import io.spring.initializr.generator.project.contributor.MultipleResourcesProjectContributor;
 

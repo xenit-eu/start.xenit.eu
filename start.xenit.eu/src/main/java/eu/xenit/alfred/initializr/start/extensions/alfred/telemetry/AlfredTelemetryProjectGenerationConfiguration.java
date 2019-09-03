@@ -2,9 +2,9 @@ package eu.xenit.alfred.initializr.start.extensions.alfred.telemetry;
 
 import static org.springframework.util.StringUtils.quote;
 
-import eu.xenit.alfred.initializr.start.build.PlatformBuild;
+import eu.xenit.alfred.initializr.start.build.platform.PlatformBuild;
 import eu.xenit.alfred.initializr.start.build.BuildCustomizer;
-import eu.xenit.alfred.initializr.start.build.gradle.root.RootGradleBuild;
+import eu.xenit.alfred.initializr.start.build.root.gradle.RootGradleBuild;
 import eu.xenit.alfred.initializr.generator.condition.ConditionalOnRequestedFacet;
 import eu.xenit.alfred.initializr.start.sdk.alfred.AlfredSdk;
 import io.spring.initializr.generator.buildsystem.Dependency;

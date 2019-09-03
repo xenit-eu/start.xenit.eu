@@ -14,11 +14,10 @@
  * limitations under the License.
  */
 
-package eu.xenit.alfred.initializr.start.build.gradle;
+package eu.xenit.alfred.initializr.generator.buildsystem.gradle;
 
 
 import eu.xenit.alfred.initializr.generator.buildsystem.BuildAssetWriter;
-import eu.xenit.alfred.initializr.generator.buildsystem.gradle.MultiProjectGradleBuild;
 import io.spring.initializr.generator.io.IndentingWriter;
 import io.spring.initializr.generator.io.IndentingWriterFactory;
 import io.spring.initializr.generator.project.contributor.ProjectContributor;

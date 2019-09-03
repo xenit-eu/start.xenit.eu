@@ -1,7 +1,7 @@
 io.spring.initializr.generator.project.ProjectGenerationConfiguration=\
 eu.xenit.alfred.initializr.start.build.BuildProjectGenerationConfiguration,\
-eu.xenit.alfred.initializr.start.build.gradle.root.GradleProjectGenerationConfiguration,\
-eu.xenit.alfred.initializr.start.build.gradle.platform.PlatformGradleBuildConfiguration,\
+eu.xenit.alfred.initializr.start.build.root.gradle.GradleProjectGenerationConfiguration,\
+eu.xenit.alfred.initializr.start.build.platform.gradle.PlatformGradleBuildConfiguration,\
 eu.xenit.alfred.initializr.start.sdk.alfred.platform.AlfredSdkPlatformProjectGenerationConfiguration,\
 eu.xenit.alfred.initializr.start.sdk.alfred.docker.DockerBuildGenerationConfiguration,\
 eu.xenit.alfred.initializr.start.sdk.alfred.docker.AlfredSdkComposeProjectGenerationConfiguration,\

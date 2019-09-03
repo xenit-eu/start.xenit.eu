@@ -1,4 +1,4 @@
-package eu.xenit.alfred.initializr.start.build;
+package eu.xenit.alfred.initializr.start.build.platform;
 
 import eu.xenit.alfred.initializr.generator.buildsystem.Build;
 

@@ -2,7 +2,7 @@ package eu.xenit.alfred.initializr.start.sdk.alfred.platform;
 
 import eu.xenit.alfred.initializr.start.alfresco.platform.AlfrescoPlatformModule;
 import eu.xenit.alfred.initializr.start.build.BuildCustomizer;
-import eu.xenit.alfred.initializr.start.build.RootProjectBuild;
+import eu.xenit.alfred.initializr.start.build.root.RootProjectBuild;
 import io.spring.initializr.generator.buildsystem.Dependency;
 import io.spring.initializr.generator.condition.ConditionalOnBuildSystem;
 import io.spring.initializr.generator.project.ProjectGenerationConfiguration;
