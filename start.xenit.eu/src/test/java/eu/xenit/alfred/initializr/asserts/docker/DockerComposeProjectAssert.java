@@ -1,7 +1,7 @@
 package eu.xenit.alfred.initializr.asserts.docker;
 
 import eu.xenit.alfred.initializr.web.project.DockerComposeGenerationResultSet;
-import eu.xenit.alfred.initializr.web.project.DockerComposeYml;
+import eu.xenit.alfred.initializr.web.project.DockerComposeYmlResult;
 import java.util.stream.Collectors;
 import org.assertj.core.api.AbstractAssert;
 
@@ -28,7 +28,7 @@ public class DockerComposeProjectAssert extends
             failWithMessage("Expected <%s> compose.yml files, but got <%s>: %s",
                     expected, this.actual.size(),
                     this.actual.files().stream()
-                            .map(DockerComposeYml::getFilename)
+                            .map(DockerComposeYmlResult::getFilename)
                             .collect(Collectors.joining(", ")));
         }
 

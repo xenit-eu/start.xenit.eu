@@ -2,13 +2,13 @@ package eu.xenit.alfred.initializr.generator.alfresco.platform;
 
 import eu.xenit.alfred.initializr.generator.alfresco.AlfrescoConstants.MavenRepositories;
 import eu.xenit.alfred.initializr.generator.alfresco.AlfrescoModuleCustomizer;
-import eu.xenit.alfred.initializr.generator.alfresco.AlfrescoModuleProjectLayout;
 import eu.xenit.alfred.initializr.generator.alfresco.AlfrescoModulePropertiesContributor;
 import eu.xenit.alfred.initializr.generator.alfresco.AlfrescoModulePropertiesWriter;
 import eu.xenit.alfred.initializr.generator.alfresco.platform.context.SpringContextModel;
 import eu.xenit.alfred.initializr.generator.alfresco.platform.context.SpringContextModelContributor;
 import eu.xenit.alfred.initializr.generator.alfresco.platform.context.SpringContextModelCustomizer;
 import eu.xenit.alfred.initializr.generator.build.BuildCustomizer;
+import eu.xenit.alfred.initializr.generator.build.PlatformBuild;
 import io.spring.initializr.generator.buildsystem.BuildItemResolver;
 import io.spring.initializr.generator.buildsystem.MavenRepository;
 import io.spring.initializr.generator.io.IndentingWriterFactory;

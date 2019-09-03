@@ -1,7 +1,7 @@
 package eu.xenit.alfred.initializr.generator.extensions.alfred.telemetry.graphite;
 
 import eu.xenit.alfred.initializr.generator.condition.ConditionalOnRequestedFacet;
-import eu.xenit.alfred.initializr.generator.docker.compose.DockerCompose;
+import eu.xenit.alfred.initializr.generator.docker.compose.DockerComposeFiles;
 import eu.xenit.alfred.initializr.generator.docker.compose.DockerComposeCustomizer;
 import eu.xenit.alfred.initializr.generator.docker.compose.DockerComposeGradlePluginConfigurationCustomizer;
 import eu.xenit.alfred.initializr.generator.docker.compose.DockerComposeLocationStrategy;
@@ -13,8 +13,8 @@ import eu.xenit.alfred.initializr.generator.extensions.alfred.telemetry.grafana.
 import eu.xenit.alfred.initializr.generator.extensions.alfred.telemetry.grafana.provisioning.GrafanaProvisioning;
 import eu.xenit.alfred.initializr.generator.extensions.alfred.telemetry.grafana.provisioning.GrafanaProvisioningContributor;
 import eu.xenit.alfred.initializr.generator.extensions.alfred.telemetry.grafana.provisioning.GrafanaProvisioningWriterDelegate;
-import eu.xenit.alfred.initializr.model.docker.ComposeServices;
-import eu.xenit.alfred.initializr.model.docker.DockerComposeModel;
+import eu.xenit.alfred.initializr.generator.docker.compose.model.ComposeServices;
+import eu.xenit.alfred.initializr.generator.docker.compose.model.DockerComposeModel;
 import io.spring.initializr.generator.buildsystem.gradle.GradleBuildSystem;
 import io.spring.initializr.generator.condition.ConditionalOnBuildSystem;
 import io.spring.initializr.generator.condition.ConditionalOnRequestedDependency;
@@ -34,7 +34,7 @@ public class GraphiteProjectGenerationConfiguration {
     }
 
     @Bean
-    public GraphiteDockerComposeYmlContributor graphiteDockerComposeContributor(DockerCompose compose,
+    public GraphiteDockerComposeYmlContributor graphiteDockerComposeContributor(DockerComposeFiles compose,
             DockerComposeYmlWriterDelegate writer,
             IndentingWriterFactory indentingWriterFactory,
             DockerComposeLocationStrategy locationStrategy) {

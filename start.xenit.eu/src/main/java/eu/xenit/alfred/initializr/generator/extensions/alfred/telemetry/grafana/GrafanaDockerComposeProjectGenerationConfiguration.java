@@ -2,7 +2,7 @@ package eu.xenit.alfred.initializr.generator.extensions.alfred.telemetry.grafana
 
 
 import eu.xenit.alfred.initializr.generator.condition.ConditionalOnRequestedFacet;
-import eu.xenit.alfred.initializr.generator.docker.compose.DockerCompose;
+import eu.xenit.alfred.initializr.generator.docker.compose.DockerComposeFiles;
 import eu.xenit.alfred.initializr.generator.docker.compose.DockerComposeCustomizer;
 import eu.xenit.alfred.initializr.generator.docker.compose.DockerComposeGradlePluginConfigurationCustomizer;
 import eu.xenit.alfred.initializr.generator.docker.compose.DockerComposeYmlWriterDelegate;
@@ -28,7 +28,7 @@ public class GrafanaDockerComposeProjectGenerationConfiguration {
     }
 
     @Bean
-    GrafanaDockerComposeYmlContributor grafanaDockerComposeYmlContributor(DockerCompose compose,
+    GrafanaDockerComposeYmlContributor grafanaDockerComposeYmlContributor(DockerComposeFiles compose,
             DockerComposeYmlWriterDelegate writer,
             IndentingWriterFactory indentingWriterFactory,
             LocationStrategy locationStrategy) {

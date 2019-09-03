@@ -1,10 +1,10 @@
 package eu.xenit.alfred.initializr.generator.docker.compose;
 
-import eu.xenit.alfred.initializr.model.docker.ComposeServiceInfo;
-import eu.xenit.alfred.initializr.model.docker.ComposeServices;
-import eu.xenit.alfred.initializr.model.docker.ComposeVolumeInfo;
-import eu.xenit.alfred.initializr.model.docker.ComposeVolumes;
-import eu.xenit.alfred.initializr.model.docker.DockerComposeModel;
+import eu.xenit.alfred.initializr.generator.docker.compose.model.ComposeServiceInfo;
+import eu.xenit.alfred.initializr.generator.docker.compose.model.ComposeServices;
+import eu.xenit.alfred.initializr.generator.docker.compose.model.ComposeVolumeInfo;
+import eu.xenit.alfred.initializr.generator.docker.compose.model.ComposeVolumes;
+import eu.xenit.alfred.initializr.generator.docker.compose.model.DockerComposeModel;
 import io.spring.initializr.generator.io.IndentingWriter;
 import java.util.Collection;
 import java.util.Map;

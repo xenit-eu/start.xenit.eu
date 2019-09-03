@@ -5,6 +5,9 @@
 initializr-generator-beans-xml-config/build/
 initializr-generator-beans-xml-config/out/
 
+initializr-generator/build/
+initializr-generator/out/
+
 start.xenit.eu/build/
 start.xenit.eu/out/
 

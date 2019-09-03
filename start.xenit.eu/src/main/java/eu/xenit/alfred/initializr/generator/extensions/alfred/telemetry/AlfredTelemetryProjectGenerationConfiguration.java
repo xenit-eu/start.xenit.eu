@@ -2,7 +2,7 @@ package eu.xenit.alfred.initializr.generator.extensions.alfred.telemetry;
 
 import static org.springframework.util.StringUtils.quote;
 
-import eu.xenit.alfred.initializr.generator.alfresco.platform.PlatformBuild;
+import eu.xenit.alfred.initializr.generator.build.PlatformBuild;
 import eu.xenit.alfred.initializr.generator.build.BuildCustomizer;
 import eu.xenit.alfred.initializr.generator.build.gradle.root.RootGradleBuild;
 import eu.xenit.alfred.initializr.generator.condition.ConditionalOnRequestedFacet;

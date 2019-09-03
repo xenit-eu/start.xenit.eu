@@ -1,7 +1,6 @@
 package eu.xenit.alfred.initializr.generator.buildsystem.gradle;
 
 import eu.xenit.alfred.initializr.generator.buildsystem.MultiModuleBuild;
-import io.micrometer.core.instrument.util.StringUtils;
 import io.spring.initializr.generator.buildsystem.BuildItemResolver;
 import io.spring.initializr.generator.buildsystem.gradle.GradleBuild;
 import java.util.Collections;
@@ -11,6 +10,7 @@ import lombok.Getter;
 import lombok.NonNull;
 import lombok.Setter;
 import lombok.var;
+import org.springframework.util.StringUtils;
 
 public class MultiProjectGradleBuild extends GradleBuild implements MultiModuleBuild<MultiProjectGradleBuild> {
 
@@ -29,9 +29,9 @@ public class MultiProjectGradleBuild extends GradleBuild implements MultiModuleB
     {
         super(buildItemResolver);
 
-        if (StringUtils.isBlank(name))
+        if (StringUtils.isEmpty(name))
         {
-            throw new IllegalArgumentException("Parameter name cannot be blank");
+            throw new IllegalArgumentException("Parameter name cannot be empty");
         }
 
         this.name = name;

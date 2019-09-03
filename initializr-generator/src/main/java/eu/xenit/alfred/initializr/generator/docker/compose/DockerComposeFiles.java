@@ -1,15 +1,15 @@
 package eu.xenit.alfred.initializr.generator.docker.compose;
 
 
-import eu.xenit.alfred.initializr.model.docker.DockerComposeModel;
+import eu.xenit.alfred.initializr.generator.docker.compose.model.DockerComposeModel;
 import java.util.HashMap;
 import java.util.Map;
 
-public class DockerCompose {
+public class DockerComposeFiles {
 
     private Map<String, DockerComposeModel> files = new HashMap<>();
 
-    public DockerCompose() {
+    public DockerComposeFiles() {
 
         // create the default `main()` file
         this.file("");

@@ -16,8 +16,8 @@ public class DockerComposeAssetGenerator implements ProjectAssetGenerator<Docker
     public DockerComposeGenerationResultSet generate(ProjectGenerationContext context) throws IOException {
         ObjectProvider<DockerComposeWriter> composeWriters = context.getBeanProvider(DockerComposeWriter.class);
 
-        List<DockerComposeYml> composeYmls = composeWriters.orderedStream()
-                .map(writer -> new DockerComposeYml(writer.composeFilename(), this.writeDockerComposeContent(writer)))
+        List<DockerComposeYmlResult> composeYmls = composeWriters.orderedStream()
+                .map(writer -> new DockerComposeYmlResult(writer.composeFilename(), this.writeDockerComposeContent(writer)))
                 .collect(Collectors.toList());
 
         return new DockerComposeGenerationResultSet(context.getBean(ProjectDescription.class), composeYmls);

@@ -1,7 +1,6 @@
-package eu.xenit.alfred.initializr.model.docker;
+package eu.xenit.alfred.initializr.generator.docker.compose.model;
 
 import java.util.HashMap;
-import java.util.stream.Stream;
 import lombok.Data;
 import lombok.NonNull;
 

@@ -1,4 +1,4 @@
-package eu.xenit.alfred.initializr.generator.alfresco.platform;
+package eu.xenit.alfred.initializr.generator.build;
 
 import eu.xenit.alfred.initializr.generator.buildsystem.Build;
 

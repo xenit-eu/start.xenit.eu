@@ -1,4 +1,4 @@
-package eu.xenit.alfred.initializr.model.docker;
+package eu.xenit.alfred.initializr.generator.docker.compose.model;
 
 import java.util.LinkedHashMap;
 import java.util.Map;

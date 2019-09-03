@@ -1,6 +1,6 @@
-package eu.xenit.alfred.initializr.model.docker;
+package eu.xenit.alfred.initializr.generator.docker.compose.model;
 
-import eu.xenit.alfred.initializr.model.docker.ComposeEnvironment.EnvironmentEntry;
+import eu.xenit.alfred.initializr.generator.docker.compose.model.ComposeEnvironment.EnvironmentEntry;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;

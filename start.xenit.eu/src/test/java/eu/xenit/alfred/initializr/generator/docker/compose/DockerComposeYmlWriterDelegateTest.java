@@ -1,10 +1,10 @@
 package eu.xenit.alfred.initializr.generator.docker.compose;
 
-import static eu.xenit.alfred.initializr.model.docker.ComposeEnvironment.env;
-import static eu.xenit.alfred.initializr.model.docker.ComposeVolumes.volume;
+import static eu.xenit.alfred.initializr.generator.docker.compose.model.ComposeEnvironment.env;
+import static eu.xenit.alfred.initializr.generator.docker.compose.model.ComposeVolumes.volume;
 import static org.assertj.core.api.Assertions.assertThat;
 
-import eu.xenit.alfred.initializr.model.docker.DockerComposeModel;
+import eu.xenit.alfred.initializr.generator.docker.compose.model.DockerComposeModel;
 import io.spring.initializr.generator.io.IndentingWriter;
 import io.spring.initializr.generator.io.IndentingWriterFactory;
 import java.io.IOException;

@@ -4,7 +4,7 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
-public class DockerComposeYml {
+public class DockerComposeYmlResult {
 
     @Getter
     private final String filename;

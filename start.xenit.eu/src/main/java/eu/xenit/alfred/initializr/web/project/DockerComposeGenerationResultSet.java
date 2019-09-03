@@ -13,14 +13,14 @@ public class DockerComposeGenerationResultSet {
     @Getter
     private final ProjectDescription projectDescription;
 
-    private final List<DockerComposeYml> composeFileList;
+    private final List<DockerComposeYmlResult> composeFileList;
 
-    public DockerComposeGenerationResultSet(ProjectDescription projectDescription, List<DockerComposeYml> files) {
+    public DockerComposeGenerationResultSet(ProjectDescription projectDescription, List<DockerComposeYmlResult> files) {
         this.projectDescription = projectDescription;
         this.composeFileList = files;
     }
 
-    public Optional<DockerComposeYml> getCompose(String filename)
+    public Optional<DockerComposeYmlResult> getCompose(String filename)
     {
         if (StringUtils.isEmpty(filename)) {
             return Optional.empty();
@@ -30,8 +30,8 @@ public class DockerComposeGenerationResultSet {
     }
 
     public String getComposeContent(String filename) {
-        Optional<DockerComposeYml> optional = this.getCompose(filename);
-        return optional.map(DockerComposeYml::getContent).orElse(null);
+        Optional<DockerComposeYmlResult> optional = this.getCompose(filename);
+        return optional.map(DockerComposeYmlResult::getContent).orElse(null);
     }
 
     public String getDockerCompose() {
@@ -50,7 +50,7 @@ public class DockerComposeGenerationResultSet {
         return this.composeFileList.size();
     }
 
-    public Collection<DockerComposeYml> files() {
+    public Collection<DockerComposeYmlResult> files() {
         return Collections.unmodifiableList(this.composeFileList);
     }
 

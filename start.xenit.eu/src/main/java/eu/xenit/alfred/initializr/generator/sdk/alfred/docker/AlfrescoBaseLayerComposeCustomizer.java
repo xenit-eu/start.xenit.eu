@@ -1,11 +1,11 @@
 package eu.xenit.alfred.initializr.generator.sdk.alfred.docker;
 
-import static eu.xenit.alfred.initializr.model.docker.ComposeEnvironment.env;
-import static eu.xenit.alfred.initializr.model.docker.ComposeVolumes.volume;
+import static eu.xenit.alfred.initializr.generator.docker.compose.model.ComposeEnvironment.env;
+import static eu.xenit.alfred.initializr.generator.docker.compose.model.ComposeVolumes.volume;
 
-import eu.xenit.alfred.initializr.generator.docker.compose.DockerCompose;
+import eu.xenit.alfred.initializr.generator.docker.compose.DockerComposeFiles;
 import eu.xenit.alfred.initializr.generator.docker.compose.DockerComposeCustomizer;
-import eu.xenit.alfred.initializr.model.docker.ComposeServices;
+import eu.xenit.alfred.initializr.generator.docker.compose.model.ComposeServices;
 import io.spring.initializr.generator.project.ProjectDescription;
 
 public class AlfrescoBaseLayerComposeCustomizer implements DockerComposeCustomizer {
@@ -17,7 +17,7 @@ public class AlfrescoBaseLayerComposeCustomizer implements DockerComposeCustomiz
     }
 
     @Override
-    public void customize(DockerCompose compose) {
+    public void customize(DockerComposeFiles compose) {
         ComposeServices services = compose.main().getServices();
 
         services

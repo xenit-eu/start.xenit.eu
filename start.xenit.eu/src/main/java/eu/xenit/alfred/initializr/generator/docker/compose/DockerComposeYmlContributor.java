@@ -1,7 +1,7 @@
 package eu.xenit.alfred.initializr.generator.docker.compose;
 
 import eu.xenit.alfred.initializr.generator.project.LocationStrategy;
-import eu.xenit.alfred.initializr.model.docker.DockerComposeModel;
+import eu.xenit.alfred.initializr.generator.docker.compose.model.DockerComposeModel;
 import io.spring.initializr.generator.io.IndentingWriter;
 import io.spring.initializr.generator.io.IndentingWriterFactory;
 import io.spring.initializr.generator.project.contributor.ProjectContributor;
@@ -13,7 +13,7 @@ import lombok.Getter;
 
 public class DockerComposeYmlContributor implements ProjectContributor, DockerComposeWriter {
 
-    private final DockerCompose compose;
+    private final DockerComposeFiles compose;
 
     @Getter
     private final String name;
@@ -22,7 +22,7 @@ public class DockerComposeYmlContributor implements ProjectContributor, DockerCo
     private final IndentingWriterFactory indentingWriterFactory;
     private final LocationStrategy locationStrategy;
 
-    public DockerComposeYmlContributor(DockerCompose compose, String name, DockerComposeYmlWriterDelegate writer,
+    public DockerComposeYmlContributor(DockerComposeFiles compose, String name, DockerComposeYmlWriterDelegate writer,
             IndentingWriterFactory indentingWriterFactory, LocationStrategy locationStrategy) {
         this.compose = compose;
         this.name = name;

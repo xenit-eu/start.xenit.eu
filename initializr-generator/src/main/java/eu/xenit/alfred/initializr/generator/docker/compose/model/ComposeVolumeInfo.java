@@ -1,4 +1,4 @@
-package eu.xenit.alfred.initializr.model.docker;
+package eu.xenit.alfred.initializr.generator.docker.compose.model;
 
 import lombok.AccessLevel;
 import lombok.Getter;

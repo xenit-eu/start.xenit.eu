@@ -1,8 +1,6 @@
-package eu.xenit.alfred.initializr.model.docker;
+package eu.xenit.alfred.initializr.generator.docker.compose.model;
 
 import java.util.Arrays;
-import java.util.function.Function;
-import java.util.stream.Collectors;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;

@@ -1,6 +1,5 @@
 package eu.xenit.alfred.initializr.generator.sdk.alfred;
 
-import eu.xenit.alfred.initializr.generator.alfresco.AlfrescoConstants;
 import eu.xenit.alfred.initializr.generator.alfresco.AlfrescoConstants.ArtifactId;
 import eu.xenit.alfred.initializr.generator.alfresco.AlfrescoConstants.GroupId;
 import eu.xenit.alfred.initializr.generator.packaging.amp.AmpPackaging;

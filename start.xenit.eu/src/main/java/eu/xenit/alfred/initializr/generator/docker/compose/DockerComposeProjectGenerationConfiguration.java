@@ -16,13 +16,13 @@ import org.springframework.context.annotation.Bean;
 public class DockerComposeProjectGenerationConfiguration {
 
     @Bean
-    DockerCompose dockerComposeModel(ObjectProvider<DockerComposeCustomizer> customizers) {
+    DockerComposeFiles dockerComposeModel(ObjectProvider<DockerComposeCustomizer> customizers) {
         return this.createDockerComposeModel(customizers.orderedStream().collect(Collectors.toList()));
     }
 
-    private DockerCompose createDockerComposeModel(List<DockerComposeCustomizer> customizers) {
+    private DockerComposeFiles createDockerComposeModel(List<DockerComposeCustomizer> customizers) {
 
-        DockerCompose compose = new DockerCompose();
+        DockerComposeFiles compose = new DockerComposeFiles();
         LambdaSafe.callbacks(DockerComposeCustomizer.class, customizers, compose, new Object[0])
                 .invoke((customizer) -> {
                     customizer.customize(compose);
@@ -32,7 +32,7 @@ public class DockerComposeProjectGenerationConfiguration {
     }
 
     @Bean
-    DockerComposeYmlContributor mainDockerComposeContributor(DockerCompose compose,
+    DockerComposeYmlContributor mainDockerComposeContributor(DockerComposeFiles compose,
             DockerComposeYmlWriterDelegate writer,
             IndentingWriterFactory indentingWriterFactory,
             DockerComposeLocationStrategy composeLocation) {
