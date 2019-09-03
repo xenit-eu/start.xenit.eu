@@ -48,7 +48,6 @@ public class CustomProjectGenerationInvoker<R extends ProjectRequest> extends Pr
         this.requestConverter = requestConverter;
     }
 
-
     protected <G> G invokeGeneration(R request, ProjectAssetGenerator<G> assetGenerator) {
         InitializrMetadata metadata = this.parentApplicationContext.getBean(InitializrMetadataProvider.class).get();
         try {
@@ -59,11 +58,7 @@ public class CustomProjectGenerationInvoker<R extends ProjectRequest> extends Pr
 
             // decorate asset-generation with project-generation-success event-publisher
             assetGenerator = decorateWithProjectGenerationEventPublication(request, assetGenerator);
-
             G generated = projectGenerator.generate(description, assetGenerator);
-
-            // TODO don't have access to the private method below
-            // addTempFile(result.getRootDirectory(), result.getRootDirectory());
 
             return generated;
         } catch (ProjectGenerationException ex) {
@@ -80,7 +75,6 @@ public class CustomProjectGenerationInvoker<R extends ProjectRequest> extends Pr
             return result;
         };
     }
-
 
     /**
      * Invokes the project generation API that knows how to just write *all* build-related files.
