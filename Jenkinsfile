@@ -50,7 +50,7 @@ pipeline {
             }
 	    steps {
 		ansibleTower(
-		    towerServer: 'Sandbox ansible tower',
+		    towerServer: 'Production ansible tower',
 		    templateType: 'job',
 		    jobTemplate: 'Update start.xenit.eu',
 		    importTowerLogs: true,
