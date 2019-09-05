@@ -1,24 +1,25 @@
 package eu.xenit.alfred.initializr.start.docker.compose;
 
-import io.spring.initializr.generator.buildsystem.gradle.GradleBuild.TaskCustomization;
+import io.spring.initializr.generator.buildsystem.gradle.GradleTask;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
 import lombok.Getter;
 
-public class DockerComposeGradlePluginConfiguration implements Consumer<TaskCustomization> {
+public class DockerComposeGradlePluginConfiguration implements Consumer<GradleTask.Builder> {
+
 
     @Getter
     private List<String> useComposeFiles = new ArrayList<>();
 
     @Override
-    public void accept(TaskCustomization dockerCompose) {
+    public void accept(GradleTask.Builder dockerCompose) {
         if (!this.shouldSetUseComposeFiles()) {
             return;
         }
 
-        dockerCompose.set("useComposeFiles", "[" + getUseComposeFilesAsString() + "]");
+        dockerCompose.attribute("useComposeFiles", "[" + getUseComposeFilesAsString() + "]");
     }
 
     private String getUseComposeFilesAsString() {
@@ -38,4 +39,5 @@ public class DockerComposeGradlePluginConfiguration implements Consumer<TaskCust
         }
         return true;
     }
+
 }

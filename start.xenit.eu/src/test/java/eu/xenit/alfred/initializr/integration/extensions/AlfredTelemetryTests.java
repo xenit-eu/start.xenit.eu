@@ -20,8 +20,8 @@ public class AlfredTelemetryTests extends BaseGeneratorTests {
         result.rootGradleBuild()
                 .hasDependency("alfrescoAmp",
                         quote("eu.xenit.alfred.telemetry:alfred-telemetry-platform:${alfredTelemetryVersion}@amp"))
-                .contains("alfredTelemetryVersion = '" + telemetryVersion + "'")
-                .contains("micrometerVersion = '" + micrometerVersion + "'");
+                .contains("alfredTelemetryVersion = \"" + telemetryVersion + "\"")
+                .contains("micrometerVersion = \"" + micrometerVersion + "\"");
 
         result.platformGradleBuild()
                 .hasDependency("alfrescoProvided", quote("io.micrometer:micrometer-core:${micrometerVersion}"));

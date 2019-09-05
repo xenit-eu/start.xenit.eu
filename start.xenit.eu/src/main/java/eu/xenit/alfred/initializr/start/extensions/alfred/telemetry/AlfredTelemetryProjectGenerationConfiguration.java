@@ -13,6 +13,7 @@ import io.spring.initializr.generator.buildsystem.gradle.GradleBuildSystem;
 import io.spring.initializr.generator.buildsystem.gradle.GradleDependency;
 import io.spring.initializr.generator.condition.ConditionalOnBuildSystem;
 import io.spring.initializr.generator.project.ProjectGenerationConfiguration;
+import io.spring.initializr.generator.version.VersionProperty;
 import io.spring.initializr.generator.version.VersionReference;
 import io.spring.initializr.metadata.InitializrMetadata;
 import io.spring.initializr.metadata.support.MetadataBuildItemMapper;
@@ -50,8 +51,8 @@ public class AlfredTelemetryProjectGenerationConfiguration {
                     .configuration(AlfredSdk.Configurations.ALFRESCO_AMP)
                     .build();
 
-            build.ext("micrometerVersion", quote(MICROMETER_VERSION));
-            build.ext("alfredTelemetryVersion", quote(ALFRED_TELEMETRY_VERSION));
+            build.properties().version(VersionProperty.of("micrometer-version"), MICROMETER_VERSION);
+            build.properties().version(VersionProperty.of("alfred-telemetry-version"), ALFRED_TELEMETRY_VERSION);
 
             build.dependencies().add(ALFRED_TELEMETRY, telemetryAmp);
         };

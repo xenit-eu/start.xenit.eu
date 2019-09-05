@@ -9,8 +9,10 @@ import eu.xenit.alfred.initializr.start.alfresco.platform.context.SpringContextM
 import eu.xenit.alfred.initializr.start.alfresco.platform.context.SpringContextModelCustomizer;
 import eu.xenit.alfred.initializr.start.build.BuildCustomizer;
 import eu.xenit.alfred.initializr.start.build.PlatformBuild;
+import eu.xenit.alfred.initializr.start.build.gradle.GradleBuildContributor;
 import io.spring.initializr.generator.buildsystem.BuildItemResolver;
 import io.spring.initializr.generator.buildsystem.MavenRepository;
+import io.spring.initializr.generator.buildsystem.gradle.GradleBuild;
 import io.spring.initializr.generator.io.IndentingWriterFactory;
 import io.spring.initializr.generator.project.ProjectGenerationConfiguration;
 import io.spring.initializr.generator.project.ProjectDescription;
@@ -70,13 +72,15 @@ public class AlfrescoModuleProjectGenerationConfiguration {
     }
 
     @Bean
+//    public BuildCustomizer<GradleBuild> simplePlatformCustomizer(
     public BuildCustomizer<PlatformBuild> simplePlatformCustomizer(
             AlfrescoPlatformModule module,
             ProjectDescription projectDescription) {
         return (build) -> {
-            build.setArtifact(module.getId());
-            build.setGroup(projectDescription.getGroupId());
-            build.setDescription(module.getDescription());
+            build.settings().artifact(module.getId());
+            build.settings().group(projectDescription.getGroupId());
+
+            // build.setDescription(module.getDescription());
 
             // Why is maven.properties not the same as gradle.ext ?
             // build.ext("alfrescoVersion", quote(this.platformModule.getAlfrescoVersion().toString()));
