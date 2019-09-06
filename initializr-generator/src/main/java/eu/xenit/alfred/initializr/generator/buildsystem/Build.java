@@ -1,8 +1,10 @@
 package eu.xenit.alfred.initializr.generator.buildsystem;
 
 import io.spring.initializr.generator.buildsystem.BomContainer;
+import io.spring.initializr.generator.buildsystem.BuildSettings;
 import io.spring.initializr.generator.buildsystem.DependencyContainer;
 import io.spring.initializr.generator.buildsystem.MavenRepositoryContainer;
+import io.spring.initializr.generator.buildsystem.PropertyContainer;
 import io.spring.initializr.generator.version.VersionProperty;
 import java.util.Map;
 import lombok.Getter;
@@ -11,25 +13,7 @@ import lombok.Setter;
 
 public interface Build {
 
-    String getGroup();
-
-    void setGroup(String group);
-
-    String getArtifact();
-
-    void setArtifact(String artifact);
-
-    String getVersion();
-
-    void setVersion(String version);
-
-    void addVersionProperty(VersionProperty versionProperty, String version);
-
-    void addExternalVersionProperty(String propertyName, String version);
-
-    void addInternalVersionProperty(String propertyName, String version);
-
-    Map<VersionProperty, String> getVersionProperties();
+    BuildSettings.Builder<?> settings();
 
     DependencyContainer dependencies();
 
@@ -38,6 +22,8 @@ public interface Build {
     MavenRepositoryContainer repositories();
 
     MavenRepositoryContainer pluginRepositories();
+
+    PropertyContainer properties();
 
     String getDescription();
     void setDescription(String description);

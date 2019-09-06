@@ -9,7 +9,7 @@ public class CustomGradleSettingsWriter extends GroovyDslGradleSettingsWriter {
 
     public void writeTo(IndentingWriter writer, MultiProjectGradleBuild build) throws IOException {
         // override -> no plugin management
-        writer.println("rootProject.name = '" + build.getArtifact() + "'");
+        writer.println("rootProject.name = '" + build.getSettings().getArtifact() + "'");
 
         this.writeSubProjects(writer, build);
 

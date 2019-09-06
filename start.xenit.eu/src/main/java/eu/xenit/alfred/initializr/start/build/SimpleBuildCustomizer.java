@@ -35,9 +35,10 @@ public class SimpleBuildCustomizer implements BuildCustomizer<Build> {
 
     @Override
     public void customize(Build build) {
-        build.setGroup(this.projectDescription.getGroupId());
-        build.setArtifact(this.projectDescription.getArtifactId());
-        build.setVersion(this.projectDescription.getVersion());
+        build.settings()
+                .group(this.projectDescription.getGroupId())
+                .artifact(this.projectDescription.getArtifactId())
+                .version(this.projectDescription.getVersion());
     }
 
     @Override

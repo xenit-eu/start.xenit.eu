@@ -42,7 +42,7 @@ public class GradleProjectGenerationConfiguration {
 
     @Bean
     public BuildCustomizer<RootGradleBuild> addDockerVersion(ProjectDescription projectDescription) {
-        return (build) -> build.ext("alfrescoVersion", quote(projectDescription.getPlatformVersion().toString()));
+        return (build) -> build.properties().property("alfrescoVersion", quote(projectDescription.getPlatformVersion().toString()));
 
     }
 

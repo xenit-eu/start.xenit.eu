@@ -74,7 +74,7 @@ public class DockerComposeProjectGenerationConfiguration {
     @Bean
     BuildCustomizer<RootGradleBuild> configureComposeGradlePlugin(
             DockerComposeGradlePluginConfiguration composePluginConfiguration) {
-        return (build) -> build.customizeTask("dockerCompose", composePluginConfiguration);
+        return (build) -> build.tasks().customize("dockerCompose", composePluginConfiguration);
     }
 
 

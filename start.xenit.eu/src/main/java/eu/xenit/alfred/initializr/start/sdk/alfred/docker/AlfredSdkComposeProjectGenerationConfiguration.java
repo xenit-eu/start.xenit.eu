@@ -30,8 +30,8 @@ public class AlfredSdkComposeProjectGenerationConfiguration {
             DockerComposeLocationStrategy locationStrategy) {
         return (build) -> {
 
-            build.customizeTask("dockerCompose", (dockerCompose) -> {
-                dockerCompose.set("dockerComposeWorkingDirectory",
+            build.tasks().customize("dockerCompose", (dockerCompose) -> {
+                dockerCompose.attribute("dockerComposeWorkingDirectory",
                         "'" + locationStrategy.getLocation().toString() + "/'");
             });
         };
