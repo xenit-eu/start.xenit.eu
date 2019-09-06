@@ -13,13 +13,15 @@ public class DockerComposeTests extends BaseGeneratorTests {
     @Test
     public void testDefaultBuild() {
         ProjectRequest request = createProjectRequest();
+        request.setArtifactId("foo");
+
         DockerComposeProjectAssert result = generateCompose(request);
 
         result.assertDockerCompose()
                 .isNotBlank()
                 .startsWith("version:")
                 .contains("alfresco:")
-                .contains("image: ${DEMO_PLATFORM_DOCKER_IMAGE:-hub.xenit.eu/demo:latest}");
+                .contains("image: ${FOO_PLATFORM_DOCKER_IMAGE:-hub.xenit.eu/demo:latest}");
     }
 
     @Test

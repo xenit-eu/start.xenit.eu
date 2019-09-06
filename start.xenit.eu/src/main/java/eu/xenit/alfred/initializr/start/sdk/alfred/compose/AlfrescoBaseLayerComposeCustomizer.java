@@ -6,23 +6,32 @@ import static eu.xenit.alfred.initializr.generator.docker.compose.model.ComposeV
 import eu.xenit.alfred.initializr.generator.docker.compose.DockerComposeFiles;
 import eu.xenit.alfred.initializr.generator.docker.compose.DockerComposeCustomizer;
 import eu.xenit.alfred.initializr.generator.docker.compose.model.ComposeServices;
+import eu.xenit.alfred.initializr.start.docker.compose.DockerImageEnvNameProvider;
+import eu.xenit.alfred.initializr.start.project.docker.DockerProjectModule;
 import io.spring.initializr.generator.project.ProjectDescription;
 
 public class AlfrescoBaseLayerComposeCustomizer implements DockerComposeCustomizer {
 
     private final ProjectDescription projectDescription;
+    private final DockerProjectModule dockerPlatformProject;
+    private final DockerImageEnvNameProvider envNameProvider;
 
-    public AlfrescoBaseLayerComposeCustomizer(ProjectDescription projectDescription) {
+    public AlfrescoBaseLayerComposeCustomizer(ProjectDescription projectDescription,
+            DockerProjectModule dockerPlatformProject,
+            DockerImageEnvNameProvider envNameProvider) {
         this.projectDescription = projectDescription;
+        this.dockerPlatformProject = dockerPlatformProject;
+        this.envNameProvider = envNameProvider;
     }
 
     @Override
     public void customize(DockerComposeFiles compose) {
         ComposeServices services = compose.main().getServices();
 
+        String imageIdEnv = this.envNameProvider.get(this.dockerPlatformProject);
         services
             .service("alfresco")
-                .image(String.format("${DEMO_PLATFORM_DOCKER_IMAGE:-hub.xenit.eu/%s:latest}", projectDescription.getName()))
+                .image(String.format("${%s:-hub.xenit.eu/%s:latest}", imageIdEnv, projectDescription.getName()))
                 .volumes("alfresco:/opt/alfresco/alf_data")
                 .ports("8080")
                 .environment(

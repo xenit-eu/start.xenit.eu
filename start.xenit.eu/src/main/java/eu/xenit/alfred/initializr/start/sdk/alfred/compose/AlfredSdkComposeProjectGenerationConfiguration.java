@@ -4,6 +4,8 @@ import eu.xenit.alfred.initializr.start.build.BuildCustomizer;
 import eu.xenit.alfred.initializr.start.build.root.gradle.RootGradleBuild;
 import eu.xenit.alfred.initializr.generator.docker.compose.DockerComposeCustomizer;
 import eu.xenit.alfred.initializr.generator.docker.compose.DockerComposeLocationStrategy;
+import eu.xenit.alfred.initializr.start.docker.compose.DockerImageEnvNameProvider;
+import eu.xenit.alfred.initializr.start.project.docker.platform.DockerPlatformModule;
 import eu.xenit.alfred.initializr.start.sdk.alfred.compose.config.ComposeUpGradleTaskConfiguration;
 import eu.xenit.alfred.initializr.start.sdk.alfred.compose.config.ComposeUpGradleTaskConfigurationCustomizer;
 import eu.xenit.alfred.initializr.start.sdk.alfred.compose.config.DockerComposeGradlePluginConfiguration;
@@ -23,8 +25,11 @@ import org.springframework.context.annotation.Bean;
 public class AlfredSdkComposeProjectGenerationConfiguration {
 
     @Bean
-    public DockerComposeCustomizer basicAlfrescoComposeCustomizer(ProjectDescription projectDescription) {
-        return new AlfrescoBaseLayerComposeCustomizer(projectDescription);
+    public DockerComposeCustomizer basicAlfrescoComposeCustomizer(
+            ProjectDescription projectDescription,
+            DockerPlatformModule dockerPlatformModule,
+            DockerImageEnvNameProvider dockerImageEnvNameProvider) {
+        return new AlfrescoBaseLayerComposeCustomizer(projectDescription, dockerPlatformModule, dockerImageEnvNameProvider);
     }
 
     @Bean
@@ -85,9 +90,10 @@ public class AlfredSdkComposeProjectGenerationConfiguration {
 
     @Bean
     ComposeUpGradleTaskConfiguration createComposeUpConfigurationInRootGradleBuild(
+            DockerImageEnvNameProvider nameProvider,
             ObjectProvider<ComposeUpGradleTaskConfigurationCustomizer> customizers) {
 
-        ComposeUpGradleTaskConfiguration composeUp = new ComposeUpGradleTaskConfiguration();
+        ComposeUpGradleTaskConfiguration composeUp = new ComposeUpGradleTaskConfiguration(nameProvider);
         LambdaSafe.callbacks(ComposeUpGradleTaskConfigurationCustomizer.class,
                 customizers.orderedStream().collect(Collectors.toList()),
                 composeUp, new Object[0]).invoke((customizer) ->

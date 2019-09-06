@@ -45,4 +45,11 @@ public class DockerComposeProjectGenerationConfiguration {
         return new DockerComposeYmlWriterDelegate();
     }
 
+    @Bean
+    DockerImageEnvNameProvider nameProvider() {
+        return module -> module.getId()
+                .toUpperCase()
+                .replace("-", "_") + "_IMAGE";
+    }
+
 }

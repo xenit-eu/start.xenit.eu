@@ -1,5 +1,6 @@
 package eu.xenit.alfred.initializr.start.sdk.alfred.compose.config;
 
+import eu.xenit.alfred.initializr.start.docker.compose.DockerImageEnvNameProvider;
 import eu.xenit.alfred.initializr.start.project.docker.DockerProjectModule;
 import io.spring.initializr.generator.buildsystem.gradle.GradleTask;
 import java.util.ArrayList;
@@ -14,17 +15,17 @@ public class ComposeUpGradleTaskConfiguration implements Consumer<GradleTask.Bui
     @Accessors(fluent = true)
     private final List<DockerProjectModule> usesDockerImageFrom = new ArrayList<>();
 
-//    composeUp {
-//        dependsOn(':demo-platform-docker:buildDockerImage')
-//        doFirst {
-//            dockerCompose.environment.put 'DEMO_PLATFORM_DOCKER_IMAGE', project(':demo-platform-docker').buildDockerImage.getImageId()
-//        }
-//    }
+    private final DockerImageEnvNameProvider variableNameProvider;
+
+    public ComposeUpGradleTaskConfiguration(DockerImageEnvNameProvider variableNameProvider)
+    {
+        this.variableNameProvider = variableNameProvider;
+    }
 
     @Override
     public void accept(GradleTask.Builder builder) {
         this.usesDockerImageFrom.forEach(dockerImageProject -> {
-            String dockerImageEnvName = module2dockerImageVariable(dockerImageProject);
+            String dockerImageEnvName = this.variableNameProvider.get(dockerImageProject);
 
             builder.invoke("dependsOn", "':"+dockerImageProject.getId()+":buildDockerImage'");
             builder.nested("doFirst", doFirst -> {
@@ -35,18 +36,4 @@ public class ComposeUpGradleTaskConfiguration implements Consumer<GradleTask.Bui
             });
         });
     }
-
-    private String module2dockerImageVariable(DockerProjectModule module) {
-        return module.getId()
-                .toUpperCase()
-                .replace("-", "_") + "_IMAGE";
-
-    }
-
-    private boolean isDefault() {
-        return this.usesDockerImageFrom.isEmpty();
-    }
-
-
-
 }
