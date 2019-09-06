@@ -203,7 +203,7 @@ public class SpringXmlConfigWriterTest {
 ////            <list>
 ////                <props>
 ////                    <prop key="engineId">activiti</prop>
-////                    <prop key="locationStrategy">alfresco/module/test-maven-sdk-platform/workflow/sample-process.bpmn20.xml</prop>
+////                    <prop key="location">alfresco/module/test-maven-sdk-platform/workflow/sample-process.bpmn20.xml</prop>
 ////                    <prop key="mimetype">text/xml</prop>
 ////                </props>
 ////            </list>

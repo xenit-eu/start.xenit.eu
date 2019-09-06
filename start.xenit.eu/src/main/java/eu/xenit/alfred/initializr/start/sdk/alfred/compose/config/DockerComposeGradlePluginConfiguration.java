@@ -12,7 +12,6 @@ import lombok.Setter;
 
 public class DockerComposeGradlePluginConfiguration implements Consumer<GradleTask.Builder> {
 
-
     @Getter
     private List<String> useComposeFiles = new ArrayList<>();
 
@@ -21,11 +20,14 @@ public class DockerComposeGradlePluginConfiguration implements Consumer<GradleTa
 
     @Override
     public void accept(GradleTask.Builder dockerCompose) {
-        if (!this.shouldSetUseComposeFiles()) {
-            return;
+        if (this.shouldSetUseComposeFiles()) {
+            dockerCompose.attribute("useComposeFiles", "[" + getUseComposeFilesAsString() + "]");
         }
 
-        dockerCompose.attribute("useComposeFiles", "[" + getUseComposeFilesAsString() + "]");
+        if (locationStrategy != null) {
+            dockerCompose.attribute("dockerComposeWorkingDirectory",
+                    "'" + this.locationStrategy.getLocation().toString() + "/'");
+        }
     }
 
     private String getUseComposeFilesAsString() {
