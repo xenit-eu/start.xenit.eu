@@ -3,6 +3,7 @@ package eu.xenit.alfred.initializr.start.extensions.alfred.telemetry.graphite;
 import eu.xenit.alfred.initializr.generator.condition.ConditionalOnRequestedFacet;
 import eu.xenit.alfred.initializr.generator.docker.compose.DockerComposeFiles;
 import eu.xenit.alfred.initializr.generator.docker.compose.DockerComposeCustomizer;
+import eu.xenit.alfred.initializr.start.sdk.alfred.compose.config.DockerComposeGradlePluginConfiguration;
 import eu.xenit.alfred.initializr.start.sdk.alfred.compose.config.DockerComposeGradlePluginConfigurationCustomizer;
 import eu.xenit.alfred.initializr.generator.docker.compose.DockerComposeLocationStrategy;
 import eu.xenit.alfred.initializr.generator.docker.compose.DockerComposeYmlWriterDelegate;
@@ -45,7 +46,18 @@ public class GraphiteProjectGenerationConfiguration {
     @ConditionalOnBuildSystem(GradleBuildSystem.ID)
     DockerComposeGradlePluginConfigurationCustomizer configureGraphiteDockerComposeGradlePlugin(
             GraphiteDockerComposeYmlContributor composeYml) {
-        return (configuration) -> configuration.getUseComposeFiles().add(composeYml.composeFilename());
+        return new DockerComposeGradlePluginConfigurationCustomizer() {
+            @Override
+            public void customize(DockerComposeGradlePluginConfiguration configuration) {
+                configuration.getUseComposeFiles().add(composeYml.composeFilename());
+            }
+
+            @Override
+            public int getOrder() {
+                return 90;
+            }
+        };
+
     }
 
     @Bean

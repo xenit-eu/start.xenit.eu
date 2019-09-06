@@ -35,9 +35,18 @@ public class AlfredSdkComposeProjectGenerationConfiguration {
     @Bean
     DockerComposeGradlePluginConfigurationCustomizer configureDockerComposeGradlePlugin(
             DockerComposeLocationStrategy locationStrategy) {
-        return (configuration) -> {
-            configuration.getUseComposeFiles().add("docker-compose.yml");
-            configuration.setLocationStrategy(locationStrategy);
+        return new DockerComposeGradlePluginConfigurationCustomizer() {
+
+            @Override
+            public void customize(DockerComposeGradlePluginConfiguration configuration) {
+                configuration.getUseComposeFiles().add("docker-compose.yml");
+                configuration.setLocationStrategy(locationStrategy);
+            }
+
+            // Make sure 'docker-compose.yml' is first
+            public int getOrder() {
+                return HIGHEST_PRECEDENCE;
+            }
         };
     }
 
