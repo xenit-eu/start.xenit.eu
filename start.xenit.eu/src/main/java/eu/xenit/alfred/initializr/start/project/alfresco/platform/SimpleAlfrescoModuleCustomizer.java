@@ -1,7 +1,7 @@
-package eu.xenit.alfred.initializr.start.alfresco.platform;
+package eu.xenit.alfred.initializr.start.project.alfresco.platform;
 
-import eu.xenit.alfred.initializr.start.alfresco.AlfrescoModuleCustomizer;
-import eu.xenit.alfred.initializr.start.alfresco.AlfrescoModuleProperties;
+import eu.xenit.alfred.initializr.start.project.alfresco.AlfrescoModuleCustomizer;
+import eu.xenit.alfred.initializr.start.project.alfresco.AlfrescoModuleProperties;
 import io.spring.initializr.generator.project.ProjectDescription;
 import org.springframework.core.Ordered;
 

@@ -22,7 +22,7 @@ public class AlfrescoBaseLayerComposeCustomizer implements DockerComposeCustomiz
 
         services
             .service("alfresco")
-                .image(String.format("${DOCKER_IMAGE:-hub.xenit.eu/%s:latest}", projectDescription.getName()))
+                .image(String.format("${DEMO_PLATFORM_DOCKER_IMAGE:-hub.xenit.eu/%s:latest}", projectDescription.getName()))
                 .volumes("alfresco:/opt/alfresco/alf_data")
                 .ports("8080")
                 .environment(

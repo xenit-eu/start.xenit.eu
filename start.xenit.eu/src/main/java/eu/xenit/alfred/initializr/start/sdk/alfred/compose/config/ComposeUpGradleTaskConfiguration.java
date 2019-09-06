@@ -1,6 +1,6 @@
 package eu.xenit.alfred.initializr.start.sdk.alfred.compose.config;
 
-import eu.xenit.alfred.initializr.generator.buildsystem.gradle.DockerGradleBuild;
+import eu.xenit.alfred.initializr.start.project.docker.DockerProjectModule;
 import io.spring.initializr.generator.buildsystem.gradle.GradleTask;
 import java.util.ArrayList;
 import java.util.List;
@@ -12,22 +12,32 @@ public class ComposeUpGradleTaskConfiguration implements Consumer<GradleTask.Bui
 
     @Getter
     @Accessors(fluent = true)
-    private final List<DockerGradleBuild> usesDockerImageFrom = new ArrayList<>();
+    private final List<DockerProjectModule> usesDockerImageFrom = new ArrayList<>();
+
+//    composeUp {
+//        dependsOn(':demo-platform-docker:buildDockerImage')
+//        doFirst {
+//            dockerCompose.environment.put 'DEMO_PLATFORM_DOCKER_IMAGE', project(':demo-platform-docker').buildDockerImage.getImageId()
+//        }
+//    }
 
     @Override
     public void accept(GradleTask.Builder builder) {
         this.usesDockerImageFrom.forEach(dockerImageProject -> {
+            String dockerImageEnvName = module2dockerImageVariable(dockerImageProject);
+
+            builder.invoke("dependsOn", "':"+dockerImageProject.getId()+":buildDockerImage'");
             builder.nested("doFirst", doFirst -> {
-                String dockerImageEnvName = projectName2dockerImageVariable(dockerImageProject);
-                doFirst.invoke("dependsOn",
-                        "'" + dockerImageEnvName + "', project(':" + dockerImageProject.getName()
-                                + "').buildDockerImage.getImageId()");
+
+                doFirst.invoke("dockerCompose.environment.put",
+                        "'" + dockerImageEnvName + "'",
+                        "project(':" + dockerImageProject.getId()+ "').buildDockerImage.getImageId()");
             });
         });
     }
 
-    private String projectName2dockerImageVariable(DockerGradleBuild gradleBuild) {
-        return gradleBuild.getName()
+    private String module2dockerImageVariable(DockerProjectModule module) {
+        return module.getId()
                 .toUpperCase()
                 .replace("-", "_") + "_IMAGE";
 

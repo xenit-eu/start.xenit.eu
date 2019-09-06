@@ -5,6 +5,7 @@ import eu.xenit.alfred.initializr.start.build.BuildCustomizer;
 import eu.xenit.alfred.initializr.start.build.platform.gradle.PlatformGradleBuild;
 import eu.xenit.alfred.initializr.start.build.platform.gradle.PlatformGradleBuildContributor;
 import eu.xenit.alfred.initializr.start.build.root.gradle.RootGradleBuild;
+import eu.xenit.alfred.initializr.start.project.docker.platform.DockerPlatformModule;
 import io.spring.initializr.generator.buildsystem.BuildItemResolver;
 import io.spring.initializr.generator.buildsystem.gradle.GradleBuildSystem;
 import io.spring.initializr.generator.condition.ConditionalOnBuildSystem;
@@ -22,13 +23,13 @@ public class PlatformDockerGradleBuildConfiguration {
 
     @Bean
     public PlatformDockerGradleBuild platformDockerGradleBuild(
-            ProjectDescription projectDescription,
+            DockerPlatformModule dockerPlatformModule,
             RootGradleBuild rootGradleBuild,
             ObjectProvider<BuildItemResolver> buildItemResolver,
             ObjectProvider<BuildCustomizer<?>> buildCustomizers) {
 
         PlatformDockerGradleBuild gradleBuild = new PlatformDockerGradleBuild(
-                projectDescription.getArtifactId() + "-platform-docker",
+                dockerPlatformModule.getId(),
                 buildItemResolver.getIfAvailable(),
                 rootGradleBuild);
 

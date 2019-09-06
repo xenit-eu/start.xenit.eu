@@ -1,7 +1,7 @@
 package eu.xenit.alfred.initializr.start.sdk.alfred;
 
-import eu.xenit.alfred.initializr.start.alfresco.AlfrescoConstants.ArtifactId;
-import eu.xenit.alfred.initializr.start.alfresco.AlfrescoConstants.GroupId;
+import eu.xenit.alfred.initializr.start.project.alfresco.AlfrescoConstants.ArtifactId;
+import eu.xenit.alfred.initializr.start.project.alfresco.AlfrescoConstants.GroupId;
 import eu.xenit.alfred.initializr.generator.packaging.amp.AmpPackaging;
 import io.spring.initializr.generator.buildsystem.Dependency;
 import io.spring.initializr.generator.buildsystem.DependencyScope;

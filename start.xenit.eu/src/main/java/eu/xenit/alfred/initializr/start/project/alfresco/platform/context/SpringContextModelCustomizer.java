@@ -1,4 +1,4 @@
-package eu.xenit.alfred.initializr.start.alfresco.platform.context;
+package eu.xenit.alfred.initializr.start.project.alfresco.platform.context;
 
 import org.springframework.core.Ordered;
 

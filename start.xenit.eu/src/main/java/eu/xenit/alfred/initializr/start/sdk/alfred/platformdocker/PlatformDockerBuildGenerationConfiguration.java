@@ -2,14 +2,13 @@ package eu.xenit.alfred.initializr.start.sdk.alfred.platformdocker;
 
 import static org.springframework.util.StringUtils.quote;
 
-import eu.xenit.alfred.initializr.start.alfresco.platform.AlfrescoPlatformModule;
+import eu.xenit.alfred.initializr.start.project.alfresco.platform.AlfrescoPlatformModule;
 import eu.xenit.alfred.initializr.start.build.BuildCustomizer;
-import eu.xenit.alfred.initializr.start.build.platform.gradle.PlatformGradleBuild;
 import eu.xenit.alfred.initializr.start.build.platformdocker.gradle.PlatformDockerGradleBuild;
 import eu.xenit.alfred.initializr.generator.buildsystem.gradle.GradleProjectDependency;
+import eu.xenit.alfred.initializr.start.project.docker.platform.DockerPlatformModule;
 import eu.xenit.alfred.initializr.start.sdk.alfred.AlfredSdk;
 import eu.xenit.alfred.initializr.start.sdk.alfred.AlfredSdk.Dependencies;
-import eu.xenit.alfred.initializr.start.sdk.alfred.compose.config.ComposeUpGradleTaskConfiguration;
 import eu.xenit.alfred.initializr.start.sdk.alfred.compose.config.ComposeUpGradleTaskConfigurationCustomizer;
 import io.spring.initializr.generator.buildsystem.DependencyScope;
 import io.spring.initializr.generator.buildsystem.gradle.GradleBuildSystem;
@@ -113,8 +112,8 @@ public class PlatformDockerBuildGenerationConfiguration {
 
     @Bean
     ComposeUpGradleTaskConfigurationCustomizer platformComposeUpCustomizer(
-            PlatformDockerGradleBuild dockerGradleBuild) {
-        return composeUp -> composeUp.usesDockerImageFrom().add(dockerGradleBuild);
+            DockerPlatformModule dockerPlatformModule) {
+        return composeUp -> composeUp.usesDockerImageFrom().add(dockerPlatformModule);
     }
 
 

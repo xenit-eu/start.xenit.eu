@@ -1,8 +1,8 @@
-package eu.xenit.alfred.initializr.start.alfresco.platform;
+package eu.xenit.alfred.initializr.start.project.alfresco.platform;
 
-import eu.xenit.alfred.initializr.start.alfresco.AlfrescoModule;
-import eu.xenit.alfred.initializr.start.alfresco.AlfrescoModuleProjectLayout;
-import eu.xenit.alfred.initializr.start.alfresco.AlfrescoModuleProperties;
+import eu.xenit.alfred.initializr.start.project.alfresco.AlfrescoModule;
+import eu.xenit.alfred.initializr.start.project.alfresco.AlfrescoModuleProjectLayout;
+import eu.xenit.alfred.initializr.start.project.alfresco.AlfrescoModuleProperties;
 import io.spring.initializr.generator.version.Version;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

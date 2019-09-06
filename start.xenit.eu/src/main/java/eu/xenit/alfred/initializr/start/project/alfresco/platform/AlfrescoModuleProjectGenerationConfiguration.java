@@ -1,12 +1,12 @@
-package eu.xenit.alfred.initializr.start.alfresco.platform;
+package eu.xenit.alfred.initializr.start.project.alfresco.platform;
 
-import eu.xenit.alfred.initializr.start.alfresco.AlfrescoConstants.MavenRepositories;
-import eu.xenit.alfred.initializr.start.alfresco.AlfrescoModuleCustomizer;
-import eu.xenit.alfred.initializr.start.alfresco.AlfrescoModulePropertiesContributor;
-import eu.xenit.alfred.initializr.start.alfresco.AlfrescoModulePropertiesWriter;
-import eu.xenit.alfred.initializr.start.alfresco.platform.context.SpringContextModel;
-import eu.xenit.alfred.initializr.start.alfresco.platform.context.SpringContextModelContributor;
-import eu.xenit.alfred.initializr.start.alfresco.platform.context.SpringContextModelCustomizer;
+import eu.xenit.alfred.initializr.start.project.alfresco.AlfrescoConstants.MavenRepositories;
+import eu.xenit.alfred.initializr.start.project.alfresco.AlfrescoModuleCustomizer;
+import eu.xenit.alfred.initializr.start.project.alfresco.AlfrescoModulePropertiesContributor;
+import eu.xenit.alfred.initializr.start.project.alfresco.AlfrescoModulePropertiesWriter;
+import eu.xenit.alfred.initializr.start.project.alfresco.platform.context.SpringContextModel;
+import eu.xenit.alfred.initializr.start.project.alfresco.platform.context.SpringContextModelContributor;
+import eu.xenit.alfred.initializr.start.project.alfresco.platform.context.SpringContextModelCustomizer;
 import eu.xenit.alfred.initializr.start.build.BuildCustomizer;
 import eu.xenit.alfred.initializr.start.build.platform.PlatformBuild;
 import io.spring.initializr.generator.buildsystem.BuildItemResolver;

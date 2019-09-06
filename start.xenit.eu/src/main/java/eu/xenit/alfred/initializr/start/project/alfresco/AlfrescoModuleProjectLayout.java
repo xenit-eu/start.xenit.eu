@@ -1,6 +1,6 @@
-package eu.xenit.alfred.initializr.start.alfresco;
+package eu.xenit.alfred.initializr.start.project.alfresco;
 
-import eu.xenit.alfred.initializr.start.alfresco.platform.AlfrescoPlatformModule;
+import eu.xenit.alfred.initializr.start.project.alfresco.platform.AlfrescoPlatformModule;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import lombok.Getter;

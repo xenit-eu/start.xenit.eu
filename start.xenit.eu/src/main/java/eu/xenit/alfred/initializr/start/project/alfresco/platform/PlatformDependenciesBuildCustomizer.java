@@ -1,4 +1,4 @@
-package eu.xenit.alfred.initializr.start.alfresco.platform;
+package eu.xenit.alfred.initializr.start.project.alfresco.platform;
 
 import eu.xenit.alfred.initializr.start.build.BuildCustomizer;
 import eu.xenit.alfred.initializr.start.build.platform.PlatformBuild;

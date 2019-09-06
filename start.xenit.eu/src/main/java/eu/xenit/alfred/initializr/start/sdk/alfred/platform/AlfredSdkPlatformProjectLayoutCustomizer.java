@@ -1,8 +1,8 @@
 package eu.xenit.alfred.initializr.start.sdk.alfred.platform;
 
-import eu.xenit.alfred.initializr.start.alfresco.AlfrescoModuleCustomizer;
-import eu.xenit.alfred.initializr.start.alfresco.AlfrescoModuleProjectLayout;
-import eu.xenit.alfred.initializr.start.alfresco.platform.AlfrescoPlatformModule;
+import eu.xenit.alfred.initializr.start.project.alfresco.AlfrescoModuleCustomizer;
+import eu.xenit.alfred.initializr.start.project.alfresco.AlfrescoModuleProjectLayout;
+import eu.xenit.alfred.initializr.start.project.alfresco.platform.AlfrescoPlatformModule;
 import org.springframework.util.Assert;
 
 public class AlfredSdkPlatformProjectLayoutCustomizer implements AlfrescoModuleCustomizer<AlfrescoPlatformModule> {

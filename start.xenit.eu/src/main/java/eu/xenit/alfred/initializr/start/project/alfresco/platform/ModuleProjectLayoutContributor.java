@@ -1,7 +1,7 @@
-package eu.xenit.alfred.initializr.start.alfresco.platform;
+package eu.xenit.alfred.initializr.start.project.alfresco.platform;
 
-import eu.xenit.alfred.initializr.start.alfresco.AlfrescoModule;
-import eu.xenit.alfred.initializr.start.alfresco.AlfrescoModuleProjectLayout;
+import eu.xenit.alfred.initializr.start.project.alfresco.AlfrescoModule;
+import eu.xenit.alfred.initializr.start.project.alfresco.AlfrescoModuleProjectLayout;
 import io.spring.initializr.generator.project.contributor.ProjectContributor;
 import java.io.IOException;
 import java.nio.file.Files;

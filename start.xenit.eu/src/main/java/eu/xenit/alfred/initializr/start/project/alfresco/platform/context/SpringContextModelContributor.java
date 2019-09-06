@@ -1,7 +1,7 @@
-package eu.xenit.alfred.initializr.start.alfresco.platform.context;
+package eu.xenit.alfred.initializr.start.project.alfresco.platform.context;
 
-import eu.xenit.alfred.initializr.start.alfresco.AlfrescoModuleProjectLayout;
-import eu.xenit.alfred.initializr.start.alfresco.platform.context.SpringContextModel.SpringXmlConfigFile;
+import eu.xenit.alfred.initializr.start.project.alfresco.AlfrescoModuleProjectLayout;
+import eu.xenit.alfred.initializr.start.project.alfresco.platform.context.SpringContextModel.SpringXmlConfigFile;
 import eu.xenit.alfred.initializr.generator.beans.config.SpringXmlConfig;
 import eu.xenit.alfred.initializr.generator.beans.config.SpringXmlConfigWriter;
 import io.spring.initializr.generator.io.IndentingWriter;

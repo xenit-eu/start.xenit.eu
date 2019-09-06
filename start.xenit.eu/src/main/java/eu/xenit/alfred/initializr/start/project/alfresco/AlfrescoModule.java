@@ -1,4 +1,4 @@
-package eu.xenit.alfred.initializr.start.alfresco;
+package eu.xenit.alfred.initializr.start.project.alfresco;
 
 import eu.xenit.alfred.initializr.generator.project.ProjectModule;
 

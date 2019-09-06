@@ -18,7 +18,8 @@ public class DockerComposeTests extends BaseGeneratorTests {
         result.assertDockerCompose()
                 .isNotBlank()
                 .startsWith("version:")
-                .contains("alfresco:");
+                .contains("alfresco:")
+                .contains("image: ${DEMO_PLATFORM_DOCKER_IMAGE:-hub.xenit.eu/demo:latest}");
     }
 
     @Test
@@ -36,7 +37,22 @@ public class DockerComposeTests extends BaseGeneratorTests {
                             "['docker-compose.yml', 'docker-compose-graphite.yml', 'docker-compose-grafana.yml']");
                     dockerCompose.assertAttribute("dockerComposeWorkingDirectory", "'docker-compose/'");
                 });
+    }
 
+    @Test
+    public void testComposeUpConfiguration() {
+        ProjectRequest request = createProjectRequest();
+        GradleMultiProjectAssert gradle = generateGradleBuild(request);
+
+        gradle.rootGradleBuild()
+                .assertTask("composeUp", composeUp -> {
+                    composeUp.contains("dependsOn ':demo-platform-docker:buildDockerImage'");
+                    composeUp.assertNested("doFirst", doFirst -> {
+                        doFirst.contains("dockerCompose.environment.put "
+                                + "'DEMO_PLATFORM_DOCKER_IMAGE', "
+                                + "project(':demo-platform-docker').buildDockerImage.getImageId()");
+                    });
+        });
     }
 
 }

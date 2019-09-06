@@ -1,7 +1,7 @@
 package eu.xenit.alfred.initializr.start.build.platform.gradle;
 
 import eu.xenit.alfred.initializr.start.build.BuildCustomizer;
-import eu.xenit.alfred.initializr.start.alfresco.platform.AlfrescoPlatformModule;
+import eu.xenit.alfred.initializr.start.project.alfresco.platform.AlfrescoPlatformModule;
 import eu.xenit.alfred.initializr.generator.buildsystem.gradle.CustomGradleBuildWriter;
 import eu.xenit.alfred.initializr.start.build.root.gradle.RootGradleBuild;
 import io.spring.initializr.generator.buildsystem.BuildItemResolver;

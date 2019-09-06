@@ -69,13 +69,13 @@ public class AlfredSdkComposeProjectGenerationConfiguration {
     }
 
     @Bean
-    BuildCustomizer<RootGradleBuild> configureComposeUpTask(ComposeUpGradleTaskConfiguration composeUpConfig)
+    BuildCustomizer<RootGradleBuild> configureComposeUpTaskInRootGradleBuild(ComposeUpGradleTaskConfiguration composeUpConfig)
     {
         return build -> build.tasks().customize("composeUp", composeUpConfig);
     }
 
     @Bean
-    ComposeUpGradleTaskConfiguration configureComposeUpTask(
+    ComposeUpGradleTaskConfiguration createComposeUpConfigurationInRootGradleBuild(
             ObjectProvider<ComposeUpGradleTaskConfigurationCustomizer> customizers) {
 
         ComposeUpGradleTaskConfiguration composeUp = new ComposeUpGradleTaskConfiguration();
