@@ -72,18 +72,12 @@ public class AlfrescoModuleProjectGenerationConfiguration {
     }
 
     @Bean
-//    public BuildCustomizer<GradleBuild> simplePlatformCustomizer(
     public BuildCustomizer<PlatformBuild> simplePlatformCustomizer(
             AlfrescoPlatformModule module,
             ProjectDescription projectDescription) {
         return (build) -> {
             build.settings().artifact(module.getId());
             build.settings().group(projectDescription.getGroupId());
-
-            // build.setDescription(module.getDescription());
-
-            // Why is maven.properties not the same as gradle.ext ?
-            // build.ext("alfrescoVersion", quote(this.platformModule.getAlfrescoVersion().toString()));
 
             build.repositories().add(MavenRepository.MAVEN_CENTRAL);
             build.repositories().add(MavenRepositories.ALFRESCO_PUBLIC);
