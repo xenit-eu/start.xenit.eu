@@ -14,10 +14,6 @@ public class DockerBuildGenerationConfigurationTest extends BaseGeneratorTests {
 
         result.rootGradleBuild()
                 .doesNotHavePlugin("eu.xenit.docker-alfresco");
-//                .contains("alfrescoVersion = ")
-//                .hasDependency(
-//                        "alfrescoAmp",
-//                        "project(path: ':demo-platform', configuration: 'amp')");
 
         result.platformBuildGradle()
                 .doesNotHavePlugin("eu.xenit.docker-alfresco");

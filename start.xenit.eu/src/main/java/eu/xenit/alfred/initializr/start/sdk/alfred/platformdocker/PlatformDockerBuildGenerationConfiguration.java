@@ -109,18 +109,9 @@ public class PlatformDockerBuildGenerationConfiguration {
         return this.metadata.getDependencies().get(dependencyId).getFacets().contains(facet);
     }
 
-
     @Bean
     ComposeUpGradleTaskConfigurationCustomizer platformComposeUpCustomizer(
             DockerPlatformModule dockerPlatformModule) {
         return composeUp -> composeUp.usesDockerImageFrom().add(dockerPlatformModule);
     }
-
-
-//    @Bean
-//    void configureRootComposeUpWithPlatformImage(ComposeUpGradleTaskConfiguration composeUp,
-//            PlatformDockerGradleBuild dockerGradleBuild) {
-//        composeUp.usesDockerImageFrom().add(dockerGradleBuild);
-//        //return composeUp -> composeUp.usesDockerImageFrom().add(dockerGradleBuild);
-//    }
 }

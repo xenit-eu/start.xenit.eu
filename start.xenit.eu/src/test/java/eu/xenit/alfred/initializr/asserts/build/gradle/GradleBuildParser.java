@@ -36,9 +36,6 @@ public class GradleBuildParser {
             if (line.trim().matches("^\\w+\\s\\{.*$")) {
                 depth++;
             }
-//            else if (line.trim().startsWith("}")) {
-//                depth--;
-//            }
 
             if (line.trim().endsWith("}")) {
                 depth--;
