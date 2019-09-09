@@ -30,8 +30,6 @@ import org.springframework.core.Ordered;
  */
 public class SimpleBuildCustomizer implements BuildCustomizer<Build> {
 
-    private static final Log logger = LogFactory.getLog(SimpleBuildCustomizer.class);
-
     private final ProjectDescription projectDescription;
 
     SimpleBuildCustomizer(ProjectDescription projectDescription) {
