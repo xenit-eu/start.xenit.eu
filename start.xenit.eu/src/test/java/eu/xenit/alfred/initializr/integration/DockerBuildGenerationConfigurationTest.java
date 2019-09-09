@@ -13,15 +13,16 @@ public class DockerBuildGenerationConfigurationTest extends BaseGeneratorTests {
         GradleMultiProjectAssert result = generateGradleBuild(request);
 
         result.rootGradleBuild()
-                .hasPlugin("eu.xenit.docker-alfresco")
-                .contains("alfrescoVersion = ")
-                .hasDependency(
-                        "alfrescoAmp",
-                        "project(path: ':demo-platform', configuration: 'amp')");
-
-
-        result.platformGradleBuild()
                 .doesNotHavePlugin("eu.xenit.docker-alfresco");
+
+        result.platformBuildGradle()
+                .doesNotHavePlugin("eu.xenit.docker-alfresco");
+
+        result.platformDockerBuildGradle()
+                .hasPlugin("eu.xenit.docker-alfresco")
+                .hasDependency("alfrescoAmp", "project(path: ':demo-platform', configuration: 'amp')")
+        ;
+
 
     }
 }

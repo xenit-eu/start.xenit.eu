@@ -5,5 +5,5 @@ import java.nio.file.Path;
 
 public interface BuildAssetWriter extends BuildWriter {
 
-    Path relativePath();
+    Path getRelativePath();
 }

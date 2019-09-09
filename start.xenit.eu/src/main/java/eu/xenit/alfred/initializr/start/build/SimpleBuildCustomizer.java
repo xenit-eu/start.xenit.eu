@@ -18,6 +18,9 @@ package eu.xenit.alfred.initializr.start.build;
 
 import eu.xenit.alfred.initializr.generator.buildsystem.Build;
 import io.spring.initializr.generator.project.ProjectDescription;
+import io.spring.initializr.web.support.DefaultInitializrMetadataUpdateStrategy;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.core.Ordered;
 
 /**
@@ -29,7 +32,7 @@ public class SimpleBuildCustomizer implements BuildCustomizer<Build> {
 
     private final ProjectDescription projectDescription;
 
-    public SimpleBuildCustomizer(ProjectDescription projectDescription) {
+    SimpleBuildCustomizer(ProjectDescription projectDescription) {
         this.projectDescription = projectDescription;
     }
 

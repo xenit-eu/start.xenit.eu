@@ -1,5 +1,8 @@
 package eu.xenit.alfred.initializr.asserts.build.gradle;
 
+import eu.xenit.alfred.initializr.metadata.Dependencies;
+import io.spring.initializr.generator.buildsystem.gradle.GradleTask;
+import java.util.function.Consumer;
 import lombok.Getter;
 import org.assertj.core.api.AbstractStringAssert;
 
@@ -11,21 +14,21 @@ public class GradleBuildAssert extends AbstractStringAssert<GradleBuildAssert> {
 
     public GradleBuildAssert hasPlugin(String plugin) {
         this.getPluginAssert().hasPlugin(plugin);
-        return this;
+        return myself;
     }
 
     public GradleBuildAssert hasPlugin(String plugin, String version) {
         this.getPluginAssert().hasPlugin(plugin, version);
-        return this;
+        return myself;
     }
 
     public GradleBuildAssert doesNotHavePlugin(String plugin) {
         this.getPluginAssert().doesNotHavePlugin(plugin);
-        return this;
+        return myself;
     }
 
     @Getter(lazy=true)
-    private final PluginAssert pluginAssert = new PluginAssert(this.actual);
+    private final PluginAssert pluginAssert = PluginAssert.from(this.actual);
 
     public GradleBuildAssert hasVersion(String version) {
         return this.contains("version = '" + version + "'");
@@ -55,10 +58,24 @@ public class GradleBuildAssert extends AbstractStringAssert<GradleBuildAssert> {
 
     public GradleBuildAssert hasDependency(String configuration, String dependency) {
         this.getDependencies().hasDependency(configuration, dependency);
-        return this;
+        return myself;
     }
 
     @Getter(lazy=true)
-    private final DependenciesAssert dependencies = new DependenciesAssert(this.actual);
+    private final DependenciesAssert dependencies = DependenciesAssert.from(this.actual);
+
+    public GradleBuildAssert assertDependencies(Consumer<DependenciesAssert> callback) {
+        callback.accept(this.getDependencies());
+        return myself;
+    }
+
+    public GradleTaskAssert getTask(String task) {
+        return GradleTaskAssert.from(task, this.actual);
+    }
+
+    public GradleBuildAssert assertTask(String task, Consumer<GradleTaskAssert> callback) {
+        callback.accept(this.getTask(task));
+        return myself;
+    }
 
 }

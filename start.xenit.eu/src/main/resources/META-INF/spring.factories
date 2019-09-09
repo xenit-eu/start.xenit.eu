@@ -1,13 +1,17 @@
 io.spring.initializr.generator.project.ProjectGenerationConfiguration=\
 eu.xenit.alfred.initializr.start.build.BuildProjectGenerationConfiguration,\
-eu.xenit.alfred.initializr.start.build.gradle.root.GradleProjectGenerationConfiguration,\
-eu.xenit.alfred.initializr.start.build.gradle.platform.PlatformGradleBuildConfiguration,\
-eu.xenit.alfred.initializr.start.sdk.alfred.platform.AlfredSdkPlatformProjectGenerationConfiguration,\
-eu.xenit.alfred.initializr.start.sdk.alfred.docker.DockerBuildGenerationConfiguration,\
-eu.xenit.alfred.initializr.start.sdk.alfred.docker.AlfredSdkComposeProjectGenerationConfiguration,\
-eu.xenit.alfred.initializr.start.alfresco.platform.AlfrescoModuleProjectGenerationConfiguration,\
+eu.xenit.alfred.initializr.start.build.platform.gradle.PlatformGradleBuildConfiguration,\
+eu.xenit.alfred.initializr.start.build.platformdocker.gradle.PlatformDockerGradleBuildConfiguration,\
+eu.xenit.alfred.initializr.start.build.root.gradle.GradleProjectGenerationConfiguration,\
 eu.xenit.alfred.initializr.start.docker.compose.DockerComposeProjectGenerationConfiguration,\
 eu.xenit.alfred.initializr.start.extensions.alfred.telemetry.AlfredTelemetryProjectGenerationConfiguration,\
 eu.xenit.alfred.initializr.start.extensions.alfred.telemetry.grafana.GrafanaDockerComposeProjectGenerationConfiguration,\
-eu.xenit.alfred.initializr.start.extensions.alfred.telemetry.graphite.GraphiteProjectGenerationConfiguration
+eu.xenit.alfred.initializr.start.extensions.alfred.telemetry.graphite.GraphiteProjectGenerationConfiguration,\
+eu.xenit.alfred.initializr.start.project.alfresco.platform.AlfrescoModuleProjectGenerationConfiguration,\
+eu.xenit.alfred.initializr.start.project.docker.platform.DockerPlatformModuleConfiguration,\
+eu.xenit.alfred.initializr.start.sdk.alfred.platform.AlfredSdkPlatformProjectGenerationConfiguration,\
+eu.xenit.alfred.initializr.start.sdk.alfred.platformdocker.PlatformDockerBuildGenerationConfiguration,\
+eu.xenit.alfred.initializr.start.sdk.alfred.compose.AlfredSdkComposeProjectGenerationConfiguration
+
+
 

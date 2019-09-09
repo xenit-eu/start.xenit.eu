@@ -1,8 +1,8 @@
 package eu.xenit.alfred.initializr.start.sdk.alfred.platform;
 
-import eu.xenit.alfred.initializr.start.alfresco.platform.AlfrescoPlatformModule;
+import eu.xenit.alfred.initializr.start.project.alfresco.platform.AlfrescoPlatformModule;
 import eu.xenit.alfred.initializr.start.build.BuildCustomizer;
-import eu.xenit.alfred.initializr.start.build.gradle.platform.PlatformGradleBuild;
+import eu.xenit.alfred.initializr.start.build.platform.gradle.PlatformGradleBuild;
 import eu.xenit.alfred.initializr.start.sdk.alfred.AlfredSdk.Dependencies;
 
 public class AlfredSdkPlatformModuleGradleCustomizer implements BuildCustomizer<PlatformGradleBuild> {

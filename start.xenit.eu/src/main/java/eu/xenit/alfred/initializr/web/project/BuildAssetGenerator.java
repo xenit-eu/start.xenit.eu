@@ -18,7 +18,7 @@ public class BuildAssetGenerator implements ProjectAssetGenerator<BuildGeneratio
         ObjectProvider<BuildAssetWriter> buildAssetWriters = context.getBeanProvider(BuildAssetWriter.class);
 
         Map<Path, String> buildFiles = buildAssetWriters.stream().collect(Collectors.toMap(
-                BuildAssetWriter::relativePath,
+                BuildAssetWriter::getRelativePath,
                 this::writeBuildAsset));
 
         return new BuildGenerationResult(context.getBean(ProjectDescription.class), buildFiles);

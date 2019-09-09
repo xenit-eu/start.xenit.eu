@@ -12,7 +12,9 @@ import lombok.Setter;
 import lombok.var;
 import org.springframework.util.StringUtils;
 
-public class MultiProjectGradleBuild extends GradleBuild implements MultiModuleBuild<MultiProjectGradleBuild> {
+public class MultiProjectGradleBuild
+        extends GradleBuild
+        implements MultiModuleBuild<MultiProjectGradleBuild>, IGradleBuild {
 
     private final Map<String, MultiProjectGradleBuild> subprojects = new LinkedHashMap<>();
     private final MultiProjectGradleBuild parent;
@@ -25,12 +27,11 @@ public class MultiProjectGradleBuild extends GradleBuild implements MultiModuleB
         this(name, buildItemResolver, null);
     }
 
-    protected MultiProjectGradleBuild(@NonNull String name, BuildItemResolver buildItemResolver, MultiProjectGradleBuild parent)
-    {
+    protected MultiProjectGradleBuild(@NonNull String name, BuildItemResolver buildItemResolver,
+            MultiProjectGradleBuild parent) {
         super(buildItemResolver);
 
-        if (StringUtils.isEmpty(name))
-        {
+        if (StringUtils.isEmpty(name)) {
             throw new IllegalArgumentException("Parameter name cannot be empty");
         }
 
@@ -40,7 +41,8 @@ public class MultiProjectGradleBuild extends GradleBuild implements MultiModuleB
         if (parent != null) {
             var result = this.parent.subprojects.putIfAbsent(name, this);
             if (result != null) {
-                String exMessage = String.format("Root project {} already contains a module with name {}", parent, name);
+                String exMessage = String
+                        .format("Root project {} already contains a module with name {}", parent, name);
                 throw new IllegalArgumentException(exMessage);
             }
         }
@@ -54,9 +56,12 @@ public class MultiProjectGradleBuild extends GradleBuild implements MultiModuleB
         return Collections.unmodifiableMap(this.subprojects);
     }
 
-    @Getter @Setter
+    @Getter
+    @Setter
     private String description;
 
-    @Getter @Setter @NonNull
+    @Getter
+    @Setter
+    @NonNull
     private String name;
 }

@@ -1,14 +1,13 @@
 package eu.xenit.alfred.initializr.start.extensions.alfred.telemetry;
 
-import static org.springframework.util.StringUtils.quote;
-
-import eu.xenit.alfred.initializr.start.build.PlatformBuild;
+import eu.xenit.alfred.initializr.start.build.platform.PlatformBuild;
 import eu.xenit.alfred.initializr.start.build.BuildCustomizer;
-import eu.xenit.alfred.initializr.start.build.gradle.root.RootGradleBuild;
+import eu.xenit.alfred.initializr.start.build.root.gradle.RootGradleBuild;
 import eu.xenit.alfred.initializr.generator.condition.ConditionalOnRequestedFacet;
+import eu.xenit.alfred.initializr.start.extensions.alfred.telemetry.AlfredTelemetryConstants.AlfredTelemetry;
+import eu.xenit.alfred.initializr.start.extensions.alfred.telemetry.AlfredTelemetryConstants.Micrometer;
 import eu.xenit.alfred.initializr.start.sdk.alfred.AlfredSdk;
 import io.spring.initializr.generator.buildsystem.Dependency;
-import io.spring.initializr.generator.buildsystem.DependencyScope;
 import io.spring.initializr.generator.buildsystem.gradle.GradleBuildSystem;
 import io.spring.initializr.generator.buildsystem.gradle.GradleDependency;
 import io.spring.initializr.generator.condition.ConditionalOnBuildSystem;
@@ -26,16 +25,6 @@ public class AlfredTelemetryProjectGenerationConfiguration {
 
     private final InitializrMetadata metadata;
 
-    private static final String ALFRED_TELEMETRY = "alfred-telemetry";
-    public static final String ALFRED_TELEMETRY_VERSION = "0.1.0";
-
-    public static final String MICROMETER_VERSION = "1.0.6";
-    private static final Dependency MICROMETER_DEPENDENCY = Dependency
-            .withCoordinates("io.micrometer", "micrometer-core")
-            .scope(DependencyScope.PROVIDED_RUNTIME)
-            .version(VersionReference.ofProperty("micrometer-version"))
-            .build();
-
     public AlfredTelemetryProjectGenerationConfiguration(InitializrMetadata metadata) {
         this.metadata = metadata;
     }
@@ -44,17 +33,19 @@ public class AlfredTelemetryProjectGenerationConfiguration {
     @ConditionalOnBuildSystem(GradleBuildSystem.ID)
     public BuildCustomizer<RootGradleBuild> addRootAlfredTelemetryAmp() {
         return (build) -> {
-            io.spring.initializr.generator.buildsystem.Dependency dependency = getDependency(ALFRED_TELEMETRY);
+            io.spring.initializr.generator.buildsystem.Dependency dependency = getDependency(
+                    AlfredTelemetry.ID);
             GradleDependency telemetryAmp = GradleDependency.from(dependency)
                     .type("amp")
                     .version(VersionReference.ofProperty("alfred-telemetry-version"))
                     .configuration(AlfredSdk.Configurations.ALFRESCO_AMP)
                     .build();
 
-            build.properties().version(VersionProperty.of("micrometer-version"), MICROMETER_VERSION);
-            build.properties().version(VersionProperty.of("alfred-telemetry-version"), ALFRED_TELEMETRY_VERSION);
+            // FIXME those .VERSION properties should NOT be hard coded, but
+            build.properties().version(VersionProperty.of("micrometer-version"), Micrometer.VERSION);
+            build.properties().version(VersionProperty.of("alfred-telemetry-version"), AlfredTelemetry.VERSION);
 
-            build.dependencies().add(ALFRED_TELEMETRY, telemetryAmp);
+            build.dependencies().add(AlfredTelemetry.ID, telemetryAmp);
         };
     }
 
@@ -63,7 +54,7 @@ public class AlfredTelemetryProjectGenerationConfiguration {
     public BuildCustomizer<PlatformBuild> addPlatformMicrometerDependency() {
         return (build) -> {
             GradleDependency micrometer = GradleDependency
-                    .from(MICROMETER_DEPENDENCY)
+                    .from(Micrometer.DEPENDENCY)
                     .configuration(AlfredSdk.Configurations.ALFRESCO_PROVIDED)
                     .build();
 
@@ -73,7 +64,7 @@ public class AlfredTelemetryProjectGenerationConfiguration {
 
     private Dependency getDependency(String dependencyId) {
         io.spring.initializr.metadata.Dependency alfredTelemetryDep = metadata.getDependencies().get(dependencyId);
-        Assert.notNull(alfredTelemetryDep, "Dependency with id 'alfred-telemetry' not found");
+        Assert.notNull(alfredTelemetryDep, "Dependency with id '"+dependencyId+"' not found");
 
         return MetadataBuildItemMapper.toDependency(alfredTelemetryDep);
     }

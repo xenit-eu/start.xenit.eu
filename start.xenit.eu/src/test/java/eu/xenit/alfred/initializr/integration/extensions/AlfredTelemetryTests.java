@@ -1,8 +1,9 @@
 package eu.xenit.alfred.initializr.integration.extensions;
 
 import eu.xenit.alfred.initializr.asserts.build.gradle.GradleMultiProjectAssert;
-import eu.xenit.alfred.initializr.start.extensions.alfred.telemetry.AlfredTelemetryProjectGenerationConfiguration;
 import eu.xenit.alfred.initializr.integration.BaseGeneratorTests;
+import eu.xenit.alfred.initializr.start.extensions.alfred.telemetry.AlfredTelemetryConstants.AlfredTelemetry;
+import eu.xenit.alfred.initializr.start.extensions.alfred.telemetry.AlfredTelemetryConstants.Micrometer;
 import io.spring.initializr.web.project.ProjectRequest;
 import org.junit.Test;
 
@@ -14,8 +15,8 @@ public class AlfredTelemetryTests extends BaseGeneratorTests {
 
         GradleMultiProjectAssert result = generateGradleBuild(request);
 
-        String telemetryVersion = AlfredTelemetryProjectGenerationConfiguration.ALFRED_TELEMETRY_VERSION;
-        String micrometerVersion = AlfredTelemetryProjectGenerationConfiguration.MICROMETER_VERSION;
+        String telemetryVersion = AlfredTelemetry.VERSION;
+        String micrometerVersion = Micrometer.VERSION;
 
         result.rootGradleBuild()
                 .hasDependency("alfrescoAmp",
@@ -23,7 +24,7 @@ public class AlfredTelemetryTests extends BaseGeneratorTests {
                 .contains("alfredTelemetryVersion = \"" + telemetryVersion + "\"")
                 .contains("micrometerVersion = \"" + micrometerVersion + "\"");
 
-        result.platformGradleBuild()
+        result.platformBuildGradle()
                 .hasDependency("alfrescoProvided", quote("io.micrometer:micrometer-core:${micrometerVersion}"));
     }
 }

@@ -4,15 +4,16 @@ import org.assertj.core.api.AbstractStringAssert;
 
 public class DependenciesAssert extends AbstractStringAssert<DependenciesAssert> {
 
-    public DependenciesAssert(String gradleBuildContent) {
-        super(extractDependenciesSection(gradleBuildContent), DependenciesAssert.class);
+    private DependenciesAssert(String content) {
+        super(content, DependenciesAssert.class);
     }
 
     public DependenciesAssert hasDependency(String configuration, String dependency) {
         return this.contains(configuration + " " + dependency);
     }
 
-    private static String extractDependenciesSection(String gradleBuildContent) {
-        return GradleBuildParser.extractSection("dependencies", gradleBuildContent);
+    public static DependenciesAssert from(String gradleBuildContent) {
+        String dependencies = GradleBuildParser.extractSection("dependencies", gradleBuildContent);
+        return new DependenciesAssert(dependencies);
     }
 }
