@@ -95,10 +95,10 @@ public abstract class BaseGeneratorTests {
         return new GrafanaProvisioningAssert(result);
     }
 
-    protected ProjectRequest createProjectRequest(String... styles) {
+    protected ProjectRequest createProjectRequest(String... dependencies) {
         WebProjectRequest request = new WebProjectRequest();
         request.initialize(this.metadataProvider.get());
-        request.getStyle().addAll(Arrays.asList(styles));
+        request.getDependencies().addAll(Arrays.asList(dependencies));
         return request;
     }
 
