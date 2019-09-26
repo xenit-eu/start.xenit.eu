@@ -24,17 +24,6 @@ public class DockerBuildGenerationConfigurationTest extends BaseGeneratorTests {
                 .hasDependency("alfrescoAmp", "project(path: ':demo-platform', configuration: 'amp')")
         ;
 
-
-    }
-
-
-    @Test
-    public void testCommunity() {
-        ProjectRequest request = createProjectRequest();
-
-        GradleMultiProjectAssert result = generateGradleBuild(request);
-        DockerComposeProjectAssert dockerComposeProjectAssert = generateCompose(request);
-
         result.platformDockerBuildGradle()
                 .hasDependency("baseAlfrescoWar", "\"org.alfresco:${alfrescoArtifactId}:${alfrescoVersion}@war\"");
 
