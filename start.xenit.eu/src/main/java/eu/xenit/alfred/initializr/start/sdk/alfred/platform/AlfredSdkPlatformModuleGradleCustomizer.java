@@ -19,7 +19,7 @@ public class AlfredSdkPlatformModuleGradleCustomizer implements BuildCustomizer<
         build.plugins().add("eu.xenit.alfresco", plugin -> plugin.setVersion("0.2.0"));
         build.plugins().add("eu.xenit.amp", plugin -> plugin.setVersion("0.2.0"));
 
-        build.dependencies().add("alfresco-repository", Dependencies.ALFRESCO_REPOSITORY);
+        build.dependencies().add("alfresco-repository", Dependencies.getAlfrescoRepositoryDependency("${alfrescoArtifactId}"));
     }
 
 }

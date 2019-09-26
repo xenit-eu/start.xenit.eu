@@ -2,6 +2,7 @@ package eu.xenit.alfred.initializr.start.sdk.alfred.platformdocker;
 
 import static org.springframework.util.StringUtils.quote;
 
+import eu.xenit.alfred.initializr.start.project.alfresco.AlfrescoConstants.ArtifactId;
 import eu.xenit.alfred.initializr.start.project.alfresco.platform.AlfrescoPlatformModule;
 import eu.xenit.alfred.initializr.start.build.BuildCustomizer;
 import eu.xenit.alfred.initializr.start.build.platformdocker.gradle.PlatformDockerGradleBuild;
@@ -35,13 +36,13 @@ public class PlatformDockerBuildGenerationConfiguration {
         return (build) -> {
             build.plugins().add("eu.xenit.docker-alfresco", plugin -> plugin.setVersion("4.0.3"));
 
-            build.dependencies().add("alfresco-war", Dependencies.ALFRESCO_WAR);
+            build.dependencies().add("alfresco-war", Dependencies.getAlfrescoWarDependency("${alfrescoArtifactId}"));
 
             build.tasks().customize("dockerAlfresco", (dockerAlfresco) -> {
-                dockerAlfresco.attribute("baseImage", "\"hub.xenit.eu/alfresco-enterprise/alfresco-enterprise:${alfrescoVersion}\"");
+                dockerAlfresco.attribute("baseImage", "\"${alfrescoHub}/${alfrescoDockerImage}:${alfrescoVersion}\"");
                 dockerAlfresco.attribute("leanImage", "true");
                 dockerAlfresco.nested("dockerBuild", (dockerBuild) -> {
-                    dockerBuild.attribute("repository", quote(project.getName()));
+                    dockerBuild.attribute("repository", quote("hub.xenit.eu/" + project.getName()));
                     dockerBuild.attribute("automaticTags", "true");
                 });
             });

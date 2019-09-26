@@ -36,7 +36,7 @@ public class DockerBuildGenerationConfigurationTest extends BaseGeneratorTests {
         DockerComposeProjectAssert dockerComposeProjectAssert = generateCompose(request);
 
         result.platformDockerBuildGradle()
-                .hasDependency("baseAlfrescoWar", "\"org.alfresco:alfresco-platform:${alfrescoVersion}@war\"");
+                .hasDependency("baseAlfrescoWar", "\"org.alfresco:${alfrescoArtifactId}:${alfrescoVersion}@war\"");
 
     }
 

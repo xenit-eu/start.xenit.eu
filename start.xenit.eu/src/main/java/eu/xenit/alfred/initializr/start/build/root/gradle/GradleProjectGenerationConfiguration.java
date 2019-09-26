@@ -10,6 +10,7 @@ import io.spring.initializr.generator.condition.ConditionalOnBuildSystem;
 import io.spring.initializr.generator.io.IndentingWriterFactory;
 import io.spring.initializr.generator.project.ProjectDescription;
 import io.spring.initializr.generator.project.ProjectGenerationConfiguration;
+import io.spring.initializr.generator.version.Version;
 import java.util.List;
 import java.util.stream.Collectors;
 import org.springframework.beans.factory.ObjectProvider;
@@ -43,8 +44,34 @@ public class GradleProjectGenerationConfiguration {
 
     @Bean
     public BuildCustomizer<RootGradleBuild> addDockerVersion(ProjectDescription projectDescription) {
-        return (build) -> build.properties().property("alfrescoVersion", quote(projectDescription.getPlatformVersion().toString()));
-
+        String alfrescoVersion;
+        String alfrescoArtifactId;
+        String alfrescoHub;
+        String alfrescoDockerImage;
+        Version version = projectDescription.getPlatformVersion();
+        // TODO until https://github.com/xenit-eu/start.xenit.eu/issues/23 is resolved, just list translations
+        switch (version.toString()) {
+            case "5.2.5":
+                alfrescoVersion = "5.2.5";
+                alfrescoArtifactId = "alfresco-enterprise";
+                alfrescoHub = "hub.xenit.eu/alfresco-enterprise";
+                alfrescoDockerImage = "alfresco-enterprise";
+                break;
+            case "5.2.0.g":
+                alfrescoVersion = "5.2.g";
+                alfrescoArtifactId = "alfresco-platform";
+                alfrescoHub = "xeniteu";
+                alfrescoDockerImage = "alfresco-repository-community";
+                break;
+            default:
+                throw new IllegalArgumentException(version.toString() + " is not a supported version for now");
+        }
+        return (build) -> {
+            build.properties().property("alfrescoVersion", quote(alfrescoVersion));
+            build.properties().property("alfrescoArtifactId", quote(alfrescoArtifactId));
+            build.properties().property("alfrescoHub", quote(alfrescoHub));
+            build.properties().property("alfrescoDockerImage", quote(alfrescoDockerImage));
+        };
     }
 
     @Bean

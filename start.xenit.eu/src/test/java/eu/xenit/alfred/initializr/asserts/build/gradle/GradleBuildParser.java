@@ -74,7 +74,7 @@ public class GradleBuildParser {
                 "version = '0.0.1-SNAPSHOT'",
                 "",
                 "dependencies {",
-                "   alfrescoProvided \"org.alfresco:alfresco-enterprise:${alfrescoVersion}\"",
+                "   alfrescoProvided \"org.alfresco:${alfrescoArtifactId}:${alfrescoVersion}\"",
 //                "}", // intentional whitespace
                 "\t}", // intentional additional whitespace
                 "");
@@ -104,7 +104,7 @@ public class GradleBuildParser {
             String result = extractSection("dependencies", GRADLE);
             assertThat(result)
                     .isNotBlank()
-                    .isEqualTo("alfrescoProvided \"org.alfresco:alfresco-enterprise:${alfrescoVersion}\"");
+                    .isEqualTo("alfrescoProvided \"org.alfresco:${alfrescoArtifactId}:${alfrescoVersion}\"");
 
         }
 

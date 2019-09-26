@@ -32,6 +32,9 @@ initializr:
   bootVersions:
   - name: Enterprise 5.2.5
     id: 5.2.5
+    default: false
+  - name: Community 5.2.g
+    id: 5.2.0.g
     default: true
   javaVersions:
   - id: 1.8
