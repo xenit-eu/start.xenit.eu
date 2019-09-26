@@ -46,7 +46,7 @@ public class GradleProjectGenerationConfiguration {
     public BuildCustomizer<RootGradleBuild> addDockerVersion(ProjectDescription projectDescription) {
         String alfrescoVersion;
         String alfrescoArtifactId;
-        String alfrescoHub;
+        String dockerRegistry;
         String alfrescoDockerImage;
         Version version = projectDescription.getPlatformVersion();
         // TODO until https://github.com/xenit-eu/start.xenit.eu/issues/23 is resolved, just list translations
@@ -54,13 +54,19 @@ public class GradleProjectGenerationConfiguration {
             case "5.2.5":
                 alfrescoVersion = "5.2.5";
                 alfrescoArtifactId = "alfresco-enterprise";
-                alfrescoHub = "hub.xenit.eu/alfresco-enterprise";
+                dockerRegistry = "hub.xenit.eu/alfresco-enterprise";
                 alfrescoDockerImage = "alfresco-enterprise";
                 break;
             case "5.2.0.g":
                 alfrescoVersion = "5.2.g";
                 alfrescoArtifactId = "alfresco-platform";
-                alfrescoHub = "xeniteu";
+                dockerRegistry = "xeniteu";
+                alfrescoDockerImage = "alfresco-repository-community";
+                break;
+            case "6.1.2.ga":
+                alfrescoVersion = "6.1.2-ga";
+                alfrescoArtifactId = "content-services-community";
+                dockerRegistry = "xeniteu";
                 alfrescoDockerImage = "alfresco-repository-community";
                 break;
             default:
@@ -69,7 +75,7 @@ public class GradleProjectGenerationConfiguration {
         return (build) -> {
             build.properties().property("alfrescoVersion", quote(alfrescoVersion));
             build.properties().property("alfrescoArtifactId", quote(alfrescoArtifactId));
-            build.properties().property("alfrescoHub", quote(alfrescoHub));
+            build.properties().property("dockerRegistry", quote(dockerRegistry));
             build.properties().property("alfrescoDockerImage", quote(alfrescoDockerImage));
         };
     }

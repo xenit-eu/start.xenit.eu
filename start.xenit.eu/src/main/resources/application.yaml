@@ -36,6 +36,9 @@ initializr:
   - name: Community 5.2.g
     id: 5.2.0.g
     default: true
+  - name: Community 6.1.2
+    id: 6.1.2.ga
+    default: false
   javaVersions:
   - id: 1.8
     default: true
