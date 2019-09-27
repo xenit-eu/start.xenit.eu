@@ -19,7 +19,7 @@ public class AlfredGradleSdkTests extends BaseGeneratorTests {
                 .hasPlugin("eu.xenit.alfresco")
                 .hasPlugin("eu.xenit.amp")
 
-                .hasDependency("alfrescoProvided", quote("org.alfresco:${alfrescoArtifactId}:${alfrescoVersion}"));
+                .hasDependency("alfrescoProvided", quote("org.alfresco:alfresco-platform:${alfrescoVersion}"));
 
     }
 }

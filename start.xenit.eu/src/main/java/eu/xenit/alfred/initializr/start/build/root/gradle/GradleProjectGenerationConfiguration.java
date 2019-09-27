@@ -2,15 +2,15 @@ package eu.xenit.alfred.initializr.start.build.root.gradle;
 
 import static org.springframework.util.StringUtils.quote;
 
-import eu.xenit.alfred.initializr.start.build.BuildCustomizer;
 import eu.xenit.alfred.initializr.generator.buildsystem.gradle.CustomGradleBuildWriter;
+import eu.xenit.alfred.initializr.start.build.BuildCustomizer;
+import eu.xenit.alfred.initializr.start.project.alfresco.artifacts.AlfrescoVersionArtifactSelector;
 import io.spring.initializr.generator.buildsystem.BuildItemResolver;
 import io.spring.initializr.generator.buildsystem.gradle.GradleBuildSystem;
 import io.spring.initializr.generator.condition.ConditionalOnBuildSystem;
 import io.spring.initializr.generator.io.IndentingWriterFactory;
 import io.spring.initializr.generator.project.ProjectDescription;
 import io.spring.initializr.generator.project.ProjectGenerationConfiguration;
-import io.spring.initializr.generator.version.Version;
 import java.util.List;
 import java.util.stream.Collectors;
 import org.springframework.beans.factory.ObjectProvider;
@@ -21,11 +21,14 @@ import org.springframework.context.annotation.Bean;
 @ConditionalOnBuildSystem(GradleBuildSystem.ID)
 public class GradleProjectGenerationConfiguration {
 
+    private AlfrescoVersionArtifactSelector artifactSelector;
+
     @Bean
     public RootGradleBuild gradleBuild(
             ProjectDescription projectDescription,
             ObjectProvider<BuildItemResolver> buildItemResolver,
-            ObjectProvider<BuildCustomizer<?>> buildCustomizers) {
+            ObjectProvider<BuildCustomizer<?>> buildCustomizers, AlfrescoVersionArtifactSelector artifactSelector) {
+        this.artifactSelector = artifactSelector;
         return this.createGradleBuild(
                 projectDescription.getName(),
                 buildItemResolver.getIfAvailable(),
@@ -44,39 +47,8 @@ public class GradleProjectGenerationConfiguration {
 
     @Bean
     public BuildCustomizer<RootGradleBuild> addDockerVersion(ProjectDescription projectDescription) {
-        String alfrescoVersion;
-        String alfrescoArtifactId;
-        String dockerRegistry;
-        String alfrescoDockerImage;
-        Version version = projectDescription.getPlatformVersion();
-        // TODO until https://github.com/xenit-eu/start.xenit.eu/issues/23 is resolved, just list translations
-        switch (version.toString()) {
-            case "5.2.5":
-                alfrescoVersion = "5.2.5";
-                alfrescoArtifactId = "alfresco-enterprise";
-                dockerRegistry = "hub.xenit.eu/alfresco-enterprise";
-                alfrescoDockerImage = "alfresco-enterprise";
-                break;
-            case "5.2.0.g":
-                alfrescoVersion = "5.2.g";
-                alfrescoArtifactId = "alfresco-platform";
-                dockerRegistry = "xeniteu";
-                alfrescoDockerImage = "alfresco-repository-community";
-                break;
-            case "6.1.2.ga":
-                alfrescoVersion = "6.1.2-ga";
-                alfrescoArtifactId = "content-services-community";
-                dockerRegistry = "xeniteu";
-                alfrescoDockerImage = "alfresco-repository-community";
-                break;
-            default:
-                throw new IllegalArgumentException(version.toString() + " is not a supported version for now");
-        }
         return (build) -> {
-            build.properties().property("alfrescoVersion", quote(alfrescoVersion));
-            build.properties().property("alfrescoArtifactId", quote(alfrescoArtifactId));
-            build.properties().property("dockerRegistry", quote(dockerRegistry));
-            build.properties().property("alfrescoDockerImage", quote(alfrescoDockerImage));
+            build.properties().property("alfrescoVersion", quote(artifactSelector.getAlfrescoVersion()));
         };
     }
 

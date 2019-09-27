@@ -2,11 +2,11 @@ package eu.xenit.alfred.initializr.start.sdk.alfred.platformdocker;
 
 import static org.springframework.util.StringUtils.quote;
 
-import eu.xenit.alfred.initializr.start.project.alfresco.AlfrescoConstants.ArtifactId;
-import eu.xenit.alfred.initializr.start.project.alfresco.platform.AlfrescoPlatformModule;
+import eu.xenit.alfred.initializr.generator.buildsystem.gradle.GradleProjectDependency;
 import eu.xenit.alfred.initializr.start.build.BuildCustomizer;
 import eu.xenit.alfred.initializr.start.build.platformdocker.gradle.PlatformDockerGradleBuild;
-import eu.xenit.alfred.initializr.generator.buildsystem.gradle.GradleProjectDependency;
+import eu.xenit.alfred.initializr.start.project.alfresco.artifacts.AlfrescoVersionArtifactSelector;
+import eu.xenit.alfred.initializr.start.project.alfresco.platform.AlfrescoPlatformModule;
 import eu.xenit.alfred.initializr.start.project.docker.platform.DockerPlatformModule;
 import eu.xenit.alfred.initializr.start.sdk.alfred.AlfredSdk;
 import eu.xenit.alfred.initializr.start.sdk.alfred.AlfredSdk.Dependencies;
@@ -15,8 +15,8 @@ import io.spring.initializr.generator.buildsystem.DependencyScope;
 import io.spring.initializr.generator.buildsystem.gradle.GradleBuildSystem;
 import io.spring.initializr.generator.buildsystem.gradle.GradleDependency;
 import io.spring.initializr.generator.condition.ConditionalOnBuildSystem;
-import io.spring.initializr.generator.project.ProjectGenerationConfiguration;
 import io.spring.initializr.generator.project.ProjectDescription;
+import io.spring.initializr.generator.project.ProjectGenerationConfiguration;
 import io.spring.initializr.metadata.InitializrMetadata;
 import java.util.AbstractMap;
 import org.springframework.context.annotation.Bean;
@@ -26,9 +26,12 @@ import org.springframework.context.annotation.Bean;
 public class PlatformDockerBuildGenerationConfiguration {
 
     private final InitializrMetadata metadata;
+    private AlfrescoVersionArtifactSelector artifactSelector;
 
-    public PlatformDockerBuildGenerationConfiguration(InitializrMetadata metadata) {
+    public PlatformDockerBuildGenerationConfiguration(InitializrMetadata metadata,
+            AlfrescoVersionArtifactSelector artifactSelector) {
         this.metadata = metadata;
+        this.artifactSelector = artifactSelector;
     }
 
     @Bean
@@ -36,10 +39,13 @@ public class PlatformDockerBuildGenerationConfiguration {
         return (build) -> {
             build.plugins().add("eu.xenit.docker-alfresco", plugin -> plugin.setVersion("4.0.3"));
 
-            build.dependencies().add("alfresco-war", Dependencies.getAlfrescoWarDependency("${alfrescoArtifactId}"));
+            build.dependencies().add("alfresco-war",
+                    Dependencies.getAlfrescoWarDependency(artifactSelector.getAlfrescoArtifactId()));
 
             build.tasks().customize("dockerAlfresco", (dockerAlfresco) -> {
-                dockerAlfresco.attribute("baseImage", "\"${dockerRegistry}/${alfrescoDockerImage}:${alfrescoVersion}\"");
+                dockerAlfresco.attribute("baseImage",
+                        "\"" + artifactSelector.getDockerRegistry() + "/" + artifactSelector.getAlfrescoDockerImage()
+                                + ":${alfrescoVersion}\"");
                 dockerAlfresco.attribute("leanImage", "true");
                 dockerAlfresco.nested("dockerBuild", (dockerBuild) -> {
                     dockerBuild.attribute("repository", quote("hub.xenit.eu/" + project.getName()));
