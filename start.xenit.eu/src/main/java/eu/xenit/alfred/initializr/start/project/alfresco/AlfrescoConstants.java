@@ -5,10 +5,10 @@ import io.spring.initializr.generator.buildsystem.MavenRepository;
 public class AlfrescoConstants {
 
     public static class MavenRepositories {
-        public static final MavenRepository ALFRESCO_PUBLIC = new MavenRepository(
-                "alfresco-public",
-                "Alfresco Public",
-                "https://artifacts.alfresco.com/nexus/content/groups/public/");
+        public static final MavenRepository ALFRESCO_PUBLIC = MavenRepository
+                .withIdAndUrl("alfresco-public", "https://artifacts.alfresco.com/nexus/content/groups/public/")
+                .name("Alfresco Public")
+                .build();
     }
 
     public static class ArtifactId {
