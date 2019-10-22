@@ -31,7 +31,7 @@ public class AlfrescoBaseLayerComposeCustomizer implements DockerComposeCustomiz
         String imageIdEnv = this.envNameProvider.get(this.dockerPlatformProject);
         services
             .service("alfresco")
-                .image(String.format("${%s:-hub.xenit.eu/%s:latest}", imageIdEnv, projectDescription.getName()))
+                .image(String.format("${%s:-%s:latest}", imageIdEnv, projectDescription.getName()))
                 .volumes("alfresco:/opt/alfresco/alf_data")
                 .ports("8080")
                 .environment(

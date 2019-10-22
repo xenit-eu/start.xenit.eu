@@ -2,7 +2,7 @@ version: '2.2'
 
 services:
   initializr:
-    image: ${DOCKER_IMAGE:-hub.xenit.eu/start.xenit.eu}
+    image: ${DOCKER_IMAGE:-hub.xenit.eu/public/start.xenit.eu}
     ports:
     - 8080
     environment:
