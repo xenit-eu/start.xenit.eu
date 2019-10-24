@@ -22,7 +22,7 @@ public class GrafanaDockerComposeProjectGenerationConfiguration {
     DockerComposeCustomizer grafanaDockerComposeCustomizer() {
         return (compose) -> compose.file("grafana").getServices()
                 .service("grafana")
-                .image("hub.xenit.eu/public/grafana:5.0")
+                .image("hub.xenit.eu/public/grafana:5")
                 //.volumes("./grafana:/etc/grafana:z")
                 .ports("3000");
     }
