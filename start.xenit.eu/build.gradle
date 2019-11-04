@@ -58,7 +58,7 @@ test {
 dockerFile {
     dockerFile = file('Dockerfile')
     dockerBuild {
-        repository = 'hub.xenit.eu/start.xenit.eu'
+        repository = 'hub.xenit.eu/public/start.xenit.eu'
         tags = [ project.version ]
         automaticTags = true
     }

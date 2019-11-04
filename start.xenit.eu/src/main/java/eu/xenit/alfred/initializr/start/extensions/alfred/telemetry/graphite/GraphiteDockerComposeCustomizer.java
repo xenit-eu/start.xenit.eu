@@ -26,11 +26,11 @@ public class GraphiteDockerComposeCustomizer implements DockerComposeCustomizer 
                 );
 
         services.service("carbon")
-                .image("hub.xenit.eu/carbon:0.0.1-4")
+                .image("hub.xenit.eu/public/carbon:0.0.1-4")
                 .volumes("whisperdb:/opt/graphite/storage/whisper");
 
         services.service("graphite-api")
-                .image("hub.xenit.eu/graphite-api:0.0.1-10")
+                .image("hub.xenit.eu/public/graphite-api:0.0.1-10")
                 .volumes("whisperdb:/srv/graphite/whisper");
 
         composeGraphite.volumes(

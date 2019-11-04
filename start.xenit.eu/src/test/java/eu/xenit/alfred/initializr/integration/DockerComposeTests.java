@@ -21,7 +21,7 @@ public class DockerComposeTests extends BaseGeneratorTests {
                 .isNotBlank()
                 .startsWith("version:")
                 .contains("alfresco:")
-                .contains("image: ${FOO_PLATFORM_DOCKER_IMAGE:-hub.xenit.eu/demo:latest}");
+                .contains("image: ${FOO_PLATFORM_DOCKER_IMAGE:-demo:latest}");
     }
 
     @Test

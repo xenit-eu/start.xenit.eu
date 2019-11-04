@@ -38,10 +38,10 @@ public class PlatformDockerBuildGenerationConfiguration {
             build.dependencies().add("alfresco-war", Dependencies.ALFRESCO_WAR);
 
             build.tasks().customize("dockerAlfresco", (dockerAlfresco) -> {
-                dockerAlfresco.attribute("baseImage", "\"hub.xenit.eu/alfresco-enterprise:${alfrescoVersion}\"");
+                dockerAlfresco.attribute("baseImage", "\"hub.xenit.eu/alfresco-enterprise/alfresco-enterprise:${alfrescoVersion}\"");
                 dockerAlfresco.attribute("leanImage", "true");
                 dockerAlfresco.nested("dockerBuild", (dockerBuild) -> {
-                    dockerBuild.attribute("repository", quote("hub.xenit.eu/" + project.getName()));
+                    dockerBuild.attribute("repository", quote(project.getName()));
                     dockerBuild.attribute("automaticTags", "true");
                 });
             });
