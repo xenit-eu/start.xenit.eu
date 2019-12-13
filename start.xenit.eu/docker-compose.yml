@@ -1,9 +1,9 @@
-version: '3'
+version: '3.2'
 
 services:
   initializr:
     image: ${DOCKER_IMAGE:-hub.xenit.eu/public/start.xenit.eu}
     ports:
-    - target: 8080
-      mode: host
+     - target: 8080
+       mode: host
     env_file: .env
