@@ -49,17 +49,19 @@ pipeline {
                 }
             }
 	    steps {
+		script {
+		    image=getImageWithTagFromFile()
+		    echo "image=${image}"
+		}		
 		ansibleTower(
 		    towerServer: 'Production ansible tower',
 		    templateType: 'job',
-		    jobTemplate: 'Update start.xenit.eu',
+		    jobTemplate: 'Deploy start.xenit.eu (test-swarm)',
 		    importTowerLogs: true,
 		    removeColor: false,
 		    verbose: true,
-		    extraVars: '''---
-applications_to_install:
-    - app: start
-      name: start'''
+		    extraVars: """---
+docker_compose_env_variables: {'DOCKER_IMAGE': '${image}'}"""
 		)
 	    }
 	}
@@ -73,3 +75,6 @@ applications_to_install:
 }
 
 
+def getImageWithTagFromFile() {
+    return readFile("tag.txt")
+}
