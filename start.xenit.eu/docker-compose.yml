@@ -6,4 +6,4 @@ services:
     ports:
      - target: 8080
        mode: host
-    env_file: .env
+    env_file: .env_file
