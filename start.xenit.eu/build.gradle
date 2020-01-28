@@ -64,9 +64,24 @@ dockerFile {
     }
 }
 
+
 buildDockerImage {
     dependsOn(bootJar)
     buildArgs = [
             'JAR_FILE': "build/libs/${tasks.bootJar.getArchiveName()}"
     ]
 }
+
+task writeTagToFile {
+    dependsOn(buildDockerImage)
+
+    def allTags = buildDockerImage.tags
+    
+    File file = new File("tag.txt")
+    file.delete()
+    doLast {
+	file.write(allTags.properties.orNull.getAt(0))
+    }
+}
+
+pushDockerImage.dependsOn(writeTagToFile)
