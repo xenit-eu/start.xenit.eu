@@ -2,7 +2,8 @@ plugins {
     id 'java'
     id 'org.springframework.boot'
     id 'io.spring.dependency-management'
-    id 'eu.xenit.docker' version '4.0.3'
+    id 'eu.xenit.docker' version '5.0.1'
+    id 'eu.xenit.docker-compose' version '5.0.1'
     id 'idea'
 }
 
@@ -73,14 +74,13 @@ buildDockerImage {
 }
 
 task writeTagToFile {
-    dependsOn(buildDockerImage)
-
-    def allTags = buildDockerImage.tags
-    
-    File file = new File("tag.txt")
-    file.delete()
     doLast {
-	file.write(allTags.properties.orNull.getAt(0))
+        def image = buildDockerImage.getImages().get().find()
+        assert image : "Docker Image has no tags"
+        println "Using image: ${image}"
+        new File("tag.txt").newWriter().withWriter { w ->
+            w << image
+        }
     }
 }
 

@@ -42,29 +42,31 @@ pipeline {
             }
         }
 
-	stage('Deploy via Ansible Tower') {
+        stage('Deploy via Ansible Tower') {
             when {
                 anyOf {
                     branch "master*"
                 }
             }
-	    steps {
-		script {
-		    image=getImageWithTagFromFile()
-		    echo "image=${image}"
-		}		
-		ansibleTower(
-		    towerServer: 'Production ansible tower',
-		    templateType: 'job',
-		    jobTemplate: 'Deploy start.xenit.eu (test-swarm)',
-		    importTowerLogs: true,
-		    removeColor: false,
-		    verbose: true,
-		    extraVars: """---
+
+            steps {
+                script {
+                    image=getImageWithTagFromFile()
+                    echo "image=${image}"
+                }
+
+                ansibleTower(
+                    towerServer: 'Production ansible tower',
+                    templateType: 'job',
+                    jobTemplate: 'Deploy start.xenit.eu (test-swarm)',
+                    importTowerLogs: true,
+                    removeColor: false,
+                    verbose: true,
+                    extraVars: """---
 docker_compose_env_variables: {'DOCKER_IMAGE': '${image}'}"""
-		)
-	    }
-	}
+                )
+            }
+        }
     }
 
     post {
