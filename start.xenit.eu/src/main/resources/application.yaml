@@ -74,7 +74,7 @@ initializr:
       id: apix
       groupId: eu.xenit.apix
       artifactId: apix-impl-52
-      version: 2.2.0
+      version: 2.3.0
       description: Alfred API allows you to access Alfresco in a standardised way.
 
   - name: Monitoring
