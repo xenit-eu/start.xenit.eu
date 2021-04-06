@@ -1,6 +1,7 @@
 package eu.xenit.alfred.initializr.integration;
 
 import eu.xenit.alfred.initializr.asserts.build.gradle.GradleMultiProjectAssert;
+import eu.xenit.alfred.initializr.asserts.docker.DockerComposeProjectAssert;
 import io.spring.initializr.web.project.ProjectRequest;
 import org.junit.Test;
 
@@ -23,6 +24,9 @@ public class DockerBuildGenerationConfigurationTest extends BaseGeneratorTests {
                 .hasDependency("alfrescoAmp", "project(path: ':demo-platform', configuration: 'amp')")
         ;
 
+        result.platformDockerBuildGradle()
+                .hasDependency("baseAlfrescoWar", "\"org.alfresco:alfresco-platform:${alfrescoVersion}@war\"");
 
     }
+
 }

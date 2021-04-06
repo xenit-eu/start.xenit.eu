@@ -2,8 +2,9 @@ package eu.xenit.alfred.initializr.start.build.root.gradle;
 
 import static org.springframework.util.StringUtils.quote;
 
-import eu.xenit.alfred.initializr.start.build.BuildCustomizer;
 import eu.xenit.alfred.initializr.generator.buildsystem.gradle.CustomGradleBuildWriter;
+import eu.xenit.alfred.initializr.start.build.BuildCustomizer;
+import eu.xenit.alfred.initializr.start.project.alfresco.artifacts.AlfrescoVersionArtifactSelector;
 import io.spring.initializr.generator.buildsystem.BuildItemResolver;
 import io.spring.initializr.generator.buildsystem.gradle.GradleBuildSystem;
 import io.spring.initializr.generator.condition.ConditionalOnBuildSystem;
@@ -20,11 +21,14 @@ import org.springframework.context.annotation.Bean;
 @ConditionalOnBuildSystem(GradleBuildSystem.ID)
 public class GradleProjectGenerationConfiguration {
 
+    private AlfrescoVersionArtifactSelector artifactSelector;
+
     @Bean
     public RootGradleBuild gradleBuild(
             ProjectDescription projectDescription,
             ObjectProvider<BuildItemResolver> buildItemResolver,
-            ObjectProvider<BuildCustomizer<?>> buildCustomizers) {
+            ObjectProvider<BuildCustomizer<?>> buildCustomizers, AlfrescoVersionArtifactSelector artifactSelector) {
+        this.artifactSelector = artifactSelector;
         return this.createGradleBuild(
                 projectDescription.getName(),
                 buildItemResolver.getIfAvailable(),
@@ -43,8 +47,9 @@ public class GradleProjectGenerationConfiguration {
 
     @Bean
     public BuildCustomizer<RootGradleBuild> addDockerVersion(ProjectDescription projectDescription) {
-        return (build) -> build.properties().property("alfrescoVersion", quote(projectDescription.getPlatformVersion().toString()));
-
+        return (build) -> {
+            build.properties().property("alfrescoVersion", quote(artifactSelector.getAlfrescoVersion()));
+        };
     }
 
     @Bean

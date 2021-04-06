@@ -11,7 +11,8 @@ eu.xenit.alfred.initializr.start.project.alfresco.platform.AlfrescoModuleProject
 eu.xenit.alfred.initializr.start.project.docker.platform.DockerPlatformModuleConfiguration,\
 eu.xenit.alfred.initializr.start.sdk.alfred.platform.AlfredSdkPlatformProjectGenerationConfiguration,\
 eu.xenit.alfred.initializr.start.sdk.alfred.platformdocker.PlatformDockerBuildGenerationConfiguration,\
-eu.xenit.alfred.initializr.start.sdk.alfred.compose.AlfredSdkComposeProjectGenerationConfiguration
+eu.xenit.alfred.initializr.start.sdk.alfred.compose.AlfredSdkComposeProjectGenerationConfiguration,\
+eu.xenit.alfred.initializr.start.project.alfresco.artifacts.AlfrescoVersionArtifactSelectionConfiguration
 
 
 

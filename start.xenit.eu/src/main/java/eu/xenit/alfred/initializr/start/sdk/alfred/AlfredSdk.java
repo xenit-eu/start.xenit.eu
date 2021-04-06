@@ -37,22 +37,26 @@ public class AlfredSdk {
 
     public static class Dependencies {
 
+        public static Dependency getAlfrescoWarDependency(String edition) {
+            return  GradleDependency.withCoordinates(
+                    GroupId.ORG_ALFRESCO,
+                    edition)
+                    .version(VersionReference.ofProperty("alfresco-version"))
+                    .scope(DependencyScope.COMPILE)
+                    .configuration("baseAlfrescoWar")
+                    .type("war")
+                    .build();
+        }
 
-        public static final Dependency ALFRESCO_WAR = GradleDependency.withCoordinates(
-                GroupId.ORG_ALFRESCO,
-                ArtifactId.ALFRESCO_ENTERPRISE)
-                .version(VersionReference.ofProperty("alfresco-version"))
-                .scope(DependencyScope.COMPILE)
-                .configuration("baseAlfrescoWar")
-                .type("war")
-                .build();
+        public static Dependency getAlfrescoRepositoryDependency(String artifactId) {
+            return GradleDependency.withCoordinates(
+                    GroupId.ORG_ALFRESCO,
+                    artifactId)
+                    .version(VersionReference.ofProperty("alfresco-version")) // this is not correct ?
+                    .scope(DependencyScope.PROVIDED_RUNTIME)
+                    .configuration("alfrescoProvided")
+                    .build();
+        }
 
-        public static final Dependency ALFRESCO_REPOSITORY = GradleDependency.withCoordinates(
-                GroupId.ORG_ALFRESCO,
-                ArtifactId.ALFRESCO_REPOSITORY)
-                .version(VersionReference.ofProperty("alfresco-version")) // this is not correct ?
-                .scope(DependencyScope.PROVIDED_RUNTIME)
-                .configuration("alfrescoProvided")
-                .build();
     }
 }

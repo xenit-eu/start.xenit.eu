@@ -32,7 +32,13 @@ initializr:
   bootVersions:
   - name: Enterprise 5.2.5
     id: 5.2.5
+    default: false
+  - name: Community 5.2.g
+    id: 5.2.0.g
     default: true
+  - name: Community 6.1.2
+    id: 6.1.2.ga
+    default: false
   javaVersions:
   - id: 1.8
     default: true
@@ -62,7 +68,7 @@ initializr:
       version: 2.0.1
       description: Rapid development of Alfresco repository extensions.
       mappings:
-      - compatibilityRange: "[5.2.0,5.3.0)"
+      - compatibilityRange: "[5.2.0.a,5.3.0)"
         artifactId: alfresco-dynamic-extensions-repo-52
 
   - name: Alfred API
