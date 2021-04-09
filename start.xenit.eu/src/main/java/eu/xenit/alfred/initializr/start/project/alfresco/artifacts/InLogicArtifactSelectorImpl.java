@@ -40,7 +40,7 @@ public class InLogicArtifactSelectorImpl implements AlfrescoVersionArtifactSelec
     @Override
     public String getDockerRegistry() {
         if (isCommunity()) {
-            return "xeniteu";
+            return "hub.xenit.eu/public";
         }
         return "hub.xenit.eu/alfresco-enterprise";
     }

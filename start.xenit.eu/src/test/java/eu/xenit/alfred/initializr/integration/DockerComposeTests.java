@@ -21,7 +21,7 @@ public class DockerComposeTests extends BaseGeneratorTests {
                 .isNotBlank()
                 .startsWith("version:")
                 .contains("alfresco:")
-                .contains("image: ${FOO_PLATFORM_DOCKER_IMAGE:-demo:latest}");
+                .contains("image: ${FOO_PLATFORM_DOCKER_DOCKER_IMAGE:-demo:latest}");
     }
 
     @Test
@@ -35,6 +35,7 @@ public class DockerComposeTests extends BaseGeneratorTests {
 
         gradle.rootGradleBuild()
                 .assertTask("dockerCompose", dockerCompose -> {
+                    dockerCompose.contains("fromProject project(':demo-platform-docker')");
                     dockerCompose.assertAttribute("useComposeFiles",
                             "['docker-compose.yml', 'docker-compose-graphite.yml', 'docker-compose-grafana.yml']");
                     dockerCompose.assertAttribute("dockerComposeWorkingDirectory", "'docker-compose/'");
@@ -48,9 +49,9 @@ public class DockerComposeTests extends BaseGeneratorTests {
 
         gradle.rootGradleBuild()
                 .assertTask("composeUp", composeUp -> {
-                    composeUp.contains("dependsOn ':demo-platform-docker:buildDockerImage'");
+                    composeUp.doesNotContain("dependsOn ':demo-platform-docker:buildDockerImage'");
                     composeUp.assertNested("doFirst", doFirst -> {
-                        doFirst.contains("dockerCompose.environment.put "
+                        doFirst.doesNotContain("dockerCompose.environment.put "
                                 + "'DEMO_PLATFORM_DOCKER_IMAGE', "
                                 + "project(':demo-platform-docker').buildDockerImage.getImageId()");
                     });

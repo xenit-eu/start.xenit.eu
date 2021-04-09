@@ -1,5 +1,6 @@
 package eu.xenit.alfred.initializr.start.sdk.alfred.platformdocker;
 
+import static eu.xenit.alfred.initializr.start.project.alfresco.AlfrescoConstants.MavenRepositories.ALFRESCO_PUBLIC;
 import static org.springframework.util.StringUtils.quote;
 
 import eu.xenit.alfred.initializr.generator.buildsystem.gradle.GradleProjectDependency;
@@ -37,20 +38,24 @@ public class PlatformDockerBuildGenerationConfiguration {
     @Bean
     public BuildCustomizer<PlatformDockerGradleBuild> addDockerAlfrescoPlugin(ProjectDescription project) {
         return (build) -> {
-            build.plugins().add("eu.xenit.docker-alfresco", plugin -> plugin.setVersion("4.0.3"));
+            build.plugins().add("eu.xenit.docker-alfresco", plugin -> plugin.setVersion("5.2.0"));
+            build.plugins().add("eu.xenit.docker-compose", plugin -> plugin.setVersion("5.2.0"));
+            build.plugins().add("eu.xenit.docker-compose.auto", plugin -> plugin.setVersion("5.2.0"));
+
+            build.repositories().add(ALFRESCO_PUBLIC); //TODO does not apply to enterprise
 
             build.dependencies().add("alfresco-war",
                     Dependencies.getAlfrescoWarDependency(artifactSelector.getAlfrescoArtifactId()));
 
-            build.tasks().customize("dockerAlfresco", (dockerAlfresco) -> {
-                dockerAlfresco.attribute("baseImage",
-                        "\"" + artifactSelector.getDockerRegistry() + "/" + artifactSelector.getAlfrescoDockerImage()
-                                + ":${alfrescoVersion}\"");
-                dockerAlfresco.attribute("leanImage", "true");
-                dockerAlfresco.nested("dockerBuild", (dockerBuild) -> {
-                    dockerBuild.attribute("repository", quote("hub.xenit.eu/" + project.getName()));
-                    dockerBuild.attribute("automaticTags", "true");
-                });
+            build.tasks().customize("dockerBuild", (dockerBuild) -> {
+                dockerBuild.attribute("repositories", "["+quote(project.getName())+"]");
+                dockerBuild.attribute("tags", "[" +quote("latest") +"]");
+                dockerBuild.nested("alfresco", (alfresco) -> {
+                    alfresco.attribute("baseImage",
+                            "\"" + artifactSelector.getDockerRegistry() + "/" + artifactSelector.getAlfrescoDockerImage()
+                                    + ":${alfrescoVersion}\"");
+                    alfresco.attribute("leanImage", "true");
+                } );
             });
         };
     }
