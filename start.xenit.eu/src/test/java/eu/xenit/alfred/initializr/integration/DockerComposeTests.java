@@ -49,13 +49,8 @@ public class DockerComposeTests extends BaseGeneratorTests {
 
         gradle.rootGradleBuild()
                 .assertTask("composeUp", composeUp -> {
-                    composeUp.doesNotContain("dependsOn ':demo-platform-docker:buildDockerImage'");
-                    composeUp.assertNested("doFirst", doFirst -> {
-                        doFirst.doesNotContain("dockerCompose.environment.put "
-                                + "'DEMO_PLATFORM_DOCKER_IMAGE', "
-                                + "project(':demo-platform-docker').buildDockerImage.getImageId()");
-                    });
-        });
+                    composeUp.contains("dependsOn ':demo-platform-docker:buildDockerImage'");
+                });
     }
 
 }

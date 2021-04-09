@@ -42,7 +42,7 @@ public class PlatformDockerBuildGenerationConfiguration {
             build.plugins().add("eu.xenit.docker-compose", plugin -> plugin.setVersion("5.2.0"));
             build.plugins().add("eu.xenit.docker-compose.auto", plugin -> plugin.setVersion("5.2.0"));
 
-            build.repositories().add(ALFRESCO_PUBLIC); //TODO does not apply to enterprise
+            build.repositories().add(ALFRESCO_PUBLIC);
 
             build.dependencies().add("alfresco-war",
                     Dependencies.getAlfrescoWarDependency(artifactSelector.getAlfrescoArtifactId()));
@@ -126,4 +126,5 @@ public class PlatformDockerBuildGenerationConfiguration {
             DockerPlatformModule dockerPlatformModule) {
         return composeUp -> composeUp.usesDockerImageFrom().add(dockerPlatformModule);
     }
+
 }
