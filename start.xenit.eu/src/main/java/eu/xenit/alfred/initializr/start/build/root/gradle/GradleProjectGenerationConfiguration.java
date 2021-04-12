@@ -64,8 +64,8 @@ public class GradleProjectGenerationConfiguration {
 //    }
 
     @Bean
-    public GradleWrapperContributor gradle4WrapperContributor() {
-        return new GradleWrapperContributor("4");
+    public GradleWrapperContributor gradle6WrapperContributor() {
+        return new GradleWrapperContributor("6");
     }
 
     @Bean
