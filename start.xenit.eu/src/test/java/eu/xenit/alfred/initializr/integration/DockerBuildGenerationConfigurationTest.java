@@ -25,7 +25,7 @@ public class DockerBuildGenerationConfigurationTest extends BaseGeneratorTests {
         ;
 
         result.platformDockerBuildGradle()
-                .hasDependency("baseAlfrescoWar", "\"org.alfresco:alfresco-platform:${alfrescoVersion}@war\"");
+                .hasDependency("baseAlfrescoWar", "\"org.alfresco:content-services-community:${alfrescoVersion}@war\"");
 
     }
 
