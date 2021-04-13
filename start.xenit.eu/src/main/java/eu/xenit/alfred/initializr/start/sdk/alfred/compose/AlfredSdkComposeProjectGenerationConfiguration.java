@@ -57,9 +57,11 @@ public class AlfredSdkComposeProjectGenerationConfiguration {
 
     @Bean
     DockerComposeGradlePluginConfiguration dockerComposeGradlePluginConfiguration(
-            ObjectProvider<DockerComposeGradlePluginConfigurationCustomizer> customizers) {
+            ObjectProvider<DockerComposeGradlePluginConfigurationCustomizer> customizers,
+            DockerPlatformModule dockerPlatformModule) {
 
         DockerComposeGradlePluginConfiguration composePluginConfig = new DockerComposeGradlePluginConfiguration();
+        composePluginConfig.setDockerPlatformModule(dockerPlatformModule);
         LambdaSafe.callbacks(DockerComposeGradlePluginConfigurationCustomizer.class,
                 customizers.orderedStream().collect(Collectors.toList()),
                 composePluginConfig,
@@ -76,7 +78,7 @@ public class AlfredSdkComposeProjectGenerationConfiguration {
             DockerComposeGradlePluginConfiguration composePluginConfiguration) {
         return (build) -> {
             // version number aligned with what the `eu.xenit.docker` plugin puts on the classpath
-            build.plugins().add("com.avast.gradle.docker-compose", plugin -> plugin.setVersion("0.8.12"));
+            build.plugins().add("com.avast.gradle.docker-compose", plugin -> plugin.setVersion("0.14.2"));
 
             build.tasks().customize("dockerCompose", composePluginConfiguration);
         };

@@ -49,7 +49,7 @@ public class DockerComposeProjectGenerationConfiguration {
     DockerImageEnvNameProvider nameProvider() {
         return module -> module.getId()
                 .toUpperCase()
-                .replace("-", "_") + "_IMAGE";
+                .replace("-", "_") + "_DOCKER_IMAGE";
     }
 
 }

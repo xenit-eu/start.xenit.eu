@@ -25,15 +25,7 @@ public class ComposeUpGradleTaskConfiguration implements Consumer<GradleTask.Bui
     @Override
     public void accept(GradleTask.Builder builder) {
         this.usesDockerImageFrom.forEach(dockerImageProject -> {
-            String dockerImageEnvName = this.variableNameProvider.get(dockerImageProject);
-
             builder.invoke("dependsOn", "':"+dockerImageProject.getId()+":buildDockerImage'");
-            builder.nested("doFirst", doFirst -> {
-
-                doFirst.invoke("dockerCompose.environment.put",
-                        "'" + dockerImageEnvName + "'",
-                        "project(':" + dockerImageProject.getId()+ "').buildDockerImage.getImageId()");
-            });
         });
     }
 }

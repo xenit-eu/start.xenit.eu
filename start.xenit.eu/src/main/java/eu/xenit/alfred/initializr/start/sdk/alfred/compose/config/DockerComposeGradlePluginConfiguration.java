@@ -1,8 +1,10 @@
 package eu.xenit.alfred.initializr.start.sdk.alfred.compose.config;
 
+import static org.springframework.util.StringUtils.quote;
 
-import io.spring.initializr.generator.buildsystem.gradle.GradleTask;
 import eu.xenit.alfred.initializr.generator.docker.compose.DockerComposeLocationStrategy;
+import eu.xenit.alfred.initializr.start.project.docker.platform.DockerPlatformModule;
+import io.spring.initializr.generator.buildsystem.gradle.GradleTask;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
@@ -18,6 +20,9 @@ public class DockerComposeGradlePluginConfiguration implements Consumer<GradleTa
     @Getter @Setter
     private DockerComposeLocationStrategy locationStrategy;
 
+    @Getter @Setter
+    private DockerPlatformModule dockerPlatformModule;
+
     @Override
     public void accept(GradleTask.Builder dockerCompose) {
         if (this.shouldSetUseComposeFiles()) {
@@ -28,6 +33,7 @@ public class DockerComposeGradlePluginConfiguration implements Consumer<GradleTa
             dockerCompose.attribute("dockerComposeWorkingDirectory",
                     "'" + this.locationStrategy.getLocation().toString() + "/'");
         }
+        dockerCompose.invoke("fromProject", "project(" + quote(":" + dockerPlatformModule.getId()) + ")");
     }
 
     private String getUseComposeFilesAsString() {
