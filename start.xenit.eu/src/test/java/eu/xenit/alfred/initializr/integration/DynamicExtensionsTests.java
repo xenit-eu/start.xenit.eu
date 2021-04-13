@@ -18,11 +18,11 @@ public class DynamicExtensionsTests extends BaseGeneratorTests {
         // Should the DE-version number be in the root project ext ?
 
         result.platformBuildGradle()
-                .hasDependency("implementation", quote("eu.xenit:alfresco-dynamic-extensions-repo-52:"+DE_RELEASE));
+                .hasDependency("implementation", quote("eu.xenit:alfresco-dynamic-extensions-repo:"+DE_RELEASE));
 
         // when creating platform docker image:
         result.platformDockerBuildGradle()
-                .hasDependency("alfrescoAmp", quote("eu.xenit:alfresco-dynamic-extensions-repo-52:"+DE_RELEASE+"@amp"));
+                .hasDependency("alfrescoAmp", quote("eu.xenit:alfresco-dynamic-extensions-repo:"+DE_RELEASE+"@amp"));
 
 
     }
