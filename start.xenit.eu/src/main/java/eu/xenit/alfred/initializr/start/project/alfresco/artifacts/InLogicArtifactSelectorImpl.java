@@ -18,9 +18,9 @@ public class InLogicArtifactSelectorImpl implements AlfrescoVersionArtifactSelec
             return version.toString();
         }
         if (version.getPatch() == 0) {
-            return version.getMajor() + "." + version.getMinor() + "." + version.getQualifier().getQualifier();
+            return version.getMajor() + "." + version.getMinor() + "." + version.getQualifier().getId();
         }
-        return version.getMajor() + "." + version.getMinor() + "." + version.getPatch() + "-" + version.getQualifier().getQualifier();
+        return version.getMajor() + "." + version.getMinor() + "." + version.getPatch() + "-" + version.getQualifier().getId();
     }
 
     @Override
@@ -54,7 +54,7 @@ public class InLogicArtifactSelectorImpl implements AlfrescoVersionArtifactSelec
     }
 
     private boolean isCommunity() {
-        return projectDescription.getPlatformVersion().getQualifier().getQualifier().matches("[a-g]*");
+        return projectDescription.getPlatformVersion().getQualifier().getId().matches("[a-g]*");
     }
 
     private boolean isSixOrAbove() {

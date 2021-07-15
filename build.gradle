@@ -8,5 +8,5 @@ allprojects {
 }
 
 ext {
-    springInitializrVersion = '0.8.0.RELEASE'
+    springInitializrVersion = '0.10.2'
 }
