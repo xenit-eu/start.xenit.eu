@@ -2,6 +2,8 @@ package eu.xenit.alfred.initializr.start.project.alfresco.artifacts;
 
 import io.spring.initializr.generator.project.ProjectDescription;
 import io.spring.initializr.generator.version.Version;
+import io.spring.initializr.generator.version.Version.Qualifier;
+import org.springframework.util.StringUtils;
 
 public class InLogicArtifactSelectorImpl implements AlfrescoVersionArtifactSelector {
 
@@ -54,7 +56,11 @@ public class InLogicArtifactSelectorImpl implements AlfrescoVersionArtifactSelec
     }
 
     private boolean isCommunity() {
-        return projectDescription.getPlatformVersion().getQualifier().getId().matches("[a-g]*");
+        Qualifier qualifier = projectDescription.getPlatformVersion().getQualifier();
+        if (StringUtils.isEmpty(qualifier)) {
+            return false;
+        }
+        return qualifier.getId().matches("[a-g]*");
     }
 
     private boolean isSixOrAbove() {
