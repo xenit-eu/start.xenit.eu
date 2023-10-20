@@ -7,6 +7,7 @@ import eu.xenit.alfred.initializr.generator.docker.compose.model.ComposeVolumes;
 import eu.xenit.alfred.initializr.generator.docker.compose.model.DockerComposeModel;
 import io.spring.initializr.generator.io.IndentingWriter;
 import java.util.Collection;
+import java.util.Comparator;
 import java.util.Map;
 import java.util.function.Function;
 
@@ -40,7 +41,7 @@ public class DockerComposeYmlWriterDelegate {
 
         writer.println();
         writer.println("volumes:");
-        writer.indented(() -> volumes.stream().forEach(vol -> writeVolume(writer, vol)));
+        writer.indented(() -> volumes.stream().sorted(Comparator.comparing(ComposeVolumeInfo::getName)).forEach(vol -> writeVolume(writer, vol)));
     }
 
     private void writeVolume(IndentingWriter writer, ComposeVolumeInfo vol) {
